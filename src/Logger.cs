@@ -22,19 +22,19 @@ namespace Updater {
         public static void log(TYPE type, String msg) {
             String stamp = createStamp(type);
             if (stamp != null) {
-                System.IO.File.AppendAllText(defaultFile, stamp + msg);
+                System.IO.File.AppendAllText(defaultFile, stamp + msg + Environment.NewLine);
             }
         }
 
         public static void log(TYPE type, String msg, String file) {
             String stamp = createStamp(type);
             if (stamp != null) {
-                System.IO.File.AppendAllText(file, stamp + msg);
+                System.IO.File.AppendAllText(file, stamp + msg + Environment.NewLine);
             }
         }
 
         public static String createStamp(TYPE type) {
-            String descriptor = DateTime.Now.ToString("HH.mm.ss dd-MM-yyyy");
+            String descriptor = DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss");
             switch (type) {
                 case TYPE.OFF:
                     descriptor = null;

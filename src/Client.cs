@@ -15,18 +15,22 @@ using System.Xml.Linq;
 
 namespace Updater {
     class Client {
-        private static WebClient webClient = new WebClient();
+        private WebClient webClient = new WebClient();
 
         private Reciever reciever;
+        private DownloadHandler downloadHandler;
         private Ui ui;
 
         public Client(Ui ui) {
             this.ui = ui;
 
-            reciever = new Reciever();
+            downloadHandler = new DownloadHandler(webClient, ui);
+            reciever = new Reciever(downloadHandler);
+
+            reciever.sendRequest();
         }
 
-        public static WebClient getWebClient() {
+        public WebClient getWebClient() {
             return webClient;
         }
 

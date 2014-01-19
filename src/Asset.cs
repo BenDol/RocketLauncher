@@ -14,9 +14,14 @@ namespace Updater {
             this.asset = asset;
             this.file = file;
 
-            if (File.Exists(file) ){
-                FileInfo fi = new FileInfo(file);
-                lastModified = fi.LastWriteTime;
+            if (File.Exists(file)) {
+                try {
+                    FileInfo fi = new FileInfo(file);
+                    lastModified = fi.LastWriteTime;
+                }
+                catch (IOException e) {
+                    Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
+                }
             }
         }
 

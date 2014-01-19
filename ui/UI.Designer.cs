@@ -23,12 +23,10 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtboxChangelog = new System.Windows.Forms.TextBox();
             this.progbarProgress = new System.Windows.Forms.ProgressBar();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.timerMultiPurpose = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,12 +71,7 @@
             this.lblStatus.TabIndex = 3;
             this.lblStatus.Text = "Status: Waiting...";
             // 
-            // timerMultiPurpose
-            // 
-            this.timerMultiPurpose.Enabled = true;
-            this.timerMultiPurpose.Tick += new System.EventHandler(this.timerMultiPurpose_Tick);
-            // 
-            // UI
+            // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,9 +83,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MaximizeBox = false;
-            this.Name = "UI";
+            this.Name = "Ui";
             this.Text = "Updater";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UI_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -106,7 +98,6 @@
         private System.Windows.Forms.ProgressBar progbarProgress;
         private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Timer timerMultiPurpose;
     }
 }
 

@@ -10,11 +10,12 @@ namespace Updater {
         /// </summary>
         [STAThread]
         static void Main(string[] args) {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             Ui ui = new Ui();
             Client client = new Client(ui);
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(ui);
         }
     }

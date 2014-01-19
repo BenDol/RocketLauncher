@@ -9,12 +9,13 @@ using System.Xml.Linq;
 namespace Updater {
 
     class Reciever {
-
         private String file;
         private Asset<XDocument> updateXML;
+        private DownloadHandler dlHandler;
 
-        public Reciever() {
+        public Reciever(DownloadHandler dlHandler) {
             file = Path.Combine(Application.StartupPath, @"update.xml");
+            this.dlHandler = dlHandler;
 
             load();
         }
@@ -23,12 +24,18 @@ namespace Updater {
          * Loads the update XML document as an XAsset.
          **/
         private void load() {
-            updateXML = new Asset<XDocument>(XDocument.Load(file), file);
-            if (!File.Exists(file)) {
-                Logger.log(Logger.TYPE.FATAL, "The file update.xml does not exist.");
+            try {
+                if (File.Exists(file)) {
+                    updateXML = new Asset<XDocument>(XDocument.Load(file), file);
+                    validateXML();
+                }
+                else {
+                    throw new FileNotFoundException("The file update.xml does not exist.");
+                }
             }
-
-            validateXML();
+            catch (IOException e) {
+                Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
+            }
         }
 
         /**
@@ -81,10 +88,15 @@ namespace Updater {
 
         public bool reloadIfModified() {
             if (File.Exists(file)) {
-                FileInfo fi = new FileInfo(file);
-                if (fi.LastWriteTime > updateXML.getLastModified()) {
-                    reload();
-                    return true;
+                try {
+                    FileInfo fi = new FileInfo(file);
+                    if (fi.LastWriteTime > updateXML.getLastModified()) {
+                        reload();
+                        return true;
+                    }
+                }
+                catch (IOException e) {
+                    Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
                 }
             }
             return false;
@@ -93,7 +105,11 @@ namespace Updater {
         public Request sendRequest() {
             reloadIfModified(); //Ensure the update XML is up to date
 
-            Request request = new Request(getUrl());
+            Request request = new Request(getUrl(), dlHandler);
+
+            request.send();
+
+            return request;
         }
 
         /**
