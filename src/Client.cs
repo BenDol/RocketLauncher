@@ -18,9 +18,9 @@ namespace Updater {
         private static WebClient webClient = new WebClient();
 
         private Reciever reciever;
-        private UI ui;
+        private Ui ui;
 
-        public Client(UI ui) {
+        public Client(Ui ui) {
             this.ui = ui;
 
             reciever = new Reciever();
@@ -34,7 +34,7 @@ namespace Updater {
             return reciever;
         }
 
-        public UI getUI() {
+        public Ui getUi() {
             return ui;
         }
     }

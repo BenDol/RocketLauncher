@@ -1,5 +1,5 @@
 ﻿namespace Updater {
-    partial class UI {
+    partial class Ui {
         /// <summary>
         /// Required designer variable.
         /// </summary>

@@ -10,7 +10,7 @@ namespace Updater {
         /// </summary>
         [STAThread]
         static void Main(string[] args) {
-            UI ui = new UI();
+            Ui ui = new Ui();
             Client client = new Client(ui);
 
             Application.EnableVisualStyles();

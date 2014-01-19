@@ -13,7 +13,7 @@ using System.Threading;
 using System.Diagnostics;
 
 namespace Updater {
-    public partial class UI : Form {
+    public partial class Ui : Form {
         
         internal static List<Uri> uriFiles = new List<Uri>();
         internal static Uri uriChangelog = null;
@@ -23,7 +23,7 @@ namespace Updater {
         string currentFile = string.Empty, labelText = string.Empty;
         int progbarValue = 0, KBps = 0;
 
-        public UI() {
+        public Ui() {
             InitializeComponent();
             if (uriFiles.Count == 0) {
                 Environment.Exit(0);
