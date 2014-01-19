@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Updater {
     class UpdateNode {
-        private Reciever reciever;
+        private Request request;
         private String url;
-        private String version;
+        private Double version;
 
-        public UpdateNode(Reciever reciever, String url, String version) {
-            if (reciever == null) {
-                Logger.log(Logger.TYPE.ERROR, "Provided a null reciever to UpdateNode");
+        public UpdateNode(Request request, String url, Double version) {
+            if (request == null) {
+                Logger.log(Logger.TYPE.ERROR, "Provided a null request to UpdateNode");
             }
-            this.reciever = reciever;
+            this.request = request;
 
             if (url == null) {
                 Logger.log(Logger.TYPE.ERROR, "Provided a null url to UpdateNode");
@@ -26,12 +26,12 @@ namespace Updater {
             this.version = version;
         }
 
-        public Reciever getReciever() {
-            return reciever;
+        public Request getRequest() {
+            return request;
         }
 
-        public void setReciever(Reciever reciever) {
-            this.reciever = reciever;
+        public void setRequest(Request request) {
+            this.request = request;
         }
 
         public String getUrl() {
@@ -42,11 +42,11 @@ namespace Updater {
             this.url = url;
         }
 
-        public String getVersion() {
+        public Double getVersion() {
             return version;
         }
 
-        public void setVersion(String version) {
+        public void setVersion(Double version) {
             this.version = version;
         }
     }

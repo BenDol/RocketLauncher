@@ -34,7 +34,7 @@ namespace Updater {
                 }
             }
             catch (IOException e) {
-                Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
+                Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
             }
         }
 
@@ -96,17 +96,18 @@ namespace Updater {
                     }
                 }
                 catch (IOException e) {
-                    Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
+                    Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
                 }
             }
             return false;
         }
 
-        public Request sendRequest() {
+        public Request sendRequest(RequestCallback callback) {
             reloadIfModified(); //Ensure the update XML is up to date
 
-            Request request = new Request(getUrl(), dlHandler);
+            Request request = new Request(getUrl(), dlHandler, getLatestVersion());
 
+            request.setCallback(callback);
             request.send();
 
             return request;
@@ -137,7 +138,7 @@ namespace Updater {
          * Note that if the modified date doesn't match the asset it will retrieve 
          * the document contents again. Returns null if failed to retrieve from the document.
          * */
-        public String getLatestVersion() {
+        public double getLatestVersion() {
             reloadIfModified();
 
             var root = from item in updateXML.get().Descendants("updates")
@@ -145,9 +146,15 @@ namespace Updater {
                     latest = item.Attribute("latest")
                 };
 
-            String latestVersion = null;
-            foreach(var data in root) {
-                latestVersion = data.latest.Value;
+            double latestVersion = 0;
+            try {
+                foreach(var data in root) {
+                    latestVersion = Convert.ToDouble(data.latest.Value);
+                    break;
+                }
+            }
+            catch(FormatException e) {
+                Logger.log(Logger.TYPE.ERROR, "Could not convert latest version: " + e.Message);
             }
             return latestVersion;
         }

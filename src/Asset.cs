@@ -20,7 +20,7 @@ namespace Updater {
                     lastModified = fi.LastWriteTime;
                 }
                 catch (IOException e) {
-                    Logger.log(Logger.TYPE.DEBUG, e.Message + e.StackTrace);
+                    Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
                 }
             }
         }

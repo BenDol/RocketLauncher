@@ -20,7 +20,7 @@ namespace Updater {
         private bool downloadComplete = false;
 
         private Uri currentUrl;
-        private String labelText = String.Empty;
+        private String description = String.Empty;
 
         private Ui ui;
 
@@ -32,6 +32,9 @@ namespace Updater {
         public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed) {
             if (!isBusy()) {
                 prepare(url);
+
+                description = "Status: Downloading " + getCurrentFileName();
+                ui.getStatusLabel().Text = description;
 
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(
                     (object sender, AsyncCompletedEventArgs e) => {
@@ -49,6 +52,9 @@ namespace Updater {
             if(!isBusy()) {
                 prepare(url);
 
+                description = "Status: Downloading " + getCurrentFileName();
+                ui.getStatusLabel().Text = description;
+
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
                     (object sender, DownloadStringCompletedEventArgs e) => {
                         downloadCompleted();
@@ -64,6 +70,8 @@ namespace Updater {
         private void downloadCompleted() {
             busy = false;
             downloadComplete = true;
+
+            ui.getStatusLabel().Text += " - Finished!";
         }
 
         private void downloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
@@ -74,10 +82,8 @@ namespace Updater {
                 KBps = (int) (fileBytesDownloaded / (fileDownloadElapsed.ElapsedMilliseconds / 1000));
             }
 
-            labelText = "Status: Downloading " + getCurrentFileName() + "\n" + fileBytesDownloaded + 
+            ui.getStatusLabel().Text = description + "\n" + fileBytesDownloaded +
                 " KB / " + fileSize + " KB - " + KBps + " KB/s";
-
-            ui.getStatusLabel().Text = labelText;
             ui.getDownloadProgressBar().Value = e.ProgressPercentage;
         }
 

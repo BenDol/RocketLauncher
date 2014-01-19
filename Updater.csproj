@@ -70,10 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\RequestCallback.cs" />
     <Compile Include="src\Logger.cs" />
     <Compile Include="src\DownloadHandler.cs" />
-    <Compile Include="src\callbacks\OnDownloadCompleted.cs" />
-    <Compile Include="src\callbacks\OnEvent.cs" />
     <Compile Include="src\Reciever.cs" />
     <Compile Include="src\Request.cs" />
     <Compile Include="src\Asset.cs" />

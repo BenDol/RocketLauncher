@@ -27,7 +27,11 @@ namespace Updater {
             downloadHandler = new DownloadHandler(webClient, ui);
             reciever = new Reciever(downloadHandler);
 
-            reciever.sendRequest();
+            reciever.sendRequest(new RequestCallback((List<UpdateNode> updates) => {
+                Console.WriteLine("onSuccess!");
+            }, () => {
+                Console.WriteLine("onFailure!");
+            }));
         }
 
         public WebClient getWebClient() {
