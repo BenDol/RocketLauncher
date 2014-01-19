@@ -20,8 +20,8 @@ namespace Updater {
             }
             this.url = url;
 
-            if (version == null) {
-                Logger.log(Logger.TYPE.ERROR, "Provided a null version to UpdateNode");
+            if (version < 0.1) {
+                Logger.log(Logger.TYPE.ERROR, "Provided an invalid version to UpdateNode");
             }
             this.version = version;
         }

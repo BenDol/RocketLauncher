@@ -14,13 +14,14 @@ namespace Updater {
      **/
     class Request {
         private XDocument serverXML;
-
-        RequestCallback callback;
+        private  RequestCallback callback;
 
         private Uri url;
         private DateTime dateTime;
         private DownloadHandler dlHandler;
         private Double lastVersion;
+
+        List<UpdateNode> updateNodes = new List<UpdateNode>();
 
         private bool dead = false;
 
@@ -28,23 +29,28 @@ namespace Updater {
             this.url = url;
             this.dlHandler = dlHandler;
             this.lastVersion = lastVersion;
-            this.dateTime = new DateTime();
         }
 
-        public void loadServerXML() {
+        public void send() {
+            if (isDead()) {
+                return;
+            }
+
+            dateTime = new DateTime();
             dlHandler.downloadStringAsync(url, (object sender, DownloadStringCompletedEventArgs e) => {
                 try {
                     serverXML = XDocument.Parse(e.Result);
 
+                    updateNodes = getUpdates();
                     if (callback != null) {
-                        callback.onSuccess(getUpdates());
+                        callback.onSuccess(updateNodes);
                     }
                 }
                 catch (XmlException ex) {
-                    Logger.log(Logger.TYPE.DEBUG, "Error while requesting server XML: " 
+                    Logger.log(Logger.TYPE.ERROR, "Error while requesting server XML: " 
                         + ex.Message + ex.StackTrace);
 
-                    dead = true;
+                    kill();
 
                     if (callback != null) {
                         callback.onFailure();
@@ -54,19 +60,23 @@ namespace Updater {
         }
 
         private List<UpdateNode> getUpdates() {
+            List<UpdateNode> updateNodes = new List<UpdateNode>();
+            if (isDead()) {
+                return updateNodes;
+            }
+
             var root = from item in serverXML.Descendants("server")
                 select new {
                     updates = item.Descendants("update")
                 };
 
-            List<UpdateNode> updates = new List<UpdateNode>();
             foreach (var data in root) {
                 foreach (var update in data.updates) {
                     String versionStr = update.Attribute("version").Value;
                     try {
                         double version = Convert.ToDouble(versionStr);
                         if (version > lastVersion) {
-                            updates.Add(new UpdateNode(this, update.Value, version));
+                            updateNodes.Add(new UpdateNode(this, update.Value, version));
                             Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr);
                         }
                     }
@@ -76,15 +86,32 @@ namespace Updater {
                     }
                 }
             }
-            return updates;
+            return orderUpdateNodes(updateNodes);
         }
 
-        public void send() {
-            loadServerXML();
+        public List<UpdateNode> orderUpdateNodes(List<UpdateNode> updateNodes) {
+            updateNodes.Sort(delegate(UpdateNode u1, UpdateNode u2) {
+                return u1.getVersion().CompareTo(u2.getVersion());
+            });
+            return updateNodes;
         }
 
         public void setCallback(RequestCallback callback) {
             this.callback = callback;
+        }
+
+        public DateTime getDateTime() {
+            return dateTime;
+        }
+
+        public void kill() {
+            dead = true;
+            updateNodes.Clear();
+            serverXML = null;
+            callback = null;
+            url = null;
+            dlHandler = null;
+            lastVersion = 0;
         }
 
         public bool isDead() {
