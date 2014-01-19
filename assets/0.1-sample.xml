@@ -1,0 +1,10 @@
+<xml>
+  <update version="0.1">
+    <change name="banner.png" destination="/" mime="images/png" log="Updated the banner image to look pretty!">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/banner.png
+    </change>
+    <change name="item.png" destination="/items" mime="images/png" log="Updated the item image to better fit">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/item.png
+    </change>
+  </update>
+</xml>

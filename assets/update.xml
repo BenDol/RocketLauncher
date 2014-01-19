@@ -1,0 +1,7 @@
+<xml>
+  <updates url="https://dl.dropboxusercontent.com/u/49948294/updater/server/server.xml" latest="0.1">
+    <update version="0.1">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/0.1-sample.xml
+    </update>
+  </updates>
+</xml>

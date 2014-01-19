@@ -123,5 +123,9 @@ namespace Updater {
         private void UI_FormClosing(object sender, FormClosingEventArgs e) {
             Environment.Exit(0);
         }
+
+        public ProgressBar getProgressBar() {
+            return progbarProgress;
+        }
     }
 }

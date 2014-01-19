@@ -11,10 +11,18 @@ namespace Updater {
 
         public UpdateNode(Reciever reciever, String url, String version) {
             if (reciever == null) {
-
+                Logger.log(Logger.TYPE.ERROR, "Provided a null reciever to UpdateNode");
             }
             this.reciever = reciever;
+
+            if (url == null) {
+                Logger.log(Logger.TYPE.ERROR, "Provided a null url to UpdateNode");
+            }
             this.url = url;
+
+            if (version == null) {
+                Logger.log(Logger.TYPE.ERROR, "Provided a null version to UpdateNode");
+            }
             this.version = version;
         }
 
