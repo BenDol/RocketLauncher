@@ -106,7 +106,6 @@ namespace Updater {
             reloadIfModified(); //Ensure the update XML is up to date
 
             Request request = new Request(getUrl(), dlHandler, getLatestVersion());
-
             request.setCallback(callback);
             request.send();
 

@@ -9,10 +9,15 @@ namespace Updater {
         private T asset;
         private String file;
         private DateTime lastModified;
+        private String mime;
 
-        public Asset(T asset, String file) {
+        public Asset(T asset, String file) : this(asset, file, "") {
+        }
+
+        public Asset(T asset, String file, String mime) {
             this.asset = asset;
             this.file = file;
+            this.mime = mime;
 
             if (File.Exists(file)) {
                 try {
@@ -27,6 +32,10 @@ namespace Updater {
 
         public DateTime getLastModified() {
             return lastModified;
+        }
+
+        public String getMimeType() {
+            return mime;
         }
 
         public T get() {

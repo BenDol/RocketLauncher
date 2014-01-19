@@ -77,6 +77,7 @@
     <Compile Include="src\Reciever.cs" />
     <Compile Include="src\Request.cs" />
     <Compile Include="src\Asset.cs" />
+    <Compile Include="src\Update.cs" />
     <Compile Include="ui\Ui.cs">
       <SubType>Form</SubType>
     </Compile>

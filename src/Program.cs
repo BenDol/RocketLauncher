@@ -16,6 +16,9 @@ namespace Updater {
             Ui ui = new Ui();
             Client client = new Client(ui);
 
+            // Attempt to update first thing
+            client.update();
+
             Application.Run(ui);
         }
     }

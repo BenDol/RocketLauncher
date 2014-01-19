@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Updater {
     class UpdateNode {
-        private Request request;
-        private String url;
-        private Double version;
+        protected Request request;
+        protected String url;
+        protected Double version;
+
+        public UpdateNode() {
+        }
 
         public UpdateNode(Request request, String url, Double version) {
             if (request == null) {

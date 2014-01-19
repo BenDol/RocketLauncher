@@ -1,0 +1,19 @@
+<xml>
+  <update version="0.2">
+    <changelog>
+      <log>Updated the item image to better fit</log>
+      <log>Updated the banner image to look pretty</log>
+      <log>Updated all the data files</log>
+    </changelog>
+    <file name="banner.png" destination="/" mime="images/png">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/banner.png
+    </file>
+    <file name="item.png" destination="/items" mime="images/png">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/item.png
+    </file>
+
+    <archive name="data.zip" extractTo="/data" mime="application/zip">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/full.zip
+    </archive>
+  </update>
+</xml>

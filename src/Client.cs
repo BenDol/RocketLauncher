@@ -26,11 +26,14 @@ namespace Updater {
 
             downloadHandler = new DownloadHandler(webClient, ui);
             reciever = new Reciever(downloadHandler);
+        }
 
-            reciever.sendRequest(new RequestCallback((List<UpdateNode> updates) => {
-                Console.WriteLine("onSuccess!");
+        public void update() {
+            reciever.sendRequest(new RequestCallback((List<UpdateNode> updateNodes) => {
+                //
             }, () => {
-                Console.WriteLine("onFailure!");
+                Logger.log(Logger.TYPE.WARN, "Failed to make update request, " 
+                    + "ensure your XML files have not been corrupted.");
             }));
         }
 
