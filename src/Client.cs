@@ -27,7 +27,10 @@ namespace Updater {
         }
 
         public void update() {
-            reciever.sendRequest(new RequestCallback((List<Update> updates) => {
+            Request request = reciever.sendRequest(new RequestCallback((List<Update> updates) => {
+                foreach (Update update in updates) {
+                    Console.WriteLine(update);
+                }
                 Console.WriteLine(updates.Count);
             }, () => {
                 Logger.log(Logger.TYPE.WARN, "Failed to make update request, " 

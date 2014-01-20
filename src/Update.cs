@@ -36,5 +36,23 @@ namespace Updater {
             files.Add(file);
         }
 
+        public override String ToString() {
+            String debugInfo = getVersion() + "\n" + getUrl() + "\n";
+
+            debugInfo += "\nFiles:\n";
+            getFiles().ForEach(x => {
+                debugInfo += "\t" + x.getName() + "\n";
+                debugInfo += "\t" + x.getPath() + "\n";
+                debugInfo += "\t" + x.getMimeType() + "\n";
+                debugInfo += "\t" + x.getDestination() + "\n";
+                debugInfo += "\n";
+            });
+            
+            debugInfo += "\nChangelog:\n";
+            getChangelog().getLogs().ForEach(x => {
+                debugInfo += "\t" + x.getText() + "\n";
+            });
+            return debugInfo;
+        }
     }
 }

@@ -77,6 +77,8 @@ namespace Updater {
                         if (callback != null) {
                             callback.onSuccess(updates);
                         }
+
+                        kill(); // Kill the request
                     }));
 
                     dlHandler.startStringQueue();
@@ -107,11 +109,11 @@ namespace Updater {
 
             foreach (var data in root) {
                 foreach (var update in data.updates) {
-                    String versionStr = update.Attribute("version").Value;
+                    String versionStr = update.Attribute("version").Value.Trim();
                     try {
                         double version = Convert.ToDouble(versionStr);
                         if (version > lastVersion) {
-                            updateNodes.Add(new UpdateNode(this, update.Value, version));
+                            updateNodes.Add(new UpdateNode(this, update.Value.Trim(), version));
                             Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr);
                         }
                     }
@@ -142,7 +144,7 @@ namespace Updater {
                 foreach (var clog in data.changelog) {
                     Changelog changelog = new Changelog();
                     foreach (var log in clog.Descendants("log")) {
-                        changelog.addLog(new Changelog.Log(log.Value));
+                        changelog.addLog(new Changelog.Log(log.Value.Trim()));
                     }
                     update.setChangelog(changelog);
                     break;
@@ -152,22 +154,22 @@ namespace Updater {
             // Add the file data
             foreach (var data in root) {
                 foreach (var f in data.files) {
-                    String name = f.Attribute("name").Value;
-                    String destination = f.Attribute("destination").Value;
-                    String mime = f.Attribute("mime").Value;
+                    String name = f.Attribute("name").Value.Trim();
+                    String destination = f.Attribute("destination").Value.Trim();
+                    String mime = f.Attribute("mime").Value.Trim();
 
-                    update.addFile(new GhostFile(name, destination, mime, new Uri(f.Value)));
+                    update.addFile(new GhostFile(name, destination, mime, new Uri(f.Value.Trim())));
                 }
             }
 
             // Add the archive data
             foreach (var data in root) {
                 foreach (var f in data.archives) {
-                    String name = f.Attribute("name").Value;
-                    String extractTo = f.Attribute("extractTo").Value;
-                    String mime = f.Attribute("mime").Value;
+                    String name = f.Attribute("name").Value.Trim();
+                    String extractTo = f.Attribute("extractTo").Value.Trim();
+                    String mime = f.Attribute("mime").Value.Trim();
 
-                    update.addFile(new Archive(name, extractTo, mime, new Uri(f.Value)));
+                    update.addFile(new Archive(name, extractTo, mime, new Uri(f.Value.Trim())));
                 }
             }
 
@@ -191,8 +193,6 @@ namespace Updater {
 
         public void kill() {
             dead = true;
-            updateNodes.Clear();
-            updates.Clear();
             serverXML = null;
             callback = null;
             url = null;

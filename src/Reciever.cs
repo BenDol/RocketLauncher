@@ -67,7 +67,7 @@ namespace Updater {
             // Ensure there is only one <updates> tag set
             if (root.Count() < 2) {
                 foreach (var data in root) {
-                    Uri url = new Uri(data.url.Value);
+                    Uri url = new Uri(data.url.Value.Trim());
 
                     if (url == null) {
                         Logger.log(Logger.TYPE.FATAL, "No 'url' attribute found in the <updates> tag: "
@@ -129,7 +129,7 @@ namespace Updater {
             foreach (var data in root) {
                 url = data.url.Value;
             }
-            return new Uri(url);
+            return new Uri(url.Trim());
         }
 
         /**
@@ -148,7 +148,7 @@ namespace Updater {
             double latestVersion = 0;
             try {
                 foreach(var data in root) {
-                    latestVersion = Convert.ToDouble(data.latest.Value);
+                    latestVersion = Convert.ToDouble(data.latest.Value.Trim());
                     break;
                 }
             }
