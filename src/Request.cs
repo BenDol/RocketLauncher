@@ -21,6 +21,7 @@ namespace Updater {
         private DateTime dateTime;
         private DownloadHandler dlHandler;
         private Double lastVersion;
+        private TimeSpan responseTime = new TimeSpan();
 
         Dictionary<UpdateNode, String> results = new Dictionary<UpdateNode, String>();
 
@@ -40,7 +41,7 @@ namespace Updater {
                 return;
             }
 
-            dateTime = new DateTime();
+            dateTime = DateTime.Now;
             dlHandler.downloadStringAsync(url, (object s1, DownloadStringCompletedEventArgs e1) => {
                 try {
                     serverXML = XDocument.Parse(e1.Result);
@@ -74,8 +75,10 @@ namespace Updater {
                             }
                         }
 
+                        setResponseTime(DateTime.Now);
+
                         if (callback != null) {
-                            callback.onSuccess(updates);
+                            callback.onSuccess(updates, responseTime);
                         }
 
                         kill(); // Kill the request
@@ -189,6 +192,14 @@ namespace Updater {
 
         public DateTime getDateTime() {
             return dateTime;
+        }
+
+        public void setResponseTime(DateTime time) {
+            this.responseTime = time - dateTime;
+        }
+
+        public TimeSpan getResponseTime() {
+            return responseTime;
         }
 
         public void kill() {

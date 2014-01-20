@@ -27,12 +27,15 @@ namespace Updater {
         }
 
         public void update() {
-            Request request = reciever.sendRequest(new RequestCallback((List<Update> updates) => {
-                foreach (Update update in updates) {
-                    Console.WriteLine(update);
-                }
-                Console.WriteLine(updates.Count);
-            }, () => {
+            Logger.log(Logger.TYPE.INFO, "Checking for updates...");
+
+            reciever.sendRequest(new RequestCallback((List<Update> updates, TimeSpan response) => {
+                Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in " 
+                    + response.Milliseconds + "ms");
+
+
+            },
+            () => {
                 Logger.log(Logger.TYPE.WARN, "Failed to make update request, " 
                     + "ensure your XML files have not been corrupted.");
             }));

@@ -20,6 +20,5 @@ namespace Updater {
         public void setExtractTo(String extractTo) {
             setDestination(extractTo);
         }
-
     }
 }
