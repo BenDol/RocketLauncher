@@ -11,7 +11,7 @@ namespace Updater {
 
     class DownloadHandler {
 
-        class QueueBlock<T> {
+        public class QueueBlock<T> {
             Uri url;
             Action<T> callback;
 
@@ -36,6 +36,7 @@ namespace Updater {
         private long fileSize = 0;
         private long fileBytesDownloaded = 0;
         private int KBps = 0;
+        private float totalPercent = 0;
 
         private bool busy = false;
         private bool downloadComplete = false;
@@ -70,7 +71,6 @@ namespace Updater {
 
                 if (!multiple) {
                     ui.getDownloadProgressBar().Value = 0;
-                    ui.getDownloadProgressBar().Maximum = 100;
                 }
 
                 description = "Status: Downloading " + getCurrentFileName();
@@ -103,7 +103,6 @@ namespace Updater {
 
                 if (!multiple) {
                     ui.getDownloadProgressBar().Value = 0;
-                    ui.getDownloadProgressBar().Maximum = 100;
                 }
 
                 WebClient webClient = new WebClient();
@@ -145,18 +144,19 @@ namespace Updater {
 
             ProgressBar progressBar = ui.getDownloadProgressBar();
 
-            int percentage = e.ProgressPercentage;
+            float percentage = 0;
+            if (fileBytesDownloaded > 0) {
+                percentage = (fileBytesDownloaded / (float)fileSize) * 100f;
+            }
+
             if (multiple) {
-                int increment = progressBar.Value + percentage;
-                if (increment > progressBar.Maximum) {
-                    percentage = progressBar.Maximum;
-                }
-                else {
-                    percentage = increment;
+                long totalSize = getQueueDownloadSize<String>(queueString);
+                if (totalSize > 0) {
+                    percentage = (fileBytesDownloaded / (float)totalSize) * 100f;
                 }
             }
 
-            ui.getDownloadProgressBar().Value = percentage;
+            ui.getDownloadProgressBar().Value = (int)percentage;
         }
 
         public void enqueueString(Uri url, Action<String> callback) {
@@ -173,7 +173,6 @@ namespace Updater {
 
         public void startStringQueue() {
             ui.getDownloadProgressBar().Value = 0;
-            ui.getDownloadProgressBar().Maximum = queueString.Count * 100;
 
             nextString();
         }
@@ -198,7 +197,6 @@ namespace Updater {
 
         public void startFileQueue() {
             ui.getDownloadProgressBar().Value = 0;
-            ui.getDownloadProgressBar().Maximum = queueFile.Count * 100;
 
             nextFile();
         }
@@ -243,6 +241,14 @@ namespace Updater {
                 }
             }
             catch { return 1; }
+        }
+
+        private static long getQueueDownloadSize<T>(Queue<QueueBlock<T>> queue) {
+            long size = 0;
+            foreach (QueueBlock<T> block in queue) {
+                size += getFileSize(block.getUrl());
+            }
+            return size;
         }
 
         public void prepare(Uri url) {
