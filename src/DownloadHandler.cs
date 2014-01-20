@@ -14,14 +14,20 @@ namespace Updater {
         public class QueueBlock<T> {
             Uri url;
             Action<T> callback;
+            long size = 0;
 
             public QueueBlock(Uri url, Action<T> callback) {
                 this.url = url;
                 this.callback = callback;
+                this.size = getFileSize(url);
             }
 
             public Uri getUrl() {
                 return url;
+            }
+
+            public long getSize() {
+                return size;
             }
 
             public void invokeCallback(T result) {
@@ -33,10 +39,11 @@ namespace Updater {
 
         private Stopwatch fileDownloadElapsed = new Stopwatch();
 
+        private int KBps = 0;
         private long fileSize = 0;
         private long fileBytesDownloaded = 0;
-        private int KBps = 0;
-        private float totalPercent = 0;
+        private long totalDownloaded = 0;
+        private long queueDownloadSize;
 
         private bool busy = false;
         private bool downloadComplete = false;
@@ -61,15 +68,15 @@ namespace Updater {
         }
 
         public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed) {
-            downloadFileAsync(url, completed, false);
+            downloadFileAsync(url, completed, null);
         }
 
         public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed,
-                bool multiple) {
+                QueueBlock<Boolean> block) {
             if (!isBusy()) {
                 prepare(url);
 
-                if (!multiple) {
+                if (block == null) {
                     ui.getDownloadProgressBar().Value = 0;
                 }
 
@@ -79,12 +86,12 @@ namespace Updater {
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(
                     (object sender, AsyncCompletedEventArgs e) => {
-                        downloadCompleted();
+                        downloadCompleted(block);
                         completed(sender, e);
                 });
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
-                        downloadProgressChanged(e, multiple);
+                        downloadProgressChanged(e, block);
                 });
 
                 webClient.DownloadStringAsync(currentUrl);
@@ -93,15 +100,15 @@ namespace Updater {
         }
 
         public void downloadStringAsync(Uri url, EventHandler<DownloadStringCompletedEventArgs> completed) {
-            downloadStringAsync(url, completed, false);
+            downloadStringAsync(url, completed, null);
         }
 
         public void downloadStringAsync(Uri url, EventHandler<DownloadStringCompletedEventArgs> completed,
-                bool multiple) {
+                QueueBlock<String> block) {
             if(!isBusy()) {
                 prepare(url);
 
-                if (!multiple) {
+                if (block == null) {
                     ui.getDownloadProgressBar().Value = 0;
                 }
 
@@ -111,12 +118,12 @@ namespace Updater {
 
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
                     (object sender, DownloadStringCompletedEventArgs e) => {
-                        downloadCompleted();
+                        downloadCompleted(block);
                         completed(sender, e);
                 });
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
-                        downloadProgressChanged(e, multiple);
+                        downloadProgressChanged(e, block);
                 });
 
                 webClient.DownloadStringAsync(currentUrl);
@@ -124,14 +131,18 @@ namespace Updater {
             }
         }
 
-        private void downloadCompleted() {
+        private void downloadCompleted<T>(QueueBlock<T> block) {
             busy = false;
             downloadComplete = true;
+
+            if (block != null) {
+                totalDownloaded += block.getSize();
+            }
 
             ui.getStatusLabel().Text += " - Finished!";
         }
 
-        private void downloadProgressChanged(DownloadProgressChangedEventArgs e, bool multiple) {
+        private void downloadProgressChanged<T>(DownloadProgressChangedEventArgs e, QueueBlock<T> block) {
             fileSize = e.TotalBytesToReceive / 1024;
 
             fileBytesDownloaded = e.BytesReceived / 1024;
@@ -149,10 +160,11 @@ namespace Updater {
                 percentage = (fileBytesDownloaded / (float)fileSize) * 100f;
             }
 
-            if (multiple) {
-                long totalSize = getQueueDownloadSize<String>(queueString);
+            if (block != null) {
+                long totalSize = queueDownloadSize;
                 if (totalSize > 0) {
-                    percentage = (fileBytesDownloaded / (float)totalSize) * 100f;
+                    percentage = ((fileBytesDownloaded + totalDownloaded) / 
+                        (float)totalSize) * 100f;
                 }
             }
 
@@ -174,6 +186,8 @@ namespace Updater {
         public void startStringQueue() {
             ui.getDownloadProgressBar().Value = 0;
 
+            queueDownloadSize = getQueueDownloadSize(queueString);
+
             nextString();
         }
 
@@ -184,10 +198,13 @@ namespace Updater {
                     downloadStringAsync(block.getUrl(), (object sender, DownloadStringCompletedEventArgs e) => {
                         block.invokeCallback(e.Result);
                         nextString();
-                    }, true);
+                    }, block);
                 }
             }
             else {
+                totalDownloaded = 0;
+                queueDownloadSize = 0;
+
                 if (queueStringCallback != null) {
                     queueStringCallback.onFinished();
                     queueStringCallback = null;
@@ -197,6 +214,8 @@ namespace Updater {
 
         public void startFileQueue() {
             ui.getDownloadProgressBar().Value = 0;
+
+            queueDownloadSize = getQueueDownloadSize(queueFile);
 
             nextFile();
         }
@@ -208,10 +227,13 @@ namespace Updater {
                     downloadFileAsync(block.getUrl(), (object sender, AsyncCompletedEventArgs e) => {
                         block.invokeCallback(e.Cancelled);
                         nextFile();
-                    }, true);
+                    }, block);
                 }
             }
             else {
+                totalDownloaded = 0;
+                queueDownloadSize = 0;
+
                 if (queueFileCallback != null) {
                     queueFileCallback.onFinished();
                     queueFileCallback = null;
@@ -243,7 +265,15 @@ namespace Updater {
             catch { return 1; }
         }
 
-        private static long getQueueDownloadSize<T>(Queue<QueueBlock<T>> queue) {
+        private long getQueueDownloadSize<T>(Queue<QueueBlock<T>> queue) {
+            long size = 0;
+            foreach (QueueBlock<T> block in queue) {
+                size += block.getSize();
+            }
+            return size;
+        }
+
+        private static long fetchQueueDownloadSize<T>(Queue<QueueBlock<T>> queue) {
             long size = 0;
             foreach (QueueBlock<T> block in queue) {
                 size += getFileSize(block.getUrl());
