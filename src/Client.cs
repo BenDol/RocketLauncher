@@ -30,15 +30,21 @@ namespace Updater {
             Logger.log(Logger.TYPE.INFO, "Checking for updates...");
 
             reciever.sendRequest(new RequestCallback((List<Update> updates, TimeSpan response) => {
-                Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in " 
+                Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in "
                     + response.Milliseconds + "ms");
 
-
+                foreach(Update update in updates) {
+                    addChangeLog(update);
+                }
             },
             () => {
-                Logger.log(Logger.TYPE.WARN, "Failed to make update request, " 
+                Logger.log(Logger.TYPE.WARN, "Failed to make update request, "
                     + "ensure your XML files have not been corrupted.");
             }));
+        }
+
+        public void addChangeLog(Update update) {
+            ui.getChangelogBox().Text += update.getChangelog() + Environment.NewLine;
         }
 
         public Reciever getReciever() {

@@ -43,5 +43,13 @@ namespace Updater {
         public void addLog(Log log) {
             logs.Add(log);
         }
+
+        public override String ToString() {
+            String changelog = "";
+            foreach (Log log in getLogs()) {
+                changelog += "* " + log.getText() + Environment.NewLine;
+            }
+            return changelog;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Updater {
@@ -112,10 +113,10 @@ namespace Updater {
                     ui.getDownloadProgressBar().Value = 0;
                 }
 
-                WebClient webClient = new WebClient();
                 description = "Status: Downloading " + getCurrentFileName();
                 ui.getStatusLabel().Text = description;
 
+                WebClient webClient = new WebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
                     (object sender, DownloadStringCompletedEventArgs e) => {
                         downloadCompleted(block);

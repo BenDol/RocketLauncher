@@ -37,6 +37,10 @@ namespace Updater {
             }*/
         }
 
+        public TextBox getChangelogBox() {
+            return txtboxChangelog;
+        }
+
         public ProgressBar getDownloadProgressBar() {
             return progbarProgress;
         }
