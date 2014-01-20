@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Updater {
     class RequestCallback {
-        private Action<List<UpdateNode>> success;
+        private Action<List<Update>> success;
         private Action failure;
 
-        public RequestCallback(Action<List<UpdateNode>> onSuccess, Action onFailure) {
+        public RequestCallback(Action<List<Update>> onSuccess, Action onFailure) {
             this.success = onSuccess;
             this.failure = onFailure;
         }
 
-        public void onSuccess(List<UpdateNode> updates) {
+        public void onSuccess(List<Update> updates) {
             success(updates);
         }
 

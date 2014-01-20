@@ -33,9 +33,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtboxChangelog);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(6, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(265, 174);
+            this.groupBox1.Size = new System.Drawing.Size(261, 174);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Changelog";
@@ -48,24 +48,23 @@
             this.txtboxChangelog.Name = "txtboxChangelog";
             this.txtboxChangelog.ReadOnly = true;
             this.txtboxChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtboxChangelog.Size = new System.Drawing.Size(253, 151);
+            this.txtboxChangelog.Size = new System.Drawing.Size(249, 151);
             this.txtboxChangelog.TabIndex = 0;
             this.txtboxChangelog.TabStop = false;
             // 
             // progbarProgress
             // 
             this.progbarProgress.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.progbarProgress.Location = new System.Drawing.Point(12, 218);
+            this.progbarProgress.Location = new System.Drawing.Point(6, 219);
             this.progbarProgress.Name = "progbarProgress";
-            this.progbarProgress.Size = new System.Drawing.Size(265, 15);
+            this.progbarProgress.Size = new System.Drawing.Size(261, 24);
             this.progbarProgress.Step = 1;
-            this.progbarProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progbarProgress.TabIndex = 2;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(10, 189);
+            this.lblStatus.Location = new System.Drawing.Point(5, 189);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(76, 11);
             this.lblStatus.TabIndex = 3;
@@ -75,7 +74,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 237);
+            this.ClientSize = new System.Drawing.Size(274, 247);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.progbarProgress);
             this.Controls.Add(this.groupBox1);

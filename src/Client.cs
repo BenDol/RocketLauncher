@@ -15,8 +15,6 @@ using System.Xml.Linq;
 
 namespace Updater {
     class Client {
-        private WebClient webClient = new WebClient();
-
         private Reciever reciever;
         private DownloadHandler downloadHandler;
         private Ui ui;
@@ -24,21 +22,17 @@ namespace Updater {
         public Client(Ui ui) {
             this.ui = ui;
 
-            downloadHandler = new DownloadHandler(webClient, ui);
+            downloadHandler = new DownloadHandler(ui);
             reciever = new Reciever(downloadHandler);
         }
 
         public void update() {
-            reciever.sendRequest(new RequestCallback((List<UpdateNode> updateNodes) => {
-                //
+            reciever.sendRequest(new RequestCallback((List<Update> updates) => {
+                Console.WriteLine(updates.Count);
             }, () => {
                 Logger.log(Logger.TYPE.WARN, "Failed to make update request, " 
                     + "ensure your XML files have not been corrupted.");
             }));
-        }
-
-        public WebClient getWebClient() {
-            return webClient;
         }
 
         public Reciever getReciever() {
