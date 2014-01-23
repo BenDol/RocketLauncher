@@ -154,7 +154,7 @@ namespace Updater {
             ui.getStatusLabel().Text = description + "\n" + fileBytesDownloaded +
                 " KB / " + fileSize + " KB - " + KBps + " KB/s";
 
-            ProgressBar progressBar = ui.getDownloadProgressBar();
+            PrettyProgressBar progressBar = ui.getDownloadProgressBar();
 
             float percentage = 0;
             if (fileBytesDownloaded > 0) {

@@ -10,7 +10,7 @@ namespace Updater {
         /// </summary>
         [STAThread]
         static void Main(string[] args) {
-            Application.EnableVisualStyles();
+            //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             Ui ui = new Ui();

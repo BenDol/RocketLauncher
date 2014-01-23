@@ -21,6 +21,7 @@ namespace Updater {
 
         public Client(Ui ui) {
             this.ui = ui;
+            this.ui.setClient(this);
 
             downloadHandler = new DownloadHandler(ui);
             reciever = new Reciever(downloadHandler);
@@ -33,6 +34,7 @@ namespace Updater {
                 Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in "
                     + response.Milliseconds + "ms");
 
+                clearChangeLog();
                 foreach(Update update in updates) {
                     addChangeLog(update);
                 }
@@ -43,6 +45,10 @@ namespace Updater {
             }));
         }
 
+        public void clearChangeLog() {
+            ui.getChangelogBox().Clear();
+        }
+
         public void addChangeLog(Update update) {
             ui.getChangelogBox().Text += update.getChangelog() + Environment.NewLine;
         }
@@ -51,6 +57,10 @@ namespace Updater {
             return reciever;
         }
 
+        public DownloadHandler getDownloadHandler() {
+            return downloadHandler;
+        }
+         
         public Ui getUi() {
             return ui;
         }
