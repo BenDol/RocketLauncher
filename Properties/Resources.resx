@@ -133,9 +133,6 @@
   <data name="minimize_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\images\minimize-icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="play_hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\images\play-hover.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="play_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\images\play.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
