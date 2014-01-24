@@ -191,7 +191,6 @@
     <None Include="assets\images\close-hover-icon.png" />
     <None Include="assets\images\minimize-hover-icon.png" />
     <None Include="assets\images\logo.png" />
-    <None Include="assets\images\loading-animation.gif" />
     <None Include="assets\images\refresh.gif" />
     <None Include="assets\images\icon.ico" />
     <Content Include="assets\server.xml" />

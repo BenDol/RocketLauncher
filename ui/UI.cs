@@ -82,6 +82,10 @@ namespace Updater {
             return lblName;
         }
 
+        public GlossyButton getPlayButton() {
+            return btnPlay;
+        }
+
         private void btnRefresh_Click(object sender, EventArgs e) {
             client.update();
         }
@@ -150,6 +154,18 @@ namespace Updater {
                 Color.Black, 1, ButtonBorderStyle.Solid,
                 Color.Black, 1, ButtonBorderStyle.Solid,
                 Color.Black, 1, ButtonBorderStyle.Solid);
+        }
+
+        private void Ui_MaximumSizeChanged(object sender, EventArgs e) {
+            if (WindowState != System.Windows.Forms.FormWindowState.Minimized) {
+                WindowState = System.Windows.Forms.FormWindowState.Normal;
+            }
+        }
+
+        private void Ui_SizeChanged(object sender, EventArgs e) {
+            if( WindowState != System.Windows.Forms.FormWindowState.Minimized) {
+                WindowState = System.Windows.Forms.FormWindowState.Normal;
+            }
         }
     }
 }

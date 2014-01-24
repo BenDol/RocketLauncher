@@ -78,13 +78,21 @@ namespace Updater {
             // Process changelog and temp directories
             clearChangeLog();
 
-            foreach(Update update in updates) {
-                addChangeLog(update.getChangelog());
-                assignTempDirs(update);
-            }
+            if (updates.Count > 0) {
+                foreach (Update update in updates) {
+                    addChangeLog(update.getChangelog());
+                    assignTempDirs(update);
+                }
 
-            // Start downloading updates
-            downloadUpdates(updates);
+                // Start downloading updates
+                downloadUpdates(updates);
+            }
+            else {
+                ui.getStatusLabel().Text = "Everything is up to date!";
+                ui.getDownloadProgressBar().Value = 100;
+
+                enablePlay();
+            }
         }
 
         private void downloadUpdates(List<Update> updates) {
@@ -103,8 +111,6 @@ namespace Updater {
                         if (!cancelled) {
                             Logger.log(Logger.TYPE.DEBUG, "Completed downloading " 
                                 + (isArchive ? "archive " : "file ") + file.getName());
-
-                            update.setSuccess(applyFileChange(file, tmpPath));
                         }
                     });
                 }
@@ -113,10 +119,34 @@ namespace Updater {
             dlHandler.setQueueFileCallback(new QueueCallback(() => {
                 Logger.log(Logger.TYPE.DEBUG, "Completed all the downloads");
 
+                ui.getStatusLabel().Text = "Patching files...";
                 foreach (Update update in updates) {
+                    foreach (GhostFile file in update.getFiles()) {
+                        String tmpPath = Path.Combine(update.getTempDir().FullName,
+                            file is Archive ? ((Archive)file).getExtractTo()
+                            : file.getDestination());
+
+                        update.setSuccess(applyFileChange(file, tmpPath));
+                    }
+
                     if (update.isSuccess()) {
                         reciever.stampUpdate(update);
                     }
+                    else {
+                        Logger.log(Logger.TYPE.FATAL, "One of the updates did not succeed, "
+                            + "cancelling update process.");
+
+                        ui.getStatusLabel().Text = "Error while patching files, please check the "
+                            +"log for more details.";
+
+                        ui.getPlayButton().BtnText = "Failed";
+                        return;
+                    }
+
+                    ui.getStatusLabel().Text = "Finished updating " 
+                        + updates.Count + "/" + updates.Count + "!";
+
+                    enablePlay();
                 }
             }));
 
@@ -244,6 +274,11 @@ namespace Updater {
 
             ui.getNameLabel().Text = name;
             ui.getNameLabel().Visible = true;
+        }
+
+        private void enablePlay() {
+            ui.getPlayButton().Enabled = true;
+            ui.getPlayButton().BtnText = "Play";
         }
 
         public Reciever getReciever() {

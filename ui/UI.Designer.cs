@@ -184,8 +184,9 @@ namespace Updater {
             this.btnPlay.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.btnPlay.BorderColor = System.Drawing.Color.White;
             this.btnPlay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnPlay.BtnText = "Play";
+            this.btnPlay.BtnText = "Updating";
             this.btnPlay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPlay.Enabled = false;
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnPlay.HoverBackColor = System.Drawing.Color.MediumAquamarine;
             this.btnPlay.HoverBorderColor = System.Drawing.Color.White;
@@ -223,6 +224,8 @@ namespace Updater {
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";
+            this.MaximumSizeChanged += new System.EventHandler(this.Ui_MaximumSizeChanged);
+            this.SizeChanged += new System.EventHandler(this.Ui_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Ui_Paint);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
