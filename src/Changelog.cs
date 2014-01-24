@@ -55,6 +55,10 @@ namespace Updater {
             logs.Add(log);
         }
 
+        public bool isEmpty() {
+            return logs.Count < 1;
+        }
+
         public override String ToString() {
             String changelog = "Version: " + getVersion() + Environment.NewLine;
             foreach (Log log in getLogs()) {

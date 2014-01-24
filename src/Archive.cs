@@ -6,11 +6,16 @@ using System.Text;
 namespace Updater {
 
     class Archive : GhostFile {
-        public Archive(String name, String extractTo, String mime, Uri url) {
+
+        Boolean cleanDirs;
+
+        public Archive(String name, String extractTo, String mime, Uri url,
+                Boolean cleanDirs) {
             this.name = name;
             this.destination = extractTo;
             this.mimeType = mime;
-            this.url = url; 
+            this.url = url;
+            this.cleanDirs = cleanDirs;
         }
 
         public String getExtractTo() {
@@ -19,6 +24,14 @@ namespace Updater {
 
         public void setExtractTo(String extractTo) {
             setDestination(extractTo);
+        }
+
+        public Boolean getCleanDirs() {
+            return cleanDirs;
+        }
+
+        public void setCleanDirs(Boolean cleanDirs) {
+            this.cleanDirs = cleanDirs;
         }
     }
 }

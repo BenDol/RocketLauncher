@@ -19,7 +19,7 @@ namespace Updater {
             this.name = name;
             this.destination = dest;
             this.mimeType = mime;
-            this.url = url; 
+            this.url = url;
         }
 
         public String getName() {

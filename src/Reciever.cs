@@ -214,5 +214,66 @@ namespace Updater {
             }
             return latestVersion;
         }
+
+        public XDocument getUpdateXML() {
+            reloadIfModified();
+
+            return updateXML.get();
+        }
+
+        public XElement getUpdateElement(Update update, XDocument doc) {
+            var root = from item in doc.Descendants("updates")
+                select new {
+                    updates = item.Descendants("update")
+                };
+
+            XElement element = null;
+            try {
+                foreach (var data in root) {
+                    foreach (var u in data.updates) {
+                        if(update.getVersion() == Convert.ToDouble(
+                                u.Attribute("version").Value)) {
+                            element = u;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch(FormatException e) {
+                Logger.log(Logger.TYPE.ERROR, "Could not convert latest version: " + e.Message);
+            }
+
+            return element;
+        }
+
+        public void stampUpdate(Update update) {
+            // Use the current updateXML object, do not repull
+            XDocument doc = updateXML.get();
+
+            XElement updateElement = getUpdateElement(update, doc);
+            if (updateElement != null) {
+                updateElement.Remove();
+            }
+
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.OmitXmlDeclaration = true;
+            xws.Indent = true;
+
+            using (XmlWriter xw = XmlWriter.Create(sb, xws)) {
+                try {
+                    doc.Element("updates").AddFirst(update.getXML());
+                    doc.Element("updates").SetAttributeValue("latest", 
+                        update.getVersion());
+
+                    doc.WriteTo(xw);
+                    doc.Save(file);
+                }
+                catch (Exception e) {
+                    Logger.log(Logger.TYPE.FATAL, "Could not stamp the updates: " 
+                        + e.Message + e.StackTrace);
+                }
+            }
+        }
     }
 }

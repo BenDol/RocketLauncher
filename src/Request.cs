@@ -185,7 +185,8 @@ namespace Updater {
                         String destination = f.Attribute("destination").Value.Trim();
                         String mime = f.Attribute("mime").Value.Trim();
 
-                        update.addFile(new GhostFile(name, destination, mime, new Uri(f.Value.Trim())));
+                        update.addFile(new GhostFile(name, destination, mime,
+                            new Uri(f.Value.Trim())));
                     }
                 }
 
@@ -196,7 +197,13 @@ namespace Updater {
                         String extractTo = f.Attribute("extractTo").Value.Trim();
                         String mime = f.Attribute("mime").Value.Trim();
 
-                        update.addFile(new Archive(name, extractTo, mime, new Uri(f.Value.Trim())));
+                        Boolean cleanDirs = false;
+                        if (f.Attribute("cleanDirs") != null) {
+                            cleanDirs = Convert.ToBoolean(f.Attribute("cleanDirs").Value.Trim());
+                        }
+
+                        update.addFile(new Archive(name, extractTo, mime, 
+                            new Uri(f.Value.Trim()), cleanDirs));
                     }
                 }
             }
