@@ -142,7 +142,7 @@ namespace Updater {
         }
 
         protected void centreLabel(Label label) {
-            int width = (this.Width / 2) - (label.Width / 2) + 3;
+            int width = (this.Width / 2) - (label.Width / 2);
             int height = (this.Height / 2) - (label.Height / 2);
             label.Location = new Point(width, height);
         }
