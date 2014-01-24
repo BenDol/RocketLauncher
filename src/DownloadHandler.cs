@@ -62,10 +62,12 @@ namespace Updater {
         private Uri currentUrl;
         private String description = String.Empty;
 
-        private Ui ui;
+        private Label statusLabel;
+        private PrettyProgressBar progressBar;
 
-        public DownloadHandler(Ui ui) {
-            this.ui = ui;
+        public DownloadHandler(Label statusLabel, PrettyProgressBar progressBar) {
+            this.statusLabel = statusLabel;
+            this.progressBar = progressBar;
         }
 
         public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed) {
@@ -77,12 +79,14 @@ namespace Updater {
             if (!isBusy()) {
                 prepare(url);
 
-                if (block == null) {
-                    ui.getDownloadProgressBar().Value = 0;
+                if (block == null && progressBar != null) {
+                    progressBar.Value = 0;
                 }
 
                 description = "Status: Downloading " + getCurrentFileName();
-                ui.getStatusLabel().Text = description;
+                if (statusLabel != null) {
+                    statusLabel.Text = description;
+                }
 
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(
@@ -90,6 +94,7 @@ namespace Updater {
                         downloadCompleted(block);
                         completed(sender, e);
                 });
+
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
                         downloadProgressChanged(e, block);
@@ -109,12 +114,14 @@ namespace Updater {
             if(!isBusy()) {
                 prepare(url);
 
-                if (block == null) {
-                    ui.getDownloadProgressBar().Value = 0;
+                if (block == null && progressBar != null) {
+                    progressBar.Value = 0;
                 }
 
                 description = "Status: Downloading " + getCurrentFileName();
-                ui.getStatusLabel().Text = description;
+                if (statusLabel != null) {
+                    statusLabel.Text = description;
+                }
 
                 WebClient webClient = new WebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
@@ -122,6 +129,7 @@ namespace Updater {
                         downloadCompleted(block);
                         completed(sender, e);
                 });
+
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
                         downloadProgressChanged(e, block);
@@ -140,7 +148,9 @@ namespace Updater {
                 totalDownloaded += block.getSize();
             }
 
-            ui.getStatusLabel().Text += " - Finished!";
+            if (statusLabel != null) {
+                statusLabel.Text += " - Finished!";
+            }
         }
 
         private void downloadProgressChanged<T>(DownloadProgressChangedEventArgs e, QueueBlock<T> block) {
@@ -151,10 +161,10 @@ namespace Updater {
                 KBps = (int) (fileBytesDownloaded / (fileDownloadElapsed.ElapsedMilliseconds / 1000));
             }
 
-            ui.getStatusLabel().Text = description + "\n" + fileBytesDownloaded +
-                " KB / " + fileSize + " KB - " + KBps + " KB/s";
-
-            PrettyProgressBar progressBar = ui.getDownloadProgressBar();
+            if (statusLabel != null) {
+                statusLabel.Text = description + "\n" + fileBytesDownloaded +
+                    " KB / " + fileSize + " KB - " + KBps + " KB/s";
+            }
 
             float percentage = 0;
             if (fileBytesDownloaded > 0) {
@@ -169,7 +179,9 @@ namespace Updater {
                 }
             }
 
-            ui.getDownloadProgressBar().Value = (int)percentage;
+            if (progressBar != null) {
+                progressBar.Value = (int)percentage;
+            }
         }
 
         public void enqueueString(Uri url, Action<String> callback) {
@@ -185,7 +197,9 @@ namespace Updater {
         }
 
         public void startStringQueue() {
-            ui.getDownloadProgressBar().Value = 0;
+            if (progressBar != null) {
+                progressBar.Value = 0;
+            }
 
             queueDownloadSize = getQueueDownloadSize(queueString);
 
@@ -214,7 +228,9 @@ namespace Updater {
         }
 
         public void startFileQueue() {
-            ui.getDownloadProgressBar().Value = 0;
+            if (progressBar != null) {
+                progressBar.Value = 0;
+            }
 
             queueDownloadSize = getQueueDownloadSize(queueFile);
 
@@ -287,7 +303,9 @@ namespace Updater {
             downloadComplete = false;
             fileDownloadElapsed.Reset();
             currentUrl = url;
-            ui.getStatusLabel().Text = "";
+            if (statusLabel != null) {
+                statusLabel.Text = "";
+            }
         }
 
         public bool isBusy() {
@@ -300,6 +318,22 @@ namespace Updater {
                 return path.Substring(path.LastIndexOf('/') + 1).Trim();
             }
             return null;
+        }
+
+        public Label getStatusLabel() {
+            return statusLabel;
+        }
+
+        public void setStatusLabel(Label statusLabel) {
+            this.statusLabel = statusLabel;
+        }
+
+        public PrettyProgressBar getProgressBar() {
+            return progressBar;
+        }
+
+        public void setProgressBar(PrettyProgressBar progressBar) {
+            this.progressBar = progressBar;
         }
     }
 }

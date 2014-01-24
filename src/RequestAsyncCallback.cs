@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 
 namespace Updater {
-    class RequestCallback {
+    class RequestAsyncCallback {
         private Action<List<Update>, TimeSpan> success;
         private Action failure;
 
-        public RequestCallback(Action<List<Update>, TimeSpan> onSuccess, Action onFailure) {
+        public RequestAsyncCallback(Action<List<Update>, TimeSpan> onSuccess, Action onFailure) {
             this.success = onSuccess;
             this.failure = onFailure;
         }

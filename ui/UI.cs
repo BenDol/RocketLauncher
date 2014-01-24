@@ -21,8 +21,11 @@ namespace Updater {
         private const int HTCAPTION = 0x2;
 
         private Client client;
+        private Connecting connecting;
 
-        public Ui() {
+        public Ui(Connecting connecting) {
+            this.connecting = connecting;
+
             InitializeComponent();
 
             /*if (uriFiles.Count == 0) {
@@ -51,11 +54,15 @@ namespace Updater {
                 message.Result = (IntPtr)HTCAPTION;
         }
 
+        public Connecting getConnectingForm() {
+            return connecting;
+        }
+
         public Client getClient() {
             return client;
         }
 
-        public void setClient(Client client) {
+        public void setClient(ref Client client) {
             this.client = client;
         }
 
@@ -69,6 +76,10 @@ namespace Updater {
 
         public Label getStatusLabel() {
             return lblStatus;
+        }
+
+        public Label getNameLabel() {
+            return lblName;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e) {
@@ -133,8 +144,12 @@ namespace Updater {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void Ui_Load(object sender, EventArgs e) {
-
+        private void Ui_Paint(object sender, PaintEventArgs e) {
+            ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle,
+                Color.Black, 1, ButtonBorderStyle.Solid,
+                Color.Black, 1, ButtonBorderStyle.Solid,
+                Color.Black, 1, ButtonBorderStyle.Solid,
+                Color.Black, 1, ButtonBorderStyle.Solid);
         }
     }
 }

@@ -10,16 +10,29 @@ namespace Updater {
         /// </summary>
         [STAThread]
         static void Main(string[] args) {
-            //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Ui ui = new Ui();
+            Connecting con = new Connecting();
+            Ui ui = new Ui(con);
+
             Client client = new Client(ui);
+            ui.setClient(ref client);
 
-            // Attempt to update first thing
-            client.update();
+            // Initialize the client then run the application
+            client.initialize(() => {
+                DownloadHandler dlHandler = client.getDownloadHandler();
+                if (dlHandler != null) {
+                    dlHandler.setProgressBar(ui.getDownloadProgressBar());
+                }
 
-            Application.Run(ui);
+                client.update();
+
+                // Display main window
+                con.Hide();
+                ui.Show();
+            });
+
+            Application.Run(con);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Updater {
      **/
     class Request {
         private XDocument serverXML;
-        private  RequestCallback callback;
+        private RequestAsyncCallback callback;
 
         private Uri url;
         private DateTime dateTime;
@@ -30,73 +30,89 @@ namespace Updater {
 
         private bool dead = false;
 
-        public Request(Uri url, DownloadHandler dlHandler, Double lastVersion) {
+        public Request(Uri url, ref DownloadHandler dlHandler, Double lastVersion) {
             this.url = url;
             this.dlHandler = dlHandler;
             this.lastVersion = lastVersion;
         }
 
         public void send() {
+            send(null);
+        }
+
+        public void send(XDocument serverXMLCached) {
             if (isDead()) {
                 return;
             }
 
             dateTime = DateTime.Now;
-            dlHandler.downloadStringAsync(url, (object s1, DownloadStringCompletedEventArgs e1) => {
-                try {
-                    serverXML = XDocument.Parse(e1.Result);
-                    updateNodes = getUpdateNodes();
 
-                    foreach (UpdateNode node in updateNodes) {
-                        dlHandler.enqueueString(new Uri(node.getUrl()), (String result) => {
-                            try {
-                                results.Add(node, result);
-                            }
-                            catch (ArgumentException ex1) {
-                                Logger.log(Logger.TYPE.ERROR, "Error in string queue callback: "
-                                    + ex1.Message + ex1.StackTrace);
-                            }
-                            catch (TargetInvocationException ex2) {
-                                Logger.log(Logger.TYPE.ERROR, "Error in string queue callback: "
-                                    + ex2.Message + ex2.StackTrace);
-                            }
-                        });
+            if (serverXMLCached == null) {
+                dlHandler.downloadStringAsync(url, (object s1,
+                        DownloadStringCompletedEventArgs e1) => {
+                    try {
+                        serverXML = XDocument.Parse(e1.Result);
+                        requestUpdates();
                     }
+                    catch (Exception ex) {
+                        Logger.log(Logger.TYPE.ERROR, "Error while requesting server XML: "
+                            + ex.Message + ex.StackTrace + " URL: " + url);
 
-                    // Process results when the queue has finished
-                    dlHandler.setQueueStringCallback(new QueueCallback(() => {
-                        foreach (KeyValuePair<UpdateNode, String> entry in results) {
-                            try {
-                                updates.Add(compileUpdate(entry.Key, XDocument.Parse(entry.Value)));
-                            }
-                            catch(XmlException e) {
-                                Logger.log(Logger.TYPE.ERROR, "Error parsing update " + entry.Key.getVersion() 
-                                    + " xml " + e.Message + e.StackTrace);
-                            }
-                        }
-
-                        setResponseTime(DateTime.Now);
+                        kill();
 
                         if (callback != null) {
-                            callback.onSuccess(updates, responseTime);
+                            callback.onFailure();
                         }
+                    }
+                });
+            }
+            else {
+                serverXML = serverXMLCached;
+                requestUpdates();
+            }
+        }
 
-                        kill(); // Kill the request
-                    }));
+        private void requestUpdates() {
+            updateNodes = getUpdateNodes();
 
-                    dlHandler.startStringQueue();
-                }
-                catch (XmlException ex) {
-                    Logger.log(Logger.TYPE.ERROR, "Error while requesting server XML: " 
-                        + ex.Message + ex.StackTrace);
+            foreach (UpdateNode node in updateNodes) {
+                dlHandler.enqueueString(new Uri(node.getUrl()), (String result) => {
+                    try {
+                        results.Add(node, result);
+                    }
+                    catch (ArgumentException ex1) {
+                        Logger.log(Logger.TYPE.ERROR, "Error in string queue callback: "
+                            + ex1.Message + ex1.StackTrace);
+                    }
+                    catch (TargetInvocationException ex2) {
+                        Logger.log(Logger.TYPE.ERROR, "Error in string queue callback: "
+                            + ex2.Message + ex2.StackTrace);
+                    }
+                });
+            }
 
-                    kill();
-
-                    if (callback != null) {
-                        callback.onFailure();
+            // Process results when the queue has finished
+            dlHandler.setQueueStringCallback(new QueueCallback(() => {
+                foreach (KeyValuePair<UpdateNode, String> entry in results) {
+                    try {
+                        updates.Add(compileUpdate(entry.Key, XDocument.Parse(entry.Value)));
+                    }
+                    catch(XmlException e) {
+                        Logger.log(Logger.TYPE.ERROR, "Error parsing update " + entry.Key.getVersion() 
+                            + " xml " + e.Message + e.StackTrace);
                     }
                 }
-            });
+
+                setResponseTime(DateTime.Now);
+
+                if (callback != null) {
+                    callback.onSuccess(updates, responseTime);
+                }
+
+                kill(); // Kill the request
+            }));
+
+            dlHandler.startStringQueue();
         }
 
         private List<UpdateNode> getUpdateNodes() {
@@ -105,26 +121,32 @@ namespace Updater {
                 return updateNodes;
             }
 
-            var root = from item in serverXML.Descendants("server")
-                select new {
-                    updates = item.Descendants("update")
-                };
+            try {
+                var root = from item in serverXML.Descendants("server")
+                    select new {
+                        updates = item.Descendants("update")
+                    };
 
-            foreach (var data in root) {
-                foreach (var update in data.updates) {
-                    String versionStr = update.Attribute("version").Value.Trim();
-                    try {
-                        double version = Convert.ToDouble(versionStr);
-                        if (version > lastVersion) {
-                            updateNodes.Add(new UpdateNode(this, update.Value.Trim(), version));
-                            Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr);
+                foreach (var data in root) {
+                    foreach (var update in data.updates) {
+                        String versionStr = update.Attribute("version").Value.Trim();
+                        try {
+                            double version = Convert.ToDouble(versionStr);
+                            if (version > lastVersion) {
+                                updateNodes.Add(new UpdateNode(this, update.Value.Trim(), version));
+                                Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr);
+                            }
+                        }
+                        catch (FormatException e) {
+                            Logger.log(Logger.TYPE.ERROR, "Problem converting 'version' for update "
+                                + versionStr + e.Message);
                         }
                     }
-                    catch (FormatException e) {
-                        Logger.log(Logger.TYPE.ERROR, "Problem converting 'version' for update " 
-                            + versionStr + e.Message);
-                    }
                 }
+            }
+            catch (Exception ex) {
+                Logger.log(Logger.TYPE.ERROR, "Problem while getting update nodes "
+                    + ex.Message + ex.StackTrace);
             }
             return updateNodes;
         }
@@ -135,45 +157,51 @@ namespace Updater {
                 return update;
             }
 
-            var root = from item in xml.Descendants("update")
-                select new {
-                    changelog = item.Descendants("changelog"),
-                    files = item.Descendants("file"),
-                    archives = item.Descendants("archive")
-                };
+            try {
+                var root = from item in xml.Descendants("update")
+                    select new {
+                        changelog = item.Descendants("changelog"),
+                        files = item.Descendants("file"),
+                        archives = item.Descendants("archive")
+                    };
 
-            // Add the changelog data
-            foreach (var data in root) {
-                foreach (var clog in data.changelog) {
-                    Changelog changelog = new Changelog();
-                    foreach (var log in clog.Descendants("log")) {
-                        changelog.addLog(new Changelog.Log(log.Value.Trim()));
+                // Add the changelog data
+                foreach (var data in root) {
+                    foreach (var clog in data.changelog) {
+                        Changelog changelog = new Changelog(update.getVersion());
+                        foreach (var log in clog.Descendants("log")) {
+                            changelog.addLog(new Changelog.Log(log.Value.Trim()));
+                        }
+                        update.setChangelog(changelog);
+                        break;
                     }
-                    update.setChangelog(changelog);
-                    break;
+                }
+
+                // Add the file data
+                foreach (var data in root) {
+                    foreach (var f in data.files) {
+                        String name = f.Attribute("name").Value.Trim();
+                        String destination = f.Attribute("destination").Value.Trim();
+                        String mime = f.Attribute("mime").Value.Trim();
+
+                        update.addFile(new GhostFile(name, destination, mime, new Uri(f.Value.Trim())));
+                    }
+                }
+
+                // Add the archive data
+                foreach (var data in root) {
+                    foreach (var f in data.archives) {
+                        String name = f.Attribute("name").Value.Trim();
+                        String extractTo = f.Attribute("extractTo").Value.Trim();
+                        String mime = f.Attribute("mime").Value.Trim();
+
+                        update.addFile(new Archive(name, extractTo, mime, new Uri(f.Value.Trim())));
+                    }
                 }
             }
-
-            // Add the file data
-            foreach (var data in root) {
-                foreach (var f in data.files) {
-                    String name = f.Attribute("name").Value.Trim();
-                    String destination = f.Attribute("destination").Value.Trim();
-                    String mime = f.Attribute("mime").Value.Trim();
-
-                    update.addFile(new GhostFile(name, destination, mime, new Uri(f.Value.Trim())));
-                }
-            }
-
-            // Add the archive data
-            foreach (var data in root) {
-                foreach (var f in data.archives) {
-                    String name = f.Attribute("name").Value.Trim();
-                    String extractTo = f.Attribute("extractTo").Value.Trim();
-                    String mime = f.Attribute("mime").Value.Trim();
-
-                    update.addFile(new Archive(name, extractTo, mime, new Uri(f.Value.Trim())));
-                }
+            catch (Exception ex) {
+                Logger.log(Logger.TYPE.ERROR, "Problem while compiling updates "
+                    + ex.Message + ex.StackTrace);
             }
 
             return update;
@@ -186,7 +214,7 @@ namespace Updater {
             return updates;
         }
 
-        public void setCallback(RequestCallback callback) {
+        public void setCallback(RequestAsyncCallback callback) {
             this.callback = callback;
         }
 

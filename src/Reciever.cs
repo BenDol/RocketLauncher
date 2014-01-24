@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Updater {
 
     class Reciever {
         private String file;
-        private Asset<XDocument> updateXML;
         private DownloadHandler dlHandler;
 
-        public Reciever(DownloadHandler dlHandler) {
+        private Asset<XDocument> updateXML;
+        private ExternalAsset<XDocument> serverXMLCache;
+
+        public Reciever(ref DownloadHandler dlHandler) {
             file = Path.Combine(Application.StartupPath, @"update.xml");
             this.dlHandler = dlHandler;
 
@@ -102,14 +106,14 @@ namespace Updater {
             return false;
         }
 
-        public Request sendRequest(RequestCallback callback) {
+        public Request sendRequest(RequestAsyncCallback callback) {
             reloadIfModified(); //Ensure the update XML is up to date
 
             Request request = null;
             try {
-                request = new Request(getUrl(), dlHandler, getLatestVersion());
+                request = new Request(getUrl(), ref dlHandler, getLatestVersion());
                 request.setCallback(callback);
-                request.send();
+                request.send(getServerXMLCache());
             }
             catch (Exception e) {
                 Logger.log(Logger.TYPE.FATAL, "Error creating request: " 
@@ -117,6 +121,52 @@ namespace Updater {
             }
 
             return request;
+        }
+
+        public void getServerName(StringAsyncCallback callback) {
+            Uri url = getUrl();
+
+            dlHandler.downloadStringAsync(url, 
+                (object s, DownloadStringCompletedEventArgs e) => {
+                    try {
+                        serverXMLCache = new ExternalAsset<XDocument>(
+                            XDocument.Parse(e.Result), url.OriginalString);
+
+                        var root = from item in serverXMLCache.get().Descendants("server")
+                            select new {
+                                name = item.Attribute("name")
+                            };
+
+                        String serverName = "";
+                        foreach (var data in root) {
+                            serverName = data.name.Value;
+                            break;
+                        }
+
+                        callback.onSuccess(serverName);
+                    }
+                    catch(Exception ex) {
+                        Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "
+                            + ex.Message + ex.StackTrace + " URL: " + url);
+
+                        callback.onFailure();
+                    }
+            });
+        }
+
+        /**
+         * Returns the server XML cache if it hasn't been longer than 
+         * 3 minutes since the last cache, otherwise it will return null.
+         **/
+        public XDocument getServerXMLCache() {
+            XDocument XMLCache = serverXMLCache.get();
+
+            TimeSpan span = DateTime.Now - serverXMLCache.getRetrievedOn();
+            if (span.Minutes > 3) {
+                XMLCache = null;
+            }
+
+            return XMLCache;
         }
 
         /**

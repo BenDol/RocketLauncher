@@ -23,13 +23,24 @@ namespace Updater {
             }
         }
 
-        List<Log> logs = new List<Log>();
+        Double version;
+        List<Log> logs;
 
-        public Changelog() {
+        public Changelog(Double version) 
+            : this(version, new List<Log>()) {
         }
 
-        public Changelog(List<Log> logs) {
+        public Changelog(Double version, List<Log> logs) {
+            this.version = version;
             this.logs = logs;
+        }
+
+        public void setVersion(double version) {
+            this.version = version;
+        }
+
+        public double getVersion() {
+            return version;
         }
 
         public List<Log> getLogs() {
@@ -45,7 +56,7 @@ namespace Updater {
         }
 
         public override String ToString() {
-            String changelog = "";
+            String changelog = "Version: " + getVersion() + Environment.NewLine;
             foreach (Log log in getLogs()) {
                 changelog += "* " + log.getText() + Environment.NewLine;
             }

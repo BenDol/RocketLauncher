@@ -7,13 +7,16 @@ using System.Text;
 namespace Updater {
     class Update : UpdateNode {
 
-        Changelog changelog = new Changelog();
+        Changelog changelog;
+        DirectoryInfo tempDir;
         List<GhostFile> files = new List<GhostFile>();
 
         public Update(UpdateNode node) {
             this.request = node.getRequest();
             this.url = node.getUrl();
             this.version = node.getVersion();
+
+            this.changelog = new Changelog(version);
         }
 
         public Changelog getChangelog() {
@@ -34,6 +37,14 @@ namespace Updater {
 
         public void addFile(GhostFile file) {
             files.Add(file);
+        }
+
+        public DirectoryInfo getTempDir() {
+            return tempDir;
+        }
+
+        public void setTempDir(DirectoryInfo dir) {
+            tempDir = dir;
         }
 
         public override String ToString() {

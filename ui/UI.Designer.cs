@@ -29,22 +29,21 @@ namespace Updater {
             this.txtboxChangelog = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblUptodate = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnClose = new Updater.GlossyButton();
             this.prettyProgress1 = new Updater.PrettyProgressBar();
             this.btnPlay = new Updater.GlossyButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtboxChangelog);
-            this.groupBox1.Location = new System.Drawing.Point(6, 121);
+            this.groupBox1.Location = new System.Drawing.Point(6, 56);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(437, 182);
             this.groupBox1.TabIndex = 0;
@@ -67,7 +66,7 @@ namespace Updater {
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(7, 307);
+            this.lblStatus.Location = new System.Drawing.Point(7, 242);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(76, 11);
             this.lblStatus.TabIndex = 3;
@@ -77,12 +76,24 @@ namespace Updater {
             // 
             this.lblUptodate.AutoSize = true;
             this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUptodate.Location = new System.Drawing.Point(346, 313);
+            this.lblUptodate.Location = new System.Drawing.Point(346, 248);
             this.lblUptodate.Name = "lblUptodate";
             this.lblUptodate.Size = new System.Drawing.Size(62, 13);
             this.lblUptodate.TabIndex = 7;
             this.lblUptodate.Text = "Up to date!";
             this.lblUptodate.Visible = false;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Moltors", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblName.Location = new System.Drawing.Point(4, 9);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(182, 37);
+            this.lblName.TabIndex = 11;
+            this.lblName.Text = "Gamename";
+            this.lblName.Visible = false;
             // 
             // btnMinimize
             // 
@@ -92,7 +103,7 @@ namespace Updater {
             this.btnMinimize.FlatAppearance.BorderSize = 0;
             this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimize.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMinimize.Location = new System.Drawing.Point(410, 3);
+            this.btnMinimize.Location = new System.Drawing.Point(408, 5);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(16, 16);
             this.btnMinimize.TabIndex = 1;
@@ -105,7 +116,7 @@ namespace Updater {
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(410, 306);
+            this.pictureBox1.Location = new System.Drawing.Point(410, 241);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(27, 26);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -122,7 +133,7 @@ namespace Updater {
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.Control;
             this.btnRefresh.Image = global::Updater.Properties.Resources.refresh_normal;
-            this.btnRefresh.Location = new System.Drawing.Point(5, 335);
+            this.btnRefresh.Location = new System.Drawing.Point(5, 270);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 47);
             this.btnRefresh.TabIndex = 4;
@@ -130,17 +141,6 @@ namespace Updater {
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             this.btnRefresh.MouseEnter += new System.EventHandler(this.btnRefresh_MouseEnter);
             this.btnRefresh.MouseLeave += new System.EventHandler(this.btnRefresh_MouseLeave);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = global::Updater.Properties.Resources.logo;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Location = new System.Drawing.Point(142, 8);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(143, 107);
-            this.pictureBox2.TabIndex = 11;
-            this.pictureBox2.TabStop = false;
             // 
             // btnClose
             // 
@@ -154,7 +154,7 @@ namespace Updater {
             this.btnClose.ForeColor = System.Drawing.Color.Transparent;
             this.btnClose.HoverBackColor = System.Drawing.Color.Transparent;
             this.btnClose.HoverBorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.Location = new System.Drawing.Point(431, 3);
+            this.btnClose.Location = new System.Drawing.Point(429, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(16, 16);
             this.btnClose.StandbyBackColor = System.Drawing.Color.Transparent;
@@ -170,7 +170,7 @@ namespace Updater {
             this.prettyProgress1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.prettyProgress1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.prettyProgress1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.prettyProgress1.Location = new System.Drawing.Point(54, 341);
+            this.prettyProgress1.Location = new System.Drawing.Point(54, 276);
             this.prettyProgress1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.prettyProgress1.Name = "prettyProgress1";
             this.prettyProgress1.Size = new System.Drawing.Size(307, 37);
@@ -189,7 +189,7 @@ namespace Updater {
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnPlay.HoverBackColor = System.Drawing.Color.MediumAquamarine;
             this.btnPlay.HoverBorderColor = System.Drawing.Color.White;
-            this.btnPlay.Location = new System.Drawing.Point(367, 340);
+            this.btnPlay.Location = new System.Drawing.Point(367, 275);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(76, 39);
             this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
@@ -201,8 +201,8 @@ namespace Updater {
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(451, 398);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(451, 323);
+            this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.prettyProgress1);
@@ -215,17 +215,18 @@ namespace Updater {
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Ui";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";
-            this.Load += new System.EventHandler(this.Ui_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Ui_Paint);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,7 +244,7 @@ namespace Updater {
         private PrettyProgressBar prettyProgress1;
         private GlossyButton btnClose;
         private System.Windows.Forms.Button btnMinimize;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lblName;
     }
 }
 
