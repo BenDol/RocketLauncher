@@ -41,8 +41,15 @@ namespace Updater {
         public static bool canLog(TYPE type) {
             char[] delimiters = { ' ', ',', '.', ':', '\t', ';' };
 
-            short[] loggingSettings = ConfigurationManager.AppSettings["logging"].Split(
-                delimiters).Select(x => Convert.ToInt16(x)).ToArray();
+            short[] loggingSettings = null;
+            try {
+                loggingSettings = ConfigurationManager.AppSettings["logging"].Split(
+                    delimiters).Select(x => Convert.ToInt16(x)).ToArray();
+            }
+            catch(FormatException e) {
+                Logger.log(Logger.TYPE.ERROR, "Format issue with the logger, make sure "
+                    + "the logger settings are correct. " + e.Message + e.StackTrace);
+            }
 
             return loggingSettings.Contains((short)type);
         }

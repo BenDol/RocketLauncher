@@ -147,7 +147,7 @@ namespace Updater {
                     }
                     catch(Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "
-                            + ex.Message + ex.StackTrace + " URL: " + url);
+                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
 
                         callback.onFailure();
                     }

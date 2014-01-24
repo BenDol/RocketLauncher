@@ -45,6 +45,10 @@ namespace Updater {
             this.url = url;
         }
 
+        public String getFileName() {
+            return url.Substring(url.LastIndexOf('/') + 1).Trim();
+        }
+
         public Double getVersion() {
             return version;
         }

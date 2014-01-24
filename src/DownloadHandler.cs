@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,11 +15,19 @@ namespace Updater {
 
         public class QueueBlock<T> {
             Uri url;
+            String destination;
+            String fileName;
             Action<T> callback;
             long size = 0;
 
-            public QueueBlock(Uri url, Action<T> callback) {
+            public QueueBlock(Uri url, String fileName, Action<T> callback)
+                : this(url, fileName, null, callback) {
+            }
+
+            public QueueBlock(Uri url, String fileName, String destination, Action<T> callback) {
                 this.url = url;
+                this.fileName = fileName;
+                this.destination = destination;
                 this.callback = callback;
                 this.size = getFileSize(url);
             }
@@ -29,6 +38,14 @@ namespace Updater {
 
             public long getSize() {
                 return size;
+            }
+
+            public String getDestination() {
+                return destination;
+            }
+
+            public String getFileName() {
+                return fileName;
             }
 
             public void invokeCallback(T result) {
@@ -70,11 +87,11 @@ namespace Updater {
             this.progressBar = progressBar;
         }
 
-        public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed) {
-            downloadFileAsync(url, completed, null);
+        public void downloadFileAsync(Uri url, String dest, EventHandler<AsyncCompletedEventArgs> completed) {
+            downloadFileAsync(url, dest, completed, null);
         }
 
-        public void downloadFileAsync(Uri url, EventHandler<AsyncCompletedEventArgs> completed,
+        public void downloadFileAsync(Uri url, String dest, EventHandler<AsyncCompletedEventArgs> completed,
                 QueueBlock<Boolean> block) {
             if (!isBusy()) {
                 prepare(url);
@@ -100,7 +117,7 @@ namespace Updater {
                         downloadProgressChanged(e, block);
                 });
 
-                webClient.DownloadStringAsync(currentUrl);
+                webClient.DownloadFileAsync(currentUrl, dest);
                 fileDownloadElapsed.Start();
             }
         }
@@ -184,15 +201,11 @@ namespace Updater {
             }
         }
 
-        public void enqueueString(Uri url, Action<String> callback) {
+        public void enqueueString(Uri url, String fileName, 
+                Action<String> callback) {
             if (!isBusy()) {
-                queueString.Enqueue(new QueueBlock<String>(url, callback));
-            }
-        }
-
-        public void enqueueFile(Uri url, Action<Boolean> callback) {
-            if (!isBusy()) {
-                queueFile.Enqueue(new QueueBlock<Boolean>(url, callback));
+                queueString.Enqueue(new QueueBlock<String>(url, fileName, 
+                    callback));
             }
         }
 
@@ -227,6 +240,14 @@ namespace Updater {
             }
         }
 
+        public void enqueueFile(Uri url, String destination, String fileName, 
+                Action<Boolean> callback) {
+            if (!isBusy()) {
+                queueFile.Enqueue(new QueueBlock<Boolean>(url, 
+                    fileName, destination, callback));
+            }
+        }
+
         public void startFileQueue() {
             if (progressBar != null) {
                 progressBar.Value = 0;
@@ -241,9 +262,11 @@ namespace Updater {
             if (queueFile.Any()) {
                 QueueBlock<Boolean> block = queueFile.Dequeue();
                 if (block != null) {
-                    downloadFileAsync(block.getUrl(), (object sender, AsyncCompletedEventArgs e) => {
-                        block.invokeCallback(e.Cancelled);
-                        nextFile();
+                    downloadFileAsync(block.getUrl(), Path.Combine(block.getDestination(), 
+                        block.getFileName()), 
+                        (object sender, AsyncCompletedEventArgs e) => {
+                            block.invokeCallback(e.Cancelled);
+                            nextFile();
                     }, block);
                 }
             }

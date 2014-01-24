@@ -53,7 +53,7 @@ namespace Updater {
             debugInfo += "\nFiles:\n";
             getFiles().ForEach(x => {
                 debugInfo += "\t" + x.getName() + "\n";
-                debugInfo += "\t" + x.getPath() + "\n";
+                debugInfo += "\t" + x.getUrl() + "\n";
                 debugInfo += "\t" + x.getMimeType() + "\n";
                 debugInfo += "\t" + x.getDestination() + "\n";
                 debugInfo += "\n";

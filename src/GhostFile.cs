@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -8,16 +9,17 @@ namespace Updater {
         protected String name;
         protected String destination;
         protected String mimeType;
-        protected Uri path;
+        protected Uri url;
+        protected DirectoryInfo tempDir;
 
         public GhostFile() {
         }
 
-        public GhostFile(String name, String dest, String mime, Uri path) {
+        public GhostFile(String name, String dest, String mime, Uri url) {
             this.name = name;
             this.destination = dest;
             this.mimeType = mime;
-            this.path = path; 
+            this.url = url; 
         }
 
         public String getName() {
@@ -41,11 +43,18 @@ namespace Updater {
             this.mimeType = mimeType;
         }
 
-        public Uri getPath() {
-            return path;
+        public Uri getUrl() {
+            return url;
         }
-        public void setPath(Uri path) {
-            this.path = path;
+        public void setUrl(Uri url) {
+            this.url = url;
+        }
+
+        public DirectoryInfo getTempDir() {
+            return tempDir;
+        }
+        public void setTempDir(DirectoryInfo tempDir) {
+            this.tempDir = tempDir;
         }
     }
 }

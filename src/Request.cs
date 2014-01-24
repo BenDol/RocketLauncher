@@ -56,7 +56,7 @@ namespace Updater {
                     }
                     catch (Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Error while requesting server XML: "
-                            + ex.Message + ex.StackTrace + " URL: " + url);
+                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
 
                         kill();
 
@@ -76,7 +76,8 @@ namespace Updater {
             updateNodes = getUpdateNodes();
 
             foreach (UpdateNode node in updateNodes) {
-                dlHandler.enqueueString(new Uri(node.getUrl()), (String result) => {
+                dlHandler.enqueueString(new Uri(node.getUrl()), node.getFileName(),
+                    (String result) => {
                     try {
                         results.Add(node, result);
                     }
