@@ -170,7 +170,8 @@ namespace Updater {
             }
         }
 
-        private void downloadProgressChanged<T>(DownloadProgressChangedEventArgs e, QueueBlock<T> block) {
+        private void downloadProgressChanged<T>(DownloadProgressChangedEventArgs e, 
+                QueueBlock<T> block) {
             fileSize = e.TotalBytesToReceive / 1024;
 
             fileBytesDownloaded = e.BytesReceived / 1024;

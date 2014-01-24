@@ -93,24 +93,33 @@ namespace Updater {
                 foreach(GhostFile file in update.getFiles()) {
                     if (file is Archive) {
                         Archive archive = (Archive)file;
+                        String tmpPath = Path.Combine(update.getTempDir().FullName,
+                            file.getDestination());
 
-                        dlHandler.enqueueFile(archive.getUrl(), Path.Combine(update.getTempDir().FullName,
-                            archive.getExtractTo()), archive.getName(),
+                        dlHandler.enqueueFile(archive.getUrl(), tmpPath, archive.getName(),
                         (Boolean cancelled) => {
                             if (!cancelled) {
-                                //applyChange();
                                 Logger.log(Logger.TYPE.DEBUG, "Completed downloading archive " 
                                     + archive.getName());
+
+                                applyFileChange(archive, tmpPath);
                             }
                         });
                     }
                     else {
-                        dlHandler.enqueueFile(file.getUrl(), Path.Combine(update.getTempDir().FullName,
-                            file.getDestination()), file.getName(),
+                        String tmpPath = Path.Combine(update.getTempDir().FullName,
+                            file.getDestination());
+
+                        dlHandler.enqueueFile(file.getUrl(), tmpPath, file.getName(),
                         (Boolean cancelled) => {
                             if (!cancelled) {
-                                //applyChange();
                                 Logger.log(Logger.TYPE.DEBUG, "Completed downloading file "
+                                    + file.getName());
+
+                                applyFileChange(file, tmpPath);
+                            }
+                            else {
+                                Logger.log(Logger.TYPE.ERROR, "File download was cancelled during update. "
                                     + file.getName());
                             }
                         });
@@ -123,6 +132,47 @@ namespace Updater {
             }));
 
             dlHandler.startFileQueue();
+        }
+
+        private void applyFileChange(GhostFile file, String tmpPath) {
+            String tmpFile = Path.Combine(tmpPath, file.getName());
+            String newPath = Path.Combine(getRootDir(), file.getDestination());
+
+            if (verifyFile(tmpFile)) {
+                if (ensureDirectory(newPath)) {
+                    try {
+                        File.Copy(tmpFile, Path.Combine(newPath, file.getName()), true);
+                    }
+                    catch (Exception ex) {
+                        Logger.log(Logger.TYPE.ERROR, "Unable to patch new file to required"
+                            + " path. " + file.getName() + ex.Message + ex.StackTrace);
+                    }
+                }
+            }
+        }
+
+        public bool verifyFile(String file) {
+            bool exists = File.Exists(file);
+            if(!exists) {
+                Logger.log(Logger.TYPE.ERROR, "Could not verify temp file: " + file);
+            }
+            return exists;
+        }
+
+        public bool ensureDirectory(String dir) {
+            bool exists = Directory.Exists(dir);
+            if (!exists) {
+                try {
+                    Directory.CreateDirectory(dir);
+                }
+                catch (Exception ex) {
+                    Logger.log(Logger.TYPE.ERROR, "Unable to create directory " 
+                        + dir + ex.Message + ex.StackTrace);
+
+                    exists = false;
+                }
+            }
+            return exists;
         }
 
         protected void assignTempDirs(Update update) {
@@ -138,7 +188,8 @@ namespace Updater {
             }
         }
 
-        protected void ensureDestination(Update update) {
+        public String getRootDir() {
+            return Application.StartupPath;
         }
 
         public String getTempPath() {
