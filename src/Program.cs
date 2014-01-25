@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Updater {
@@ -32,6 +33,10 @@ namespace Updater {
         [STAThread]
         static void Main(string[] args) {
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Load embedded resources
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(
+                CurrentDomain_AssemblyResolve);
 
             Connecting con = new Connecting();
             Ui ui = new Ui(con);
@@ -54,6 +59,18 @@ namespace Updater {
             });
 
             Application.Run(con);
+        }
+
+        static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(
+                    "Updater.dlls.JacksonSoft.CustomTabControl.dll")) {
+
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+
+                return Assembly.Load(assemblyData);
+            }
         }
     }
 }
