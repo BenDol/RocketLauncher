@@ -81,7 +81,7 @@ namespace Updater {
         }
 
         public override String ToString() {
-            String changelog = "Version: " + getVersion() + Environment.NewLine;
+            String changelog = "";
             foreach (Log log in getLogs()) {
                 changelog += "* " + log.getText() + Environment.NewLine;
             }

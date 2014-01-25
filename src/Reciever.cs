@@ -242,6 +242,58 @@ namespace Updater {
             return updateXML.get();
         }
 
+        public List<Update> getPreviousUpdates() {
+            XDocument xml = getUpdateXML();
+
+            List<Update> updates = new List<Update>();
+            var root = from item in updateXML.get().Descendants("updates")
+                select new {
+                    updates = item.Descendants("update")
+                };
+
+            try {
+                foreach (var data in root) {
+                    var udates = from item in data.updates
+                        select new {
+                            name = item.Attribute("name"),
+                            version = item.Attribute("version"),
+                            url = item.Attribute("url"),
+                            baseType = item.Attribute("base"),
+                            changelogs = item.Descendants("changelog")
+                        };
+
+                    foreach (var u in udates) {
+                        Update update = new Update();
+                        update.setName(u.name.Value);
+                        update.setVersion(Convert.ToDouble(u.version.Value));
+                        update.setUrl(u.url.Value);
+
+                        XAttribute baseType = u.baseType;
+                        if (baseType != null) {
+                            update.setBaseType(baseType.Value);
+                        }
+
+                        Changelog changelog = new Changelog(update.getVersion());
+                        foreach (var clog in u.changelogs) {
+                            foreach(var log in clog.Descendants("log")) {
+                                changelog.addLog(new Changelog.Log(log.Value));
+                            }
+                            update.setChangelog(changelog);
+                            break;
+                        }
+
+                        updates.Add(update);
+                    }
+                }
+            }
+            catch (Exception e) {
+                Logger.log(Logger.TYPE.ERROR, "Failed to get previous updates " 
+                    + e.Message + e.StackTrace);
+            }
+
+            return updates;
+        }
+
         public String getLogging() {
             reloadIfModified();
 

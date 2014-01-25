@@ -29,10 +29,15 @@ using System.Xml.Linq;
 namespace Updater {
     class Update : UpdateNode {
 
+        String name;
+        String baseType;
         Changelog changelog;
         DirectoryInfo tempDir;
         Boolean success;
         List<GhostFile> files = new List<GhostFile>();
+
+        public Update() {
+        }
 
         public Update(UpdateNode node) {
             this.request = node.getRequest();
@@ -79,6 +84,22 @@ namespace Updater {
             this.success = success;
         }
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getBaseType() {
+            return baseType;
+        }
+
+        public void setBaseType(String baseType) {
+            this.baseType = baseType;
+        }
+
         public XElement getXML() {
             XElement xml = new XElement("update");
 
@@ -95,14 +116,17 @@ namespace Updater {
                 xml.Add(changeLogXML);
             }
 
+            xml.SetAttributeValue("name", getName());
             xml.SetAttributeValue("version", getVersion());
+            xml.SetAttributeValue("base", getBaseType());
             xml.SetAttributeValue("url", getUrl());
 
             return xml;
         }
 
         public override String ToString() {
-            String debugInfo = getVersion() + "\n" + getUrl() + "\n";
+            String debugInfo = getName() + "\n" + getBaseType() 
+                + "\n" + getVersion() + "\n" + getUrl() + "\n";
 
             debugInfo += "\nFiles:\n";
             getFiles().ForEach(x => {

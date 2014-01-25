@@ -61,6 +61,8 @@ namespace Updater {
                 setServerName(name);
                 initialized = true;
 
+                populateUpdateLogs();
+
                 callback();
             },
             () => {
@@ -96,12 +98,29 @@ namespace Updater {
             }));
         }
 
-        public void clearChangeLog() {
-            ui.getChangelogBox().Clear();
+        private void populateUpdateLogs() {
+            List<Update> updates = reciever.getPreviousUpdates();
+
+            addUpdateListChangeHandler(ui.getUpdatesListBox(), 
+                updates, ui.getUpdatelogsTextBox());
+
+            foreach(Update update in updates) {
+                addChangeLog(ui.getUpdatesListBox(), update.getChangelog(), 
+                    update.getName(), update.getBaseType());
+            }
         }
 
-        public void addChangeLog(Changelog changelog) {
-            ui.getChangelogBox().Text = changelog + Environment.NewLine + ui.getChangelogBox().Text;
+        public void clearChangeLog() {
+            ui.getChangelogBox().Clear();
+            ui.getChangelogListBox().Items.Clear();
+        }
+
+        public void addChangeLog(ListBox listBox, Changelog changelog, 
+                String updateName, String baseType) {
+            String item = "[" + changelog.getVersion() + baseType + "] " + updateName;
+
+            listBox.Items.Remove(item);
+            listBox.Items.Add(item);
         }
 
         protected void processUpdates(List<Update> updates) {
@@ -109,8 +128,13 @@ namespace Updater {
             clearChangeLog();
 
             if (updates.Count > 0) {
+                addUpdateListChangeHandler(ui.getChangelogListBox(), updates,
+                    ui.getChangelogBox());
+
                 foreach (Update update in updates) {
-                    addChangeLog(update.getChangelog());
+                    addChangeLog(ui.getChangelogListBox(), update.getChangelog(), 
+                        update.getName(), update.getBaseType());
+
                     assignTempDirs(update);
                 }
 
@@ -123,6 +147,25 @@ namespace Updater {
 
                 enablePlay();
             }
+        }
+
+        public static void addUpdateListChangeHandler(ListBox listBox, List<Update> updates,
+                TextBox textBox) {
+            listBox.SelectedValueChanged += new EventHandler(
+                    (object sender, EventArgs e) => {
+                ListBox lb = sender as ListBox;
+                if (lb != null) {
+                    foreach (Update update in updates) {
+                        double version = update.getVersion();
+                        String baseType = update.getBaseType();
+
+                        if (lb.SelectedItem.ToString().Contains("[" + version + baseType + "]")) {
+                            textBox.Text = update.getChangelog().ToString();
+                            break;
+                        }
+                    }
+                }
+            });
         }
 
         private void downloadUpdates(List<Update> updates) {

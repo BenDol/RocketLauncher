@@ -53,32 +53,32 @@ namespace Updater.Interface {
             this.btnMinimize = new System.Windows.Forms.Button();
             this.imgTick = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnRepair = new System.Windows.Forms.PictureBox();
             this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
             this.tabChangelog = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lboxChangelog = new System.Windows.Forms.ListBox();
             this.txtboxChangelog = new System.Windows.Forms.TextBox();
             this.tabUpdatelogs = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.lboxUpdatelogs = new System.Windows.Forms.ListBox();
+            this.txtBoxUpdate = new System.Windows.Forms.TextBox();
             this.btnClose = new Updater.Interface.GlossyButton();
-            this.prettyProgress1 = new Updater.Interface.PrettyProgressBar();
+            this.pBarMain = new Updater.Interface.PrettyProgressBar();
             this.btnPlay = new Updater.Interface.GlossyButton();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).BeginInit();
             this.customTabControl1.SuspendLayout();
             this.tabChangelog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.tabUpdatelogs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblStatus
@@ -160,17 +160,17 @@ namespace Updater.Interface {
             this.btnRefresh.MouseEnter += new System.EventHandler(this.btnRefresh_MouseEnter);
             this.btnRefresh.MouseLeave += new System.EventHandler(this.btnRefresh_MouseLeave);
             // 
-            // pictureBox1
+            // btnRepair
             // 
-            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
-            this.pictureBox1.Location = new System.Drawing.Point(479, 37);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
-            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
-            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Location = new System.Drawing.Point(479, 37);
+            this.btnRepair.Name = "btnRepair";
+            this.btnRepair.Size = new System.Drawing.Size(24, 24);
+            this.btnRepair.TabIndex = 14;
+            this.btnRepair.TabStop = false;
+            this.btnRepair.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.btnRepair.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
+            this.btnRepair.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
             // customTabControl1
             // 
@@ -215,6 +215,35 @@ namespace Updater.Interface {
             this.tabChangelog.ToolTipText = "New updates changelog";
             this.tabChangelog.UseVisualStyleBackColor = true;
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.lboxChangelog);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.txtboxChangelog);
+            this.splitContainer2.Size = new System.Drawing.Size(488, 185);
+            this.splitContainer2.SplitterDistance = 162;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // lboxChangelog
+            // 
+            this.lboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lboxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lboxChangelog.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lboxChangelog.FormattingEnabled = true;
+            this.lboxChangelog.ItemHeight = 14;
+            this.lboxChangelog.Location = new System.Drawing.Point(0, 0);
+            this.lboxChangelog.Name = "lboxChangelog";
+            this.lboxChangelog.Size = new System.Drawing.Size(162, 185);
+            this.lboxChangelog.TabIndex = 0;
+            // 
             // txtboxChangelog
             // 
             this.txtboxChangelog.BackColor = System.Drawing.SystemColors.Window;
@@ -250,68 +279,39 @@ namespace Updater.Interface {
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.lboxUpdatelogs);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 183);
+            this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 185);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
-            // listBox1
+            // lboxUpdatelogs
             // 
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 14;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(162, 183);
-            this.listBox1.TabIndex = 0;
+            this.lboxUpdatelogs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lboxUpdatelogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lboxUpdatelogs.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.lboxUpdatelogs.FormattingEnabled = true;
+            this.lboxUpdatelogs.ItemHeight = 14;
+            this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
+            this.lboxUpdatelogs.Name = "lboxUpdatelogs";
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
+            this.lboxUpdatelogs.TabIndex = 0;
             // 
-            // textBox1
+            // txtBoxUpdate
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(325, 183);
-            this.textBox1.TabIndex = 0;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.listBox2);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.txtboxChangelog);
-            this.splitContainer2.Size = new System.Drawing.Size(488, 185);
-            this.splitContainer2.SplitterDistance = 162;
-            this.splitContainer2.TabIndex = 0;
-            // 
-            // listBox2
-            // 
-            this.listBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 14;
-            this.listBox2.Location = new System.Drawing.Point(0, 0);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(162, 185);
-            this.listBox2.TabIndex = 0;
+            this.txtBoxUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBoxUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtBoxUpdate.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxUpdate.Location = new System.Drawing.Point(0, 0);
+            this.txtBoxUpdate.Multiline = true;
+            this.txtBoxUpdate.Name = "txtBoxUpdate";
+            this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
+            this.txtBoxUpdate.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -336,17 +336,17 @@ namespace Updater.Interface {
             this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
             this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
             // 
-            // prettyProgress1
+            // pBarMain
             // 
-            this.prettyProgress1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.prettyProgress1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.prettyProgress1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.prettyProgress1.Location = new System.Drawing.Point(54, 310);
-            this.prettyProgress1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.prettyProgress1.Name = "prettyProgress1";
-            this.prettyProgress1.Size = new System.Drawing.Size(368, 37);
-            this.prettyProgress1.TabIndex = 9;
-            this.prettyProgress1.Value = 0F;
+            this.pBarMain.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pBarMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pBarMain.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.pBarMain.Location = new System.Drawing.Point(54, 310);
+            this.pBarMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.pBarMain.Name = "pBarMain";
+            this.pBarMain.Size = new System.Drawing.Size(368, 37);
+            this.pBarMain.TabIndex = 9;
+            this.pBarMain.Value = 0F;
             // 
             // btnPlay
             // 
@@ -374,12 +374,12 @@ namespace Updater.Interface {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(511, 355);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnRepair);
             this.Controls.Add(this.customTabControl1);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.prettyProgress1);
+            this.Controls.Add(this.pBarMain);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.lblStatus);
@@ -400,20 +400,20 @@ namespace Updater.Interface {
             this.SizeChanged += new System.EventHandler(this.Ui_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Ui_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).EndInit();
             this.customTabControl1.ResumeLayout(false);
             this.tabChangelog.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.tabUpdatelogs.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,7 +426,7 @@ namespace Updater.Interface {
         private System.Windows.Forms.PictureBox imgTick;
         private System.Windows.Forms.Label lblUptodate;
         private GlossyButton btnPlay;
-        private PrettyProgressBar prettyProgress1;
+        private PrettyProgressBar pBarMain;
         private GlossyButton btnClose;
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Label lblName;
@@ -435,11 +435,11 @@ namespace Updater.Interface {
         private System.Windows.Forms.TabPage tabChangelog;
         private System.Windows.Forms.TabPage tabUpdatelogs;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox txtBoxUpdate;
+        private System.Windows.Forms.ListBox lboxUpdatelogs;
+        private System.Windows.Forms.PictureBox btnRepair;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox lboxChangelog;
     }
 }
 

@@ -92,7 +92,7 @@ namespace Updater.Interface {
         }
 
         public PrettyProgressBar getDownloadProgressBar() {
-            return prettyProgress1;
+            return pBarMain;
         }
 
         public Label getStatusLabel() {
@@ -113,6 +113,18 @@ namespace Updater.Interface {
 
         public PictureBox getTickImage() {
             return imgTick;
+        }
+
+        public ListBox getChangelogListBox() {
+            return lboxChangelog;
+        }
+
+        public ListBox getUpdatesListBox() {
+            return lboxUpdatelogs;
+        }
+
+        public TextBox getUpdatelogsTextBox() {
+            return txtBoxUpdate;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e) {
@@ -198,15 +210,15 @@ namespace Updater.Interface {
         }
 
         private void pictureBox1_MouseEnter(object sender, EventArgs e) {
-            this.pictureBox1.Image = global::Updater.Properties.Resources.repair_hover;
+            this.btnRepair.Image = global::Updater.Properties.Resources.repair_hover;
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e) {
-            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e) {
-            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
         }
     }
 }

@@ -184,11 +184,20 @@ namespace Updater {
                     select new {
                         changelog = item.Descendants("changelog"),
                         files = item.Descendants("file"),
-                        archives = item.Descendants("archive")
+                        archives = item.Descendants("archive"),
+                        name = item.Attribute("name"),
+                        baseType = item.Attribute("base")
                     };
 
-                // Add the changelog data
                 foreach (var data in root) {
+
+                    // Set Attributes
+                    update.setName(data.name.Value);
+                    if (data.baseType != null) {
+                        update.setBaseType(data.baseType.Value);
+                    }
+
+                    // Add the changelog data
                     foreach (var clog in data.changelog) {
                         Changelog changelog = new Changelog(update.getVersion());
                         foreach (var log in clog.Descendants("log")) {
@@ -197,10 +206,8 @@ namespace Updater {
                         update.setChangelog(changelog);
                         break;
                     }
-                }
 
-                // Add the file data
-                foreach (var data in root) {
+                    // Add the file data
                     foreach (var f in data.files) {
                         String name = f.Attribute("name").Value.Trim();
                         String destination = f.Attribute("destination").Value.Trim();
@@ -209,10 +216,8 @@ namespace Updater {
                         update.addFile(new GhostFile(name, destination, mime,
                             new Uri(f.Value.Trim())));
                     }
-                }
 
-                // Add the archive data
-                foreach (var data in root) {
+                    // Add the archive data
                     foreach (var f in data.archives) {
                         String name = f.Attribute("name").Value.Trim();
                         String extractTo = f.Attribute("extractTo").Value.Trim();
