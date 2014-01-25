@@ -222,6 +222,12 @@
     <Content Include="assets\server.xml" />
     <Content Include="assets\update.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="external\ImageListBox\ImageListBox.csproj">
+      <Project>{b9f6169c-c838-4621-8e3c-3af3d9a31453}</Project>
+      <Name>ImageListBox</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

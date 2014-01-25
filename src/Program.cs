@@ -75,13 +75,14 @@ namespace Updater {
 
         static void setupAssemblyResolve() {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(
-                CustomTabControl_AssemblyResolve);
-        }
+                (object sender, ResolveEventArgs args) => {
+                    return loadResource(@"dlls.JacksonSoft.CustomTabControl.dll");
+            });
 
-        
-        static Assembly CustomTabControl_AssemblyResolve(object sender, ResolveEventArgs args) {
-            Console.WriteLine(args.Name);
-            return loadResource(@"dlls.JacksonSoft.CustomTabControl.dll");
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(
+                (object sender, ResolveEventArgs args) => {
+                    return loadResource(@"dlls.ListControls.dll");
+            });
         }
     }
 }

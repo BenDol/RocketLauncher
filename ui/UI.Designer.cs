@@ -303,12 +303,14 @@ namespace Updater.Interface {
             // 
             // txtBoxUpdate
             // 
+            this.txtBoxUpdate.BackColor = System.Drawing.Color.White;
             this.txtBoxUpdate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBoxUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtBoxUpdate.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxUpdate.Location = new System.Drawing.Point(0, 0);
             this.txtBoxUpdate.Multiline = true;
             this.txtBoxUpdate.Name = "txtBoxUpdate";
+            this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
             this.txtBoxUpdate.TabIndex = 0;
