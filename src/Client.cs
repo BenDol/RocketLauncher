@@ -35,6 +35,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Updater.Interface;
+using Controls.Development;
 
 namespace Updater {
     class Client {
@@ -117,7 +118,9 @@ namespace Updater {
 
         public void addChangeLog(ListBox listBox, Changelog changelog, 
                 String updateName, String baseType) {
-            String item = "[" + changelog.getVersion() + baseType + "] " + updateName;
+
+            String text = "[" + changelog.getVersion() + baseType + "] " + updateName;
+            ImageListBoxItem item = new ImageListBoxItem(text, 0);
 
             listBox.Items.Remove(item);
             listBox.Items.Add(item);

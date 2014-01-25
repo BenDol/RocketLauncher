@@ -204,6 +204,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="assets\images\repair_new.png" />
+    <Content Include="dlls\ListControls.dll" />
     <Content Include="icon.ico" />
     <EmbeddedResource Include="dlls\JacksonSoft.CustomTabControl.dll" />
     <None Include="assets\images\refresh.png" />

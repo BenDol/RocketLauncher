@@ -46,6 +46,7 @@ namespace Updater.Interface {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblUptodate = new System.Windows.Forms.Label();
@@ -54,14 +55,18 @@ namespace Updater.Interface {
             this.imgTick = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnRepair = new System.Windows.Forms.PictureBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imgListDLIcon = new System.Windows.Forms.ImageList(this.components);
+            this.imgListArrow = new System.Windows.Forms.ImageList(this.components);
+            this.imgListNew = new System.Windows.Forms.ImageList(this.components);
             this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
             this.tabChangelog = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lboxChangelog = new System.Windows.Forms.ListBox();
+            this.lboxChangelog = new Controls.Development.ImageListBox();
             this.txtboxChangelog = new System.Windows.Forms.TextBox();
             this.tabUpdatelogs = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lboxUpdatelogs = new System.Windows.Forms.ListBox();
+            this.lboxUpdatelogs = new Controls.Development.ImageListBox();
             this.txtBoxUpdate = new System.Windows.Forms.TextBox();
             this.btnClose = new Updater.Interface.GlossyButton();
             this.pBarMain = new Updater.Interface.PrettyProgressBar();
@@ -172,6 +177,31 @@ namespace Updater.Interface {
             this.btnRepair.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.btnRepair.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "icon_tick1.png");
+            this.imageList1.Images.SetKeyName(1, "icon_tick2.png");
+            // 
+            // imgListDLIcon
+            // 
+            this.imgListDLIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListDLIcon.ImageStream")));
+            this.imgListDLIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListDLIcon.Images.SetKeyName(0, "new_icon1.png");
+            // 
+            // imgListArrow
+            // 
+            this.imgListArrow.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListArrow.ImageStream")));
+            this.imgListArrow.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListArrow.Images.SetKeyName(0, "new_icon3.gif");
+            // 
+            // imgListNew
+            // 
+            this.imgListNew.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListNew.ImageStream")));
+            this.imgListNew.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListNew.Images.SetKeyName(0, "new_icon2.png");
+            // 
             // customTabControl1
             // 
             this.customTabControl1.Controls.Add(this.tabChangelog);
@@ -236,13 +266,14 @@ namespace Updater.Interface {
             // 
             this.lboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lboxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lboxChangelog.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lboxChangelog.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lboxChangelog.FormattingEnabled = true;
-            this.lboxChangelog.ItemHeight = 14;
+            this.lboxChangelog.ImageList = this.imgListNew;
             this.lboxChangelog.Location = new System.Drawing.Point(0, 0);
             this.lboxChangelog.Name = "lboxChangelog";
             this.lboxChangelog.Size = new System.Drawing.Size(162, 185);
-            this.lboxChangelog.TabIndex = 0;
+            this.lboxChangelog.TabIndex = 15;
             // 
             // txtboxChangelog
             // 
@@ -293,13 +324,14 @@ namespace Updater.Interface {
             // 
             this.lboxUpdatelogs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lboxUpdatelogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lboxUpdatelogs.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.lboxUpdatelogs.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lboxUpdatelogs.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lboxUpdatelogs.FormattingEnabled = true;
-            this.lboxUpdatelogs.ItemHeight = 14;
+            this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
             this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
-            this.lboxUpdatelogs.TabIndex = 0;
+            this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
             // 
@@ -438,10 +470,14 @@ namespace Updater.Interface {
         private System.Windows.Forms.TabPage tabUpdatelogs;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox txtBoxUpdate;
-        private System.Windows.Forms.ListBox lboxUpdatelogs;
         private System.Windows.Forms.PictureBox btnRepair;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox lboxChangelog;
+        private Controls.Development.ImageListBox lboxChangelog;
+        private System.Windows.Forms.ImageList imageList1;
+        private Controls.Development.ImageListBox lboxUpdatelogs;
+        private System.Windows.Forms.ImageList imgListDLIcon;
+        private System.Windows.Forms.ImageList imgListArrow;
+        private System.Windows.Forms.ImageList imgListNew;
     }
 }
 

@@ -32,6 +32,7 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using Controls.Development;
 
 namespace Updater.Interface {
 
@@ -115,11 +116,11 @@ namespace Updater.Interface {
             return imgTick;
         }
 
-        public ListBox getChangelogListBox() {
+        public ImageListBox getChangelogListBox() {
             return lboxChangelog;
         }
 
-        public ListBox getUpdatesListBox() {
+        public ImageListBox getUpdatesListBox() {
             return lboxUpdatelogs;
         }
 
