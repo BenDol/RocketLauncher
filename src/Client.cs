@@ -34,6 +34,7 @@ using System.IO.Compression;
 using System.Threading;
 using System.Diagnostics;
 using System.Xml.Linq;
+using Updater.Interface;
 
 namespace Updater {
     class Client {
@@ -43,6 +44,8 @@ namespace Updater {
 
         private Boolean initialized = false;
         private String serverName;
+
+        public static String UPDATE_XML_NAME = @"update.xml";
 
         public Client(Ui ui) {
             this.ui = ui;
@@ -74,6 +77,12 @@ namespace Updater {
             }
 
             Logger.log(Logger.TYPE.INFO, "Checking for updates...");
+
+            ui.getTickImage().Visible = false;
+            ui.getUpToDateLabel().Visible = false;
+
+            ui.getPlayButton().Enabled = false;
+            ui.getPlayButton().BtnText = "Updating";
 
             reciever.sendRequest(new RequestAsyncCallback((List<Update> updates, TimeSpan response) => {
                 Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in "
@@ -166,6 +175,9 @@ namespace Updater {
 
                     ui.getStatusLabel().Text = "Finished updating " 
                         + updates.Count + "/" + updates.Count + "!";
+
+                    ui.getTickImage().Visible = true;
+                    ui.getUpToDateLabel().Visible = true;
 
                     enablePlay();
                 }
@@ -284,6 +296,25 @@ namespace Updater {
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 getServerName()
             );
+        }
+
+        public static String getLogging() {
+            String file = Path.Combine(Application.StartupPath,
+                Client.UPDATE_XML_NAME);
+
+            String logging = "";
+            XDocument xml = Xml.load(file);
+            if (xml != null) {
+                var root = from item in xml.Descendants("updates")
+                    select new {
+                        logging = item.Attribute("logging")
+                    };
+
+                foreach (var data in root) {
+                    logging = data.logging.Value;
+                }
+            }
+            return logging;
         }
 
         public String getServerName() {

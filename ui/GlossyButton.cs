@@ -31,7 +31,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Configuration;
 
-namespace Updater {
+namespace Updater.Interface {
     public partial class GlossyButton : UserControl {
         // Import the Gdi32 DLL
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]

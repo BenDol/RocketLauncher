@@ -39,7 +39,7 @@ namespace Updater {
         private ExternalAsset<XDocument> serverXMLCache;
 
         public Reciever(ref DownloadHandler dlHandler) {
-            file = Path.Combine(Application.StartupPath, @"update.xml");
+            file = Path.Combine(Application.StartupPath, Client.UPDATE_XML_NAME);
             this.dlHandler = dlHandler;
 
             load();
@@ -52,14 +52,14 @@ namespace Updater {
             try {
                 if (File.Exists(file)) {
                     updateXML = new Asset<XDocument>(XDocument.Load(file), file);
-                    validateXML();
+                    validateXML(updateXML.get());
                 }
                 else {
-                    throw new FileNotFoundException("The file update.xml does not exist.");
+                    throw new FileNotFoundException("The file " + file + " does not exist.");
                 }
             }
-            catch (IOException e) {
-                Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
+            catch (Exception e) {
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -81,8 +81,8 @@ namespace Updater {
         /**
          * Ensure the update XML is valid.
          **/
-        protected bool validateXML() {
-            var root = from item in updateXML.get().Descendants("updates")
+        protected static bool validateXML(XDocument updateXML) {
+            var root = from item in updateXML.Descendants("updates")
                 select new {
                     // Attributes
                     url = item.Attribute("url"),
@@ -240,6 +240,21 @@ namespace Updater {
             reloadIfModified();
 
             return updateXML.get();
+        }
+
+        public String getLogging() {
+            reloadIfModified();
+
+            var root = from item in updateXML.get().Descendants("updates")
+                select new {
+                    logging = item.Attribute("logging")
+                };
+
+            String logging = "";
+            foreach (var data in root) {
+                logging = data.logging.Value;
+            }
+            return logging;
         }
 
         public XElement getUpdateElement(Update update, XDocument doc) {

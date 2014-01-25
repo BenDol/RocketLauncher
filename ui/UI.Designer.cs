@@ -21,7 +21,7 @@
  */
 using System.Drawing;
 
-namespace Updater {
+namespace Updater.Interface {
     partial class Ui {
         /// <summary>
         /// Required designer variable.
@@ -47,48 +47,38 @@ namespace Updater {
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtboxChangelog = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblUptodate = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.btnMinimize = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.imgTick = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnClose = new Updater.GlossyButton();
-            this.prettyProgress1 = new Updater.PrettyProgressBar();
-            this.btnPlay = new Updater.GlossyButton();
-            this.groupBox1.SuspendLayout();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txtboxChangelog = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnClose = new Updater.Interface.GlossyButton();
+            this.prettyProgress1 = new Updater.Interface.PrettyProgressBar();
+            this.btnPlay = new Updater.Interface.GlossyButton();
+            ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.customTabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.txtboxChangelog);
-            this.groupBox1.Location = new System.Drawing.Point(6, 56);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(437, 182);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Changelog";
-            // 
-            // txtboxChangelog
-            // 
-            this.txtboxChangelog.BackColor = System.Drawing.SystemColors.Window;
-            this.txtboxChangelog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtboxChangelog.Location = new System.Drawing.Point(6, 17);
-            this.txtboxChangelog.Multiline = true;
-            this.txtboxChangelog.Name = "txtboxChangelog";
-            this.txtboxChangelog.ReadOnly = true;
-            this.txtboxChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtboxChangelog.Size = new System.Drawing.Size(425, 159);
-            this.txtboxChangelog.TabIndex = 0;
-            this.txtboxChangelog.TabStop = false;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(7, 242);
+            this.lblStatus.Location = new System.Drawing.Point(7, 274);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(76, 11);
             this.lblStatus.TabIndex = 3;
@@ -98,7 +88,7 @@ namespace Updater {
             // 
             this.lblUptodate.AutoSize = true;
             this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUptodate.Location = new System.Drawing.Point(346, 248);
+            this.lblUptodate.Location = new System.Drawing.Point(346, 282);
             this.lblUptodate.Name = "lblUptodate";
             this.lblUptodate.Size = new System.Drawing.Size(62, 13);
             this.lblUptodate.TabIndex = 7;
@@ -135,16 +125,16 @@ namespace Updater {
             this.btnMinimize.MouseEnter += new System.EventHandler(this.btnMinimize_MouseEnter);
             this.btnMinimize.MouseLeave += new System.EventHandler(this.btnMinimize_MouseLeave);
             // 
-            // pictureBox1
+            // imgTick
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(410, 241);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(27, 26);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
+            this.imgTick.Image = global::Updater.Properties.Resources.tick_blue;
+            this.imgTick.Location = new System.Drawing.Point(410, 275);
+            this.imgTick.Name = "imgTick";
+            this.imgTick.Size = new System.Drawing.Size(27, 26);
+            this.imgTick.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgTick.TabIndex = 6;
+            this.imgTick.TabStop = false;
+            this.imgTick.Visible = false;
             // 
             // btnRefresh
             // 
@@ -155,7 +145,7 @@ namespace Updater {
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.Control;
             this.btnRefresh.Image = global::Updater.Properties.Resources.refresh_normal;
-            this.btnRefresh.Location = new System.Drawing.Point(5, 270);
+            this.btnRefresh.Location = new System.Drawing.Point(5, 304);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 47);
             this.btnRefresh.TabIndex = 4;
@@ -163,6 +153,132 @@ namespace Updater {
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             this.btnRefresh.MouseEnter += new System.EventHandler(this.btnRefresh_MouseEnter);
             this.btnRefresh.MouseLeave += new System.EventHandler(this.btnRefresh_MouseLeave);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
+            this.pictureBox1.Location = new System.Drawing.Point(419, 37);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            // 
+            // customTabControl1
+            // 
+            this.customTabControl1.Controls.Add(this.tabPage3);
+            this.customTabControl1.Controls.Add(this.tabPage4);
+            this.customTabControl1.DisplayStyle = System.Windows.Forms.TabStyle.Chrome;
+            // 
+            // 
+            // 
+            this.customTabControl1.DisplayStyleProvider.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.customTabControl1.DisplayStyleProvider.BorderColorHot = System.Drawing.SystemColors.ControlDark;
+            this.customTabControl1.DisplayStyleProvider.BorderColorSelected = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(157)))), ((int)(((byte)(185)))));
+            this.customTabControl1.DisplayStyleProvider.CloserColor = System.Drawing.Color.DarkGray;
+            this.customTabControl1.DisplayStyleProvider.CloserColorActive = System.Drawing.Color.White;
+            this.customTabControl1.DisplayStyleProvider.FocusTrack = false;
+            this.customTabControl1.DisplayStyleProvider.HotTrack = true;
+            this.customTabControl1.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.customTabControl1.DisplayStyleProvider.Opacity = 1F;
+            this.customTabControl1.DisplayStyleProvider.Overlap = 16;
+            this.customTabControl1.DisplayStyleProvider.Padding = new System.Drawing.Point(7, 5);
+            this.customTabControl1.DisplayStyleProvider.Radius = 16;
+            this.customTabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            this.customTabControl1.DisplayStyleProvider.TextColor = System.Drawing.SystemColors.ControlText;
+            this.customTabControl1.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark;
+            this.customTabControl1.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText;
+            this.customTabControl1.HotTrack = true;
+            this.customTabControl1.Location = new System.Drawing.Point(4, 53);
+            this.customTabControl1.Name = "customTabControl1";
+            this.customTabControl1.SelectedIndex = 0;
+            this.customTabControl1.Size = new System.Drawing.Size(443, 220);
+            this.customTabControl1.TabIndex = 13;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.txtboxChangelog);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(435, 191);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "Changelog";
+            this.tabPage3.ToolTipText = "New updates changelog";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // txtboxChangelog
+            // 
+            this.txtboxChangelog.BackColor = System.Drawing.SystemColors.Window;
+            this.txtboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtboxChangelog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtboxChangelog.Location = new System.Drawing.Point(0, 1);
+            this.txtboxChangelog.Multiline = true;
+            this.txtboxChangelog.Name = "txtboxChangelog";
+            this.txtboxChangelog.ReadOnly = true;
+            this.txtboxChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtboxChangelog.Size = new System.Drawing.Size(435, 194);
+            this.txtboxChangelog.TabIndex = 1;
+            this.txtboxChangelog.TabStop = false;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.splitContainer1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(435, 191);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Updates";
+            this.tabPage4.ToolTipText = "Previous update information";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(429, 185);
+            this.splitContainer1.SplitterDistance = 143;
+            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // listBox1
+            // 
+            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 14;
+            this.listBox1.Items.AddRange(new object[] {
+            "jhgfdghj",
+            "hgfdsasdfghj"});
+            this.listBox1.Location = new System.Drawing.Point(0, 0);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(143, 185);
+            this.listBox1.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(285, 185);
+            this.textBox1.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -192,7 +308,7 @@ namespace Updater {
             this.prettyProgress1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.prettyProgress1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.prettyProgress1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.prettyProgress1.Location = new System.Drawing.Point(54, 276);
+            this.prettyProgress1.Location = new System.Drawing.Point(54, 310);
             this.prettyProgress1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.prettyProgress1.Name = "prettyProgress1";
             this.prettyProgress1.Size = new System.Drawing.Size(307, 37);
@@ -212,7 +328,7 @@ namespace Updater {
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnPlay.HoverBackColor = System.Drawing.Color.MediumAquamarine;
             this.btnPlay.HoverBorderColor = System.Drawing.Color.White;
-            this.btnPlay.Location = new System.Drawing.Point(367, 275);
+            this.btnPlay.Location = new System.Drawing.Point(367, 309);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(76, 39);
             this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
@@ -224,17 +340,18 @@ namespace Updater {
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(451, 323);
+            this.ClientSize = new System.Drawing.Size(451, 355);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.customTabControl1);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.prettyProgress1);
             this.Controls.Add(this.btnPlay);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblUptodate);
+            this.Controls.Add(this.imgTick);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -245,13 +362,21 @@ namespace Updater {
             this.Name = "Ui";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Updater";
+            this.Text = "Launcher";
             this.MaximumSizeChanged += new System.EventHandler(this.Ui_MaximumSizeChanged);
             this.SizeChanged += new System.EventHandler(this.Ui_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Ui_Paint);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgTick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.customTabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,17 +384,23 @@ namespace Updater {
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox imgTick;
         private System.Windows.Forms.Label lblUptodate;
         private GlossyButton btnPlay;
         private PrettyProgressBar prettyProgress1;
         private GlossyButton btnClose;
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.TextBox txtboxChangelog;
+        private System.Windows.Forms.CustomTabControl customTabControl1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

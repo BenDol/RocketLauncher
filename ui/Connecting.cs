@@ -28,7 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Updater {
+namespace Updater.Interface {
     public partial class Connecting : Form {
         public Connecting() {
             InitializeComponent();

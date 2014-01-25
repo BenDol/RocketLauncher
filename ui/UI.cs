@@ -33,7 +33,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
-namespace Updater {
+namespace Updater.Interface {
 
     partial class Ui : Form {
 
@@ -105,6 +105,14 @@ namespace Updater {
 
         public GlossyButton getPlayButton() {
             return btnPlay;
+        }
+
+        public Label getUpToDateLabel() {
+            return lblUptodate;
+        }
+
+        public PictureBox getTickImage() {
+            return imgTick;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e) {
@@ -187,6 +195,18 @@ namespace Updater {
             if( WindowState != System.Windows.Forms.FormWindowState.Minimized) {
                 WindowState = System.Windows.Forms.FormWindowState.Normal;
             }
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e) {
+            this.pictureBox1.Image = global::Updater.Properties.Resources.repair_hover;
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e) {
+            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e) {
+            this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
         }
     }
 }
