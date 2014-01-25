@@ -55,24 +55,30 @@ namespace Updater.Interface {
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabChangelog = new System.Windows.Forms.TabPage();
             this.txtboxChangelog = new System.Windows.Forms.TextBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabUpdatelogs = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.btnClose = new Updater.Interface.GlossyButton();
             this.prettyProgress1 = new Updater.Interface.PrettyProgressBar();
             this.btnPlay = new Updater.Interface.GlossyButton();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.customTabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabChangelog.SuspendLayout();
+            this.tabUpdatelogs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblStatus
@@ -88,7 +94,7 @@ namespace Updater.Interface {
             // 
             this.lblUptodate.AutoSize = true;
             this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUptodate.Location = new System.Drawing.Point(346, 282);
+            this.lblUptodate.Location = new System.Drawing.Point(412, 283);
             this.lblUptodate.Name = "lblUptodate";
             this.lblUptodate.Size = new System.Drawing.Size(62, 13);
             this.lblUptodate.TabIndex = 7;
@@ -115,7 +121,7 @@ namespace Updater.Interface {
             this.btnMinimize.FlatAppearance.BorderSize = 0;
             this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimize.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMinimize.Location = new System.Drawing.Point(408, 5);
+            this.btnMinimize.Location = new System.Drawing.Point(469, 5);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(16, 16);
             this.btnMinimize.TabIndex = 1;
@@ -128,7 +134,7 @@ namespace Updater.Interface {
             // imgTick
             // 
             this.imgTick.Image = global::Updater.Properties.Resources.tick_blue;
-            this.imgTick.Location = new System.Drawing.Point(410, 275);
+            this.imgTick.Location = new System.Drawing.Point(475, 277);
             this.imgTick.Name = "imgTick";
             this.imgTick.Size = new System.Drawing.Size(27, 26);
             this.imgTick.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -157,7 +163,7 @@ namespace Updater.Interface {
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Updater.Properties.Resources.repair;
-            this.pictureBox1.Location = new System.Drawing.Point(419, 37);
+            this.pictureBox1.Location = new System.Drawing.Point(479, 37);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(24, 24);
             this.pictureBox1.TabIndex = 14;
@@ -168,8 +174,8 @@ namespace Updater.Interface {
             // 
             // customTabControl1
             // 
-            this.customTabControl1.Controls.Add(this.tabPage3);
-            this.customTabControl1.Controls.Add(this.tabPage4);
+            this.customTabControl1.Controls.Add(this.tabChangelog);
+            this.customTabControl1.Controls.Add(this.tabUpdatelogs);
             this.customTabControl1.DisplayStyle = System.Windows.Forms.TabStyle.Chrome;
             // 
             // 
@@ -194,46 +200,47 @@ namespace Updater.Interface {
             this.customTabControl1.Location = new System.Drawing.Point(4, 53);
             this.customTabControl1.Name = "customTabControl1";
             this.customTabControl1.SelectedIndex = 0;
-            this.customTabControl1.Size = new System.Drawing.Size(443, 220);
+            this.customTabControl1.Size = new System.Drawing.Size(502, 220);
             this.customTabControl1.TabIndex = 13;
             // 
-            // tabPage3
+            // tabChangelog
             // 
-            this.tabPage3.Controls.Add(this.txtboxChangelog);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(435, 191);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "Changelog";
-            this.tabPage3.ToolTipText = "New updates changelog";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabChangelog.Controls.Add(this.splitContainer2);
+            this.tabChangelog.Location = new System.Drawing.Point(4, 25);
+            this.tabChangelog.Name = "tabChangelog";
+            this.tabChangelog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChangelog.Size = new System.Drawing.Size(494, 191);
+            this.tabChangelog.TabIndex = 0;
+            this.tabChangelog.Text = "Changelog";
+            this.tabChangelog.ToolTipText = "New updates changelog";
+            this.tabChangelog.UseVisualStyleBackColor = true;
             // 
             // txtboxChangelog
             // 
             this.txtboxChangelog.BackColor = System.Drawing.SystemColors.Window;
-            this.txtboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtboxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtboxChangelog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtboxChangelog.Location = new System.Drawing.Point(0, 1);
+            this.txtboxChangelog.Location = new System.Drawing.Point(0, 0);
             this.txtboxChangelog.Multiline = true;
             this.txtboxChangelog.Name = "txtboxChangelog";
             this.txtboxChangelog.ReadOnly = true;
             this.txtboxChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtboxChangelog.Size = new System.Drawing.Size(435, 194);
+            this.txtboxChangelog.Size = new System.Drawing.Size(322, 185);
             this.txtboxChangelog.TabIndex = 1;
             this.txtboxChangelog.TabStop = false;
             // 
-            // tabPage4
+            // tabUpdatelogs
             // 
-            this.tabPage4.Controls.Add(this.splitContainer1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(435, 191);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Updates";
-            this.tabPage4.ToolTipText = "Previous update information";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabUpdatelogs.Controls.Add(this.splitContainer1);
+            this.tabUpdatelogs.Location = new System.Drawing.Point(4, 25);
+            this.tabUpdatelogs.Name = "tabUpdatelogs";
+            this.tabUpdatelogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdatelogs.Size = new System.Drawing.Size(494, 191);
+            this.tabUpdatelogs.TabIndex = 1;
+            this.tabUpdatelogs.Text = "Update Logs";
+            this.tabUpdatelogs.ToolTipText = "Previous update information";
+            this.tabUpdatelogs.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -248,8 +255,8 @@ namespace Updater.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(429, 185);
-            this.splitContainer1.SplitterDistance = 143;
+            this.splitContainer1.Size = new System.Drawing.Size(488, 183);
+            this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -260,12 +267,9 @@ namespace Updater.Interface {
             this.listBox1.Font = new System.Drawing.Font("Tahoma", 9F);
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 14;
-            this.listBox1.Items.AddRange(new object[] {
-            "jhgfdghj",
-            "hgfdsasdfghj"});
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(143, 185);
+            this.listBox1.Size = new System.Drawing.Size(162, 183);
             this.listBox1.TabIndex = 0;
             // 
             // textBox1
@@ -277,8 +281,37 @@ namespace Updater.Interface {
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(285, 185);
+            this.textBox1.Size = new System.Drawing.Size(325, 183);
             this.textBox1.TabIndex = 0;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.listBox2);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.txtboxChangelog);
+            this.splitContainer2.Size = new System.Drawing.Size(488, 185);
+            this.splitContainer2.SplitterDistance = 162;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // listBox2
+            // 
+            this.listBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 14;
+            this.listBox2.Location = new System.Drawing.Point(0, 0);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(162, 185);
+            this.listBox2.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -292,7 +325,7 @@ namespace Updater.Interface {
             this.btnClose.ForeColor = System.Drawing.Color.Transparent;
             this.btnClose.HoverBackColor = System.Drawing.Color.Transparent;
             this.btnClose.HoverBorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.Location = new System.Drawing.Point(429, 5);
+            this.btnClose.Location = new System.Drawing.Point(490, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(16, 16);
             this.btnClose.StandbyBackColor = System.Drawing.Color.Transparent;
@@ -311,7 +344,7 @@ namespace Updater.Interface {
             this.prettyProgress1.Location = new System.Drawing.Point(54, 310);
             this.prettyProgress1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.prettyProgress1.Name = "prettyProgress1";
-            this.prettyProgress1.Size = new System.Drawing.Size(307, 37);
+            this.prettyProgress1.Size = new System.Drawing.Size(368, 37);
             this.prettyProgress1.TabIndex = 9;
             this.prettyProgress1.Value = 0F;
             // 
@@ -328,7 +361,7 @@ namespace Updater.Interface {
             this.btnPlay.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnPlay.HoverBackColor = System.Drawing.Color.MediumAquamarine;
             this.btnPlay.HoverBorderColor = System.Drawing.Color.White;
-            this.btnPlay.Location = new System.Drawing.Point(367, 309);
+            this.btnPlay.Location = new System.Drawing.Point(427, 309);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(76, 39);
             this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
@@ -340,7 +373,7 @@ namespace Updater.Interface {
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(451, 355);
+            this.ClientSize = new System.Drawing.Size(511, 355);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.customTabControl1);
             this.Controls.Add(this.lblName);
@@ -369,14 +402,18 @@ namespace Updater.Interface {
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.customTabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.tabChangelog.ResumeLayout(false);
+            this.tabUpdatelogs.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,12 +432,14 @@ namespace Updater.Interface {
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.CustomTabControl customTabControl1;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabChangelog;
+        private System.Windows.Forms.TabPage tabUpdatelogs;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
 
