@@ -227,6 +227,7 @@
     <ProjectReference Include="external\ImageListBox\ImageListBox.csproj">
       <Project>{b9f6169c-c838-4621-8e3c-3af3d9a31453}</Project>
       <Name>ImageListBox</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -62,26 +62,30 @@ namespace Updater {
             Application.Run(con);
         }
 
-        static Assembly loadResource(String name) {
-            using (var stream = Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("Updater." + name)) {
-
-                byte[] assemblyData = new byte[stream.Length];
-                stream.Read(assemblyData, 0, assemblyData.Length);
-
-                return Assembly.Load(assemblyData);
-            }
-        }
+        static Dictionary<string, Assembly> libs = new Dictionary<string, Assembly>();
 
         static void setupAssemblyResolve() {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(
-                (object sender, ResolveEventArgs args) => {
-                    return loadResource(@"dlls.JacksonSoft.CustomTabControl.dll");
-            });
+                    (object sender, ResolveEventArgs args) => {
+                
+                string keyName = new AssemblyName(args.Name).Name;
 
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(
-                (object sender, ResolveEventArgs args) => {
-                    return loadResource(@"dlls.ListControls.dll");
+                if (libs.ContainsKey(keyName)) {
+                    return libs[keyName];
+                }
+
+                using (var stream = Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("Updater.dlls." + keyName + ".dll")) {
+
+                    Assembly assembly = null;
+                    if (stream != null) {
+                        byte[] buffer = new byte[stream.Length];
+                        stream.Read(buffer, 0, buffer.Length);
+                        assembly = Assembly.Load(buffer);
+                        libs[keyName] = assembly;
+                    }
+                    return assembly;
+                }
             });
         }
     }
