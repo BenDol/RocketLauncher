@@ -81,6 +81,8 @@ namespace Updater {
 
             Logger.log(Logger.TYPE.INFO, "Checking for updates...");
 
+            ui.getRefreshButton().Enabled = false;
+
             ui.getTickImage().Visible = false;
             ui.getUpToDateLabel().Visible = false;
 
@@ -225,15 +227,16 @@ namespace Updater {
                         ui.getPlayButton().BtnText = "Failed";
                         return;
                     }
-
-                    ui.getStatusLabel().Text = "Finished updating " 
-                        + updates.Count + "/" + updates.Count + "!";
-
-                    ui.getTickImage().Visible = true;
-                    ui.getUpToDateLabel().Visible = true;
-
-                    enablePlay();
                 }
+
+                ui.getStatusLabel().Text = "Finished updating "
+                    + updates.Count + "/" + updates.Count + "!";
+
+                ui.getTickImage().Visible = true;
+                ui.getUpToDateLabel().Visible = true;
+                ui.getRefreshButton().Enabled = true;
+
+                enablePlay();
             }));
 
             dlHandler.startFileQueue();

@@ -128,6 +128,10 @@ namespace Updater.Interface {
             return txtBoxUpdate;
         }
 
+        public Button getRefreshButton() {
+            return btnRefresh;
+        }
+
         private void btnRefresh_Click(object sender, EventArgs e) {
             client.refresh();
         }
