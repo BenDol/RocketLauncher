@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Updater <https://github.com/BenDol/Basic-Updater>
+ * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  */
 using System.Drawing;
 
-namespace Updater.Interface {
+namespace Launcher.Interface {
     partial class Ui {
         /// <summary>
         /// Required designer variable.
@@ -68,9 +68,9 @@ namespace Updater.Interface {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lboxUpdatelogs = new Controls.Development.ImageListBox();
             this.txtBoxUpdate = new System.Windows.Forms.TextBox();
-            this.btnClose = new Updater.Interface.GlossyButton();
-            this.pBarMain = new Updater.Interface.PrettyProgressBar();
-            this.btnPlay = new Updater.Interface.GlossyButton();
+            this.btnClose = new Launcher.Interface.GlossyButton();
+            this.pBarMain = new Launcher.Interface.PrettyProgressBar();
+            this.btnPlay = new Launcher.Interface.GlossyButton();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).BeginInit();
             this.customTabControl1.SuspendLayout();
@@ -120,7 +120,7 @@ namespace Updater.Interface {
             // 
             // btnMinimize
             // 
-            this.btnMinimize.BackgroundImage = global::Updater.Properties.Resources.minimize_icon;
+            this.btnMinimize.BackgroundImage = global::Launcher.Properties.Resources.minimize_icon;
             this.btnMinimize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMinimize.FlatAppearance.BorderSize = 0;
@@ -138,7 +138,7 @@ namespace Updater.Interface {
             // 
             // imgTick
             // 
-            this.imgTick.Image = global::Updater.Properties.Resources.tick_blue;
+            this.imgTick.Image = global::Launcher.Properties.Resources.tick_blue;
             this.imgTick.Location = new System.Drawing.Point(475, 277);
             this.imgTick.Name = "imgTick";
             this.imgTick.Size = new System.Drawing.Size(27, 26);
@@ -155,7 +155,7 @@ namespace Updater.Interface {
             this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnRefresh.Image = global::Updater.Properties.Resources.refresh_normal;
+            this.btnRefresh.Image = global::Launcher.Properties.Resources.refresh_normal;
             this.btnRefresh.Location = new System.Drawing.Point(5, 304);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 47);
@@ -167,7 +167,7 @@ namespace Updater.Interface {
             // 
             // btnRepair
             // 
-            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Image = global::Launcher.Properties.Resources.repair;
             this.btnRepair.Location = new System.Drawing.Point(479, 37);
             this.btnRepair.Name = "btnRepair";
             this.btnRepair.Size = new System.Drawing.Size(24, 24);
@@ -352,7 +352,7 @@ namespace Updater.Interface {
             this.btnClose.ActiveBackColor = System.Drawing.Color.Transparent;
             this.btnClose.ActiveBorderColor = System.Drawing.Color.Transparent;
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::Updater.Properties.Resources.close_icon;
+            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_icon;
             this.btnClose.BorderColor = System.Drawing.Color.Transparent;
             this.btnClose.BtnText = "";
             this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;

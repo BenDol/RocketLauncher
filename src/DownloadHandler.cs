@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Updater <https://github.com/BenDol/Basic-Updater>
+ * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Updater.Interface;
+using Launcher.Interface;
 
-namespace Updater {
+namespace Launcher {
 
     class DownloadHandler {
 

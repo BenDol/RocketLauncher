@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Updater <https://github.com/BenDol/Basic-Updater>
+ * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ using System.Threading;
 using System.Diagnostics;
 using Controls.Development;
 
-namespace Updater.Interface {
+namespace Launcher.Interface {
 
     partial class Ui : Form {
 
@@ -137,11 +137,11 @@ namespace Updater.Interface {
         }
 
         private void btnRefresh_MouseEnter(object sender, EventArgs e) {
-            this.btnRefresh.Image = global::Updater.Properties.Resources.refresh_hover;
+            this.btnRefresh.Image = global::Launcher.Properties.Resources.refresh_hover;
         }
 
         private void btnRefresh_MouseLeave(object sender, EventArgs e) {
-            this.btnRefresh.Image = global::Updater.Properties.Resources.refresh_normal;
+            this.btnRefresh.Image = global::Launcher.Properties.Resources.refresh_normal;
         }
 
         private void btnPlay_Click(object sender, EventArgs e) {
@@ -149,23 +149,23 @@ namespace Updater.Interface {
         }
 
         private void btnPlay_MouseEnter(object sender, EventArgs e) {
-            //this.btnPlay.Image = global::Updater.Properties.Resources.play_hover;
+            //this.btnPlay.Image = global::Launcher.Properties.Resources.play_hover;
         }
 
         private void btnPlay_MouseLeave(object sender, EventArgs e) {
-            //this.btnPlay.Image = global::Updater.Properties.Resources.play_normal;
+            //this.btnPlay.Image = global::Launcher.Properties.Resources.play_normal;
         }
 
         private void btnClose_MouseEnter(object sender, EventArgs e) {
-            this.btnClose.BackgroundImage = global::Updater.Properties.Resources.close_hover_icon;
+            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_hover_icon;
         }
 
         private void btnClose_MouseLeave(object sender, EventArgs e) {
-            this.btnClose.BackgroundImage = global::Updater.Properties.Resources.close_icon;
+            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_icon;
         }
 
         private void btnClose_MouseDown(object sender, MouseEventArgs e) {
-            this.btnClose.BackgroundImage = global::Updater.Properties.Resources.close_icon;
+            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_icon;
         }
 
         private void btnClose_MouseClick(object sender, MouseEventArgs e) {
@@ -179,15 +179,15 @@ namespace Updater.Interface {
         }
 
         private void btnMinimize_MouseEnter(object sender, EventArgs e) {
-            this.btnMinimize.BackgroundImage = global::Updater.Properties.Resources.minimize_hover_icon;
+            this.btnMinimize.BackgroundImage = global::Launcher.Properties.Resources.minimize_hover_icon;
         }
 
         private void btnMinimize_MouseLeave(object sender, EventArgs e) {
-            this.btnMinimize.BackgroundImage = global::Updater.Properties.Resources.minimize_icon;
+            this.btnMinimize.BackgroundImage = global::Launcher.Properties.Resources.minimize_icon;
         }
 
         private void btnMinimize_MouseDown(object sender, MouseEventArgs e) {
-            this.btnMinimize.BackgroundImage = global::Updater.Properties.Resources.minimize_icon;
+            this.btnMinimize.BackgroundImage = global::Launcher.Properties.Resources.minimize_icon;
         }
 
         private void btnMinimize_MouseClick(object sender, MouseEventArgs e) {
@@ -215,15 +215,15 @@ namespace Updater.Interface {
         }
 
         private void pictureBox1_MouseEnter(object sender, EventArgs e) {
-            this.btnRepair.Image = global::Updater.Properties.Resources.repair_hover;
+            this.btnRepair.Image = global::Launcher.Properties.Resources.repair_hover;
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e) {
-            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Image = global::Launcher.Properties.Resources.repair;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e) {
-            this.btnRepair.Image = global::Updater.Properties.Resources.repair;
+            this.btnRepair.Image = global::Launcher.Properties.Resources.repair;
         }
     }
 }

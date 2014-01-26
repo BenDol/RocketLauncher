@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Updater <https://github.com/BenDol/Basic-Updater>
+ * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using Updater.Interface;
+using Launcher.Interface;
 
-namespace Updater {
+namespace Launcher {
     static class Program {
         /// <summary>
         /// The main entry point for the application.
@@ -75,7 +75,7 @@ namespace Updater {
                 }
 
                 using (var stream = Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("Updater.dlls." + keyName + ".dll")) {
+                    .GetManifestResourceStream("Launcher.dlls." + keyName + ".dll")) {
 
                     Assembly assembly = null;
                     if (stream != null) {

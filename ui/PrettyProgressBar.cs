@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Updater <https://github.com/BenDol/Basic-Updater>
+ * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace Updater.Interface {
+namespace Launcher.Interface {
     public partial class PrettyProgressBar : UserControl {
         public PrettyProgressBar() {
             InitializeComponent();
