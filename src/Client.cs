@@ -99,21 +99,29 @@ namespace Updater {
             }));
         }
 
+        public void refresh() {
+            clearChangeLog(ui.getChangelogListBox(), ui.getChangelogBox());
+            populateUpdateLogs();
+
+            update();
+        }
+
         private void populateUpdateLogs() {
             List<Update> updates = reciever.getPreviousUpdates();
 
             addUpdateListChangeHandler(ui.getUpdatesListBox(), 
                 updates, ui.getUpdatelogsTextBox());
 
+            clearChangeLog(ui.getUpdatesListBox(), ui.getUpdatelogsTextBox());
             foreach(Update update in updates) {
                 addChangeLog(ui.getUpdatesListBox(), update.getChangelog(), 
                     update.getName(), update.getBaseType());
             }
         }
 
-        public void clearChangeLog() {
-            ui.getChangelogBox().Clear();
-            ui.getChangelogListBox().Items.Clear();
+        public void clearChangeLog(ListBox listBox, TextBox textBox) {
+            textBox.Clear();
+            listBox.Items.Clear();
         }
 
         public void addChangeLog(ListBox listBox, Changelog changelog, 
@@ -122,13 +130,12 @@ namespace Updater {
             String text = "[" + changelog.getVersion() + baseType + "] " + updateName;
             ImageListBoxItem item = new ImageListBoxItem(text, 0);
 
-            listBox.Items.Remove(item);
             listBox.Items.Add(item);
         }
 
         protected void processUpdates(List<Update> updates) {
             // Process changelog and temp directories
-            clearChangeLog();
+            clearChangeLog(ui.getChangelogListBox(), ui.getChangelogBox());
 
             if (updates.Count > 0) {
                 addUpdateListChangeHandler(ui.getChangelogListBox(), updates,

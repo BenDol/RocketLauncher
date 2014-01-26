@@ -129,7 +129,7 @@ namespace Updater.Interface {
         }
 
         private void btnRefresh_Click(object sender, EventArgs e) {
-            client.update();
+            client.refresh();
         }
 
         private void btnRefresh_MouseEnter(object sender, EventArgs e) {
