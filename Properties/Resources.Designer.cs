@@ -193,6 +193,16 @@ namespace Launcher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sheep_launcher {
+            get {
+                object obj = ResourceManager.GetObject("sheep_launcher", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tick_blue {
             get {
                 object obj = ResourceManager.GetObject("tick_blue", resourceCulture);

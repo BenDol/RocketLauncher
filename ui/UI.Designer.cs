@@ -48,9 +48,6 @@ namespace Launcher.Interface {
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.lblUptodate = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.imgTick = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -58,7 +55,7 @@ namespace Launcher.Interface {
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.imgListDLIcon = new System.Windows.Forms.ImageList(this.components);
             this.imgListArrow = new System.Windows.Forms.ImageList(this.components);
-            this.imgListNew = new System.Windows.Forms.ImageList(this.components);
+            this.imgLogo = new System.Windows.Forms.PictureBox();
             this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
             this.tabChangelog = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -68,11 +65,15 @@ namespace Launcher.Interface {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lboxUpdatelogs = new Controls.Development.ImageListBox();
             this.txtBoxUpdate = new System.Windows.Forms.TextBox();
+            this.lblName = new Launcher.Interface.ControlLabel();
             this.btnClose = new Launcher.Interface.GlossyButton();
             this.pBarMain = new Launcher.Interface.PrettyProgressBar();
             this.btnPlay = new Launcher.Interface.GlossyButton();
+            this.lblStatus = new Launcher.Interface.ControlLabel();
+            this.lblUptodate = new Launcher.Interface.ControlLabel();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.customTabControl1.SuspendLayout();
             this.tabChangelog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -85,38 +86,6 @@ namespace Launcher.Interface {
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(7, 274);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(76, 11);
-            this.lblStatus.TabIndex = 3;
-            this.lblStatus.Text = "Status: Waiting...";
-            // 
-            // lblUptodate
-            // 
-            this.lblUptodate.AutoSize = true;
-            this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUptodate.Location = new System.Drawing.Point(412, 283);
-            this.lblUptodate.Name = "lblUptodate";
-            this.lblUptodate.Size = new System.Drawing.Size(62, 13);
-            this.lblUptodate.TabIndex = 7;
-            this.lblUptodate.Text = "Up to date!";
-            this.lblUptodate.Visible = false;
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Moltors", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblName.Location = new System.Drawing.Point(4, 9);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(182, 37);
-            this.lblName.TabIndex = 11;
-            this.lblName.Text = "Gamename";
-            this.lblName.Visible = false;
             // 
             // btnMinimize
             // 
@@ -138,6 +107,7 @@ namespace Launcher.Interface {
             // 
             // imgTick
             // 
+            this.imgTick.Enabled = false;
             this.imgTick.Image = global::Launcher.Properties.Resources.tick_blue;
             this.imgTick.Location = new System.Drawing.Point(475, 277);
             this.imgTick.Name = "imgTick";
@@ -159,7 +129,7 @@ namespace Launcher.Interface {
             this.btnRefresh.Location = new System.Drawing.Point(5, 304);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 47);
-            this.btnRefresh.TabIndex = 4;
+            this.btnRefresh.TabIndex = 5;
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             this.btnRefresh.MouseEnter += new System.EventHandler(this.btnRefresh_MouseEnter);
@@ -183,6 +153,7 @@ namespace Launcher.Interface {
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "icon_tick1.png");
             this.imageList1.Images.SetKeyName(1, "icon_tick2.png");
+            this.imageList1.Images.SetKeyName(2, "new_icon2.png");
             // 
             // imgListDLIcon
             // 
@@ -196,11 +167,15 @@ namespace Launcher.Interface {
             this.imgListArrow.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListArrow.Images.SetKeyName(0, "new_icon3.gif");
             // 
-            // imgListNew
+            // imgLogo
             // 
-            this.imgListNew.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListNew.ImageStream")));
-            this.imgListNew.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgListNew.Images.SetKeyName(0, "new_icon2.png");
+            this.imgLogo.Enabled = false;
+            this.imgLogo.Image = global::Launcher.Properties.Resources.sheep_launcher;
+            this.imgLogo.Location = new System.Drawing.Point(388, 7);
+            this.imgLogo.Name = "imgLogo";
+            this.imgLogo.Size = new System.Drawing.Size(64, 64);
+            this.imgLogo.TabIndex = 15;
+            this.imgLogo.TabStop = false;
             // 
             // customTabControl1
             // 
@@ -231,7 +206,7 @@ namespace Launcher.Interface {
             this.customTabControl1.Name = "customTabControl1";
             this.customTabControl1.SelectedIndex = 0;
             this.customTabControl1.Size = new System.Drawing.Size(502, 220);
-            this.customTabControl1.TabIndex = 13;
+            this.customTabControl1.TabIndex = 2;
             // 
             // tabChangelog
             // 
@@ -269,25 +244,25 @@ namespace Launcher.Interface {
             this.lboxChangelog.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.lboxChangelog.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lboxChangelog.FormattingEnabled = true;
-            this.lboxChangelog.ImageList = this.imgListNew;
+            this.lboxChangelog.ImageList = this.imageList1;
             this.lboxChangelog.Location = new System.Drawing.Point(0, 0);
             this.lboxChangelog.Name = "lboxChangelog";
             this.lboxChangelog.Size = new System.Drawing.Size(162, 185);
-            this.lboxChangelog.TabIndex = 15;
+            this.lboxChangelog.TabIndex = 3;
             // 
             // txtboxChangelog
             // 
             this.txtboxChangelog.BackColor = System.Drawing.SystemColors.Window;
             this.txtboxChangelog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtboxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtboxChangelog.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtboxChangelog.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtboxChangelog.Location = new System.Drawing.Point(0, 0);
             this.txtboxChangelog.Multiline = true;
             this.txtboxChangelog.Name = "txtboxChangelog";
             this.txtboxChangelog.ReadOnly = true;
             this.txtboxChangelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtboxChangelog.Size = new System.Drawing.Size(322, 185);
-            this.txtboxChangelog.TabIndex = 1;
+            this.txtboxChangelog.TabIndex = 4;
             this.txtboxChangelog.TabStop = false;
             // 
             // tabUpdatelogs
@@ -347,6 +322,24 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
             this.txtBoxUpdate.TabIndex = 0;
             // 
+            // lblName
+            // 
+            this.lblName.AutoEllipsis = true;
+            this.lblName.AutoSize = true;
+            this.lblName.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            this.lblName.DisabledTextColor = System.Drawing.Color.SteelBlue;
+            this.lblName.Enabled = false;
+            this.lblName.Font = new System.Drawing.Font("Moltors", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblName.Location = new System.Drawing.Point(5, 7);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(182, 37);
+            this.lblName.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            this.lblName.TabIndex = 11;
+            this.lblName.Text = "Gamename";
+            this.lblName.TextRenderHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            this.lblName.Visible = false;
+            // 
             // btnClose
             // 
             this.btnClose.ActiveBackColor = System.Drawing.Color.Transparent;
@@ -365,6 +358,7 @@ namespace Launcher.Interface {
             this.btnClose.StandbyBackColor = System.Drawing.Color.Transparent;
             this.btnClose.StandbyBorderColor = System.Drawing.Color.Transparent;
             this.btnClose.TabIndex = 10;
+            this.btnClose.TabStop = false;
             this.btnClose.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseClick);
             this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
             this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
@@ -380,6 +374,7 @@ namespace Launcher.Interface {
             this.pBarMain.Name = "pBarMain";
             this.pBarMain.Size = new System.Drawing.Size(368, 37);
             this.pBarMain.TabIndex = 9;
+            this.pBarMain.TabStop = false;
             this.pBarMain.Value = 0F;
             // 
             // btnPlay
@@ -400,7 +395,41 @@ namespace Launcher.Interface {
             this.btnPlay.Size = new System.Drawing.Size(76, 39);
             this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
             this.btnPlay.StandbyBorderColor = System.Drawing.Color.White;
-            this.btnPlay.TabIndex = 8;
+            this.btnPlay.TabIndex = 6;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoEllipsis = true;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+            this.lblStatus.DisabledTextColor = System.Drawing.Color.Black;
+            this.lblStatus.Enabled = false;
+            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblStatus.Location = new System.Drawing.Point(7, 274);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(93, 13);
+            this.lblStatus.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            this.lblStatus.TabIndex = 3;
+            this.lblStatus.Text = "Status: Waiting...";
+            this.lblStatus.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // lblUptodate
+            // 
+            this.lblUptodate.AutoSize = true;
+            this.lblUptodate.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+            this.lblUptodate.DisabledTextColor = System.Drawing.Color.Black;
+            this.lblUptodate.Enabled = false;
+            this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUptodate.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblUptodate.Location = new System.Drawing.Point(412, 283);
+            this.lblUptodate.Name = "lblUptodate";
+            this.lblUptodate.Size = new System.Drawing.Size(62, 13);
+            this.lblUptodate.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            this.lblUptodate.TabIndex = 7;
+            this.lblUptodate.Text = "Up to date!";
+            this.lblUptodate.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.lblUptodate.Visible = false;
             // 
             // Ui
             // 
@@ -408,6 +437,7 @@ namespace Launcher.Interface {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(511, 355);
+            this.Controls.Add(this.imgLogo);
             this.Controls.Add(this.btnRepair);
             this.Controls.Add(this.customTabControl1);
             this.Controls.Add(this.lblName);
@@ -435,6 +465,7 @@ namespace Launcher.Interface {
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Ui_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();
             this.customTabControl1.ResumeLayout(false);
             this.tabChangelog.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -455,15 +486,15 @@ namespace Launcher.Interface {
 
         #endregion
 
-        private System.Windows.Forms.Label lblStatus;
+        private ControlLabel lblStatus;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.PictureBox imgTick;
-        private System.Windows.Forms.Label lblUptodate;
+        private ControlLabel lblUptodate;
         private GlossyButton btnPlay;
         private PrettyProgressBar pBarMain;
         private GlossyButton btnClose;
         private System.Windows.Forms.Button btnMinimize;
-        private System.Windows.Forms.Label lblName;
+        private ControlLabel lblName;
         private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.CustomTabControl customTabControl1;
         private System.Windows.Forms.TabPage tabChangelog;
@@ -477,7 +508,7 @@ namespace Launcher.Interface {
         private Controls.Development.ImageListBox lboxUpdatelogs;
         private System.Windows.Forms.ImageList imgListDLIcon;
         private System.Windows.Forms.ImageList imgListArrow;
-        private System.Windows.Forms.ImageList imgListNew;
+        private System.Windows.Forms.PictureBox imgLogo;
     }
 }
 

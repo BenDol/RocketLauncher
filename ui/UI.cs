@@ -96,11 +96,11 @@ namespace Launcher.Interface {
             return pBarMain;
         }
 
-        public Label getStatusLabel() {
+        public ControlLabel getStatusLabel() {
             return lblStatus;
         }
 
-        public Label getNameLabel() {
+        public ControlLabel getNameLabel() {
             return lblName;
         }
 
@@ -108,7 +108,7 @@ namespace Launcher.Interface {
             return btnPlay;
         }
 
-        public Label getUpToDateLabel() {
+        public ControlLabel getUpToDateLabel() {
             return lblUptodate;
         }
 

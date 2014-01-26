@@ -80,8 +80,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Launcher.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -122,6 +121,12 @@
     <Compile Include="ui\Connecting.Designer.cs">
       <DependentUpon>Connecting.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\ControlLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ui\ControlLabel.Designer.cs">
+      <DependentUpon>ControlLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\GlossyButton.cs">
       <SubType>UserControl</SubType>
       <Generator>GlossyButton</Generator>
@@ -156,6 +161,9 @@
     <Compile Include="src\UpdateNode.cs" />
     <EmbeddedResource Include="ui\Connecting.resx">
       <DependentUpon>Connecting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\ControlLabel.resx">
+      <DependentUpon>ControlLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\GlossyButton.resx">
       <DependentUpon>GlossyButton.cs</DependentUpon>
@@ -206,6 +214,7 @@
     </Content>
     <None Include="assets\images\repair_new.png" />
     <EmbeddedResource Include="dlls\ListControls.dll" />
+    <None Include="assets\images\sheep_launcher.png" />
     <Content Include="icon.ico" />
     <EmbeddedResource Include="dlls\JacksonSoft.CustomTabControl.dll" />
     <None Include="assets\images\refresh.png" />

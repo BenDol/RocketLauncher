@@ -117,20 +117,20 @@ namespace Launcher {
             clearChangeLog(ui.getUpdatesListBox(), ui.getUpdatelogsTextBox());
             foreach(Update update in updates) {
                 addChangeLog(ui.getUpdatesListBox(), update.getChangelog(), 
-                    update.getName(), update.getBaseType());
+                    update.getName(), update.getBaseType(), 0);
             }
         }
 
-        public void clearChangeLog(ListBox listBox, TextBox textBox) {
+        public void clearChangeLog(ImageListBox listBox, TextBox textBox) {
             textBox.Clear();
             listBox.Items.Clear();
         }
 
-        public void addChangeLog(ListBox listBox, Changelog changelog, 
-                String updateName, String baseType) {
+        public void addChangeLog(ImageListBox listBox, Changelog changelog, 
+                String updateName, String baseType, int imageIndex) {
 
             String text = "[" + changelog.getVersion() + baseType + "] " + updateName;
-            ImageListBoxItem item = new ImageListBoxItem(text, 0);
+            ImageListBoxItem item = new ImageListBoxItem(text, imageIndex);
 
             listBox.Items.Add(item);
         }
@@ -145,7 +145,7 @@ namespace Launcher {
 
                 foreach (Update update in updates) {
                     addChangeLog(ui.getChangelogListBox(), update.getChangelog(), 
-                        update.getName(), update.getBaseType());
+                        update.getName(), update.getBaseType(), 2);
 
                     assignTempDirs(update);
                 }
@@ -161,11 +161,11 @@ namespace Launcher {
             }
         }
 
-        public static void addUpdateListChangeHandler(ListBox listBox, List<Update> updates,
+        public static void addUpdateListChangeHandler(ImageListBox listBox, List<Update> updates,
                 TextBox textBox) {
             listBox.SelectedValueChanged += new EventHandler(
                     (object sender, EventArgs e) => {
-                ListBox lb = sender as ListBox;
+                ImageListBox lb = sender as ImageListBox;
                 if (lb != null) {
                     foreach (Update update in updates) {
                         double version = update.getVersion();
@@ -178,6 +178,17 @@ namespace Launcher {
                     }
                 }
             });
+        }
+
+        public ImageListBoxItem getLogItem(Update update, ImageListBox listBox) {
+            ImageListBoxItem item = null;
+            foreach(ImageListBoxItem it in listBox.Items) {
+                if (it.Text.Contains("[" + update.getVersion() + update.getBaseType() + "]")) {
+                    item = it;
+                    break;
+                }
+            }
+            return item;
         }
 
         private void downloadUpdates(List<Update> updates) {
@@ -216,6 +227,14 @@ namespace Launcher {
 
                     if (update.isSuccess()) {
                         reciever.stampUpdate(update);
+
+                        ImageListBox listBox = ui.getChangelogListBox();
+                        ImageListBoxItem item = getLogItem(update, listBox);
+                        if (item != null) {
+                            item.ImageIndex = 0;
+                            listBox.Invalidate(listBox.GetItemRectangle(item.Index));
+                            listBox.Update();
+                        }
                     }
                     else {
                         Logger.log(Logger.TYPE.FATAL, "One of the updates did not succeed, "
@@ -234,8 +253,7 @@ namespace Launcher {
 
                 ui.getTickImage().Visible = true;
                 ui.getUpToDateLabel().Visible = true;
-                ui.getRefreshButton().Enabled = true;
-
+                
                 enablePlay();
             }));
 
@@ -385,6 +403,7 @@ namespace Launcher {
         }
 
         private void enablePlay() {
+            ui.getRefreshButton().Enabled = true;
             ui.getPlayButton().Enabled = true;
             ui.getPlayButton().BtnText = "Play";
         }
