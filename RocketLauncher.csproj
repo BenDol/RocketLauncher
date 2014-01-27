@@ -109,11 +109,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="src\Archive.cs" />
+    <Compile Include="src\ArchiveHandler.cs" />
     <Compile Include="src\Changelog.cs" />
+    <Compile Include="src\EnumUtils.cs" />
+    <Compile Include="src\FontAsyncCallback.cs" />
     <Compile Include="src\ExternalAsset.cs" />
+    <Compile Include="src\FontApply.cs" />
     <Compile Include="src\FontHandler.cs" />
+    <Compile Include="src\FontPackage.cs" />
     <Compile Include="src\StringAsyncCallback.cs" />
     <Compile Include="src\GhostFile.cs" />
+    <Compile Include="src\WindowsMessages.cs" />
+    <Compile Include="src\WinAPI.cs" />
     <Compile Include="src\Xml.cs" />
     <Compile Include="ui\Connecting.cs">
       <SubType>Form</SubType>
@@ -230,7 +237,9 @@
     <None Include="assets\images\icon.ico" />
     <None Include="assets\images\repair.png" />
     <None Include="assets\images\repair_hover.png" />
-    <Content Include="assets\server.xml" />
+    <Content Include="assets\server.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="assets\update.xml" />
   </ItemGroup>
   <ItemGroup>

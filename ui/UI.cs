@@ -76,6 +76,10 @@ namespace Launcher.Interface {
                 message.Result = (IntPtr)HTCAPTION;
         }
 
+        public Control.ControlCollection getControls() {
+            return Controls;
+        }
+
         public Connecting getConnectingForm() {
             return connecting;
         }

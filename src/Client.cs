@@ -54,17 +54,32 @@ namespace Launcher {
             dlHandler = new DownloadHandler(ui.getStatusLabel(), 
                 ui.getDownloadProgressBar());
 
-            reciever = new Reciever(ref dlHandler);
+            reciever = new Reciever(ref dlHandler, this);
         }
 
         public void initialize(Action callback) {
             reciever.getServerName(new StringAsyncCallback((String name) => {
                 setServerName(name);
-                initialized = true;
 
-                populateUpdateLogs();
+                reciever.getFonts(new FontAsyncCallback((List<FontPackage> packages) => {
+                    foreach (FontPackage package in packages) {
+                        if (package.isInstalled()) {
+                            applyCustomFonts(package.getApplyMap());
+                        }
+                    }
 
-                callback();
+                    initialized = true;
+                    populateUpdateLogs();
+                    callback();
+                },
+                () => {
+                    Logger.log(Logger.TYPE.FATAL, "Failed to get font packages");
+                    MessageBox.Show("Failed to get font packages, check the log file for more details.");
+
+                    initialized = true;
+                    populateUpdateLogs();
+                    callback();
+                }));
             },
             () => {
                 Logger.log(Logger.TYPE.FATAL, "Failed to retrieve server name, " 
@@ -115,6 +130,7 @@ namespace Launcher {
                 updates, ui.getUpdatelogsTextBox());
 
             clearChangeLog(ui.getUpdatesListBox(), ui.getUpdatelogsTextBox());
+
             foreach(Update update in updates) {
                 addChangeLog(ui.getUpdatesListBox(), update.getChangelog(), 
                     update.getName(), update.getBaseType(), 0);
@@ -275,27 +291,7 @@ namespace Launcher {
                                 // TODO: Clean root directory
                             }
 
-                            using (ZipArchive a = ZipFile.OpenRead(tmpFile)) {
-                                foreach (ZipArchiveEntry entry in a.Entries) {
-                                    if (!entry.FullName.EndsWith("/", StringComparison.OrdinalIgnoreCase)) {
-                                        entry.ExtractToFile(Path.Combine(newPath, entry.FullName), true);
-                                    }
-                                    else {
-                                        String dir = entry.FullName.Replace("/", "//");
-
-                                        bool createDir = !Directory.Exists(dir);
-                                        if (!createDir) {
-                                            if (archive.getCleanDirs()) {
-                                                Directory.Delete(dir, true);
-                                                createDir = true;
-                                            }
-                                        }
-                                        if (createDir) {
-                                            Directory.CreateDirectory(dir);
-                                        }
-                                    }
-                                }
-                            }
+                            ArchiveHandler.extractZip(tmpFile, newPath, archive.getCleanDirs());
 
                             Logger.log(Logger.TYPE.DEBUG, "Extracted archive " + tmpFile + " to " + newPath);
                         }
@@ -370,6 +366,23 @@ namespace Launcher {
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 getServerName()
             );
+        }
+
+        public String getFontCacheDir() {
+            return Path.Combine(getTempPath(), "fontcache");
+        }
+
+        private void applyCustomFonts(Dictionary<String, FontApply> applyMap) {
+            foreach (KeyValuePair<String, FontApply> pair in applyMap) {
+                String to = pair.Key;
+                FontApply fontApply = pair.Value;
+
+                foreach (Control control in ui.getControls()) {
+                    if (control.Name.Equals(to)) {
+                        control.Font = fontApply.getFont();
+                    }
+                }
+            }
         }
 
         public static String getLogging() {

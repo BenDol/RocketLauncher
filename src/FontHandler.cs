@@ -22,6 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -29,29 +31,89 @@ using System.Text;
 namespace Launcher {
     class FontHandler {
 
-        [DllImport("gdi32.dll", EntryPoint = "AddFontResourceW", SetLastError = true)]
-        public static extern int AddFontResource([In][MarshalAs(UnmanagedType.LPWStr)]
-            string lpFileName);
+        private static PrivateFontCollection privateFonts = new PrivateFontCollection();
 
-        public static void installLocalFont(String uri) {
-            int result = AddFontResource(uri);
+        public static String addPrivateFont(String uri) {
+            privateFonts.AddFontFile(uri);
 
-            int error = Marshal.GetLastWin32Error();
-            if (error != 0) {
-                Console.WriteLine(new Win32Exception(error).Message);
-            }
-            else {
-                if (result == 0) {
-                    Logger.log(Logger.TYPE.DEBUG, "Font is already installed: " + uri);
-                }
-                else {
-                    Logger.log(Logger.TYPE.DEBUG, "Font installed successfully:" + uri);
-                }
-            }
+            FontFamily fontFamily = privateFonts.Families[
+                privateFonts.Families.Count() - 1];
+
+            return fontFamily.Name;
         }
 
-        public static void installExternalFont(String url) {
-            
+        public static PrivateFontCollection getPrivateFonts() {
+            return privateFonts;
+        }
+
+        public static FontFamily getPrivateFontFamily(String fontName) {
+            FontFamily fontFamily = null;
+            foreach (FontFamily ff in privateFonts.Families) {
+                if (ff.Name.Equals(fontName)) {
+                    fontFamily = ff;
+                    break;
+                }
+            }
+            return fontFamily;
+        }
+
+        public static bool doesPrivateFontExist(string fontFamilyName, bool ignoreCase) {
+            bool result = false;
+
+            StringComparison comparison = StringComparison.Ordinal;
+            if (ignoreCase) {
+                comparison = StringComparison.OrdinalIgnoreCase;
+            }
+
+            try {
+                foreach (var fontFamily in privateFonts.Families) {
+                    if (fontFamily.Name.Equals(fontFamilyName, comparison)) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            catch (ArgumentException) {
+                result = false;
+            }
+
+            return result;
+        }
+
+        public static bool doesFontExist(string fontFamilyName, 
+                bool checkPrivateFonts, bool ignoreCase) {
+            bool result = false;
+
+            StringComparison comparison = StringComparison.Ordinal;
+            if (ignoreCase) {
+                comparison = StringComparison.OrdinalIgnoreCase;
+            }
+
+            try {
+                if (checkPrivateFonts) {
+                    foreach (var fontFamily in privateFonts.Families) {
+                        if (fontFamily.Name.Equals(fontFamilyName, comparison)) {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!result) {
+                    var fontCollection = new InstalledFontCollection();
+                    foreach (var fontFamily in fontCollection.Families) {
+                        if (fontFamily.Name.Equals(fontFamilyName, comparison)) {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (ArgumentException) {
+                result = false;
+            }
+
+            return result;
         }
     }
 }

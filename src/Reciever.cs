@@ -21,6 +21,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -34,13 +35,15 @@ namespace Launcher {
     class Reciever {
         private String file;
         private DownloadHandler dlHandler;
+        private Client client;
 
         private Asset<XDocument> updateXML;
         private ExternalAsset<XDocument> serverXMLCache;
 
-        public Reciever(ref DownloadHandler dlHandler) {
+        public Reciever(ref DownloadHandler dlHandler, Client client) {
             file = Path.Combine(Application.StartupPath, Client.UPDATE_XML_NAME);
             this.dlHandler = dlHandler;
+            this.client = client;
 
             load();
         }
@@ -173,6 +176,140 @@ namespace Launcher {
                         callback.onFailure();
                     }
             });
+        }
+
+        public void getFonts(FontAsyncCallback callback) {
+            Uri url = getUrl();
+
+            dlHandler.downloadStringAsync(url,
+                (object s, DownloadStringCompletedEventArgs e) => {
+                    try {
+                        serverXMLCache = new ExternalAsset<XDocument>(
+                            XDocument.Parse(e.Result), url.OriginalString);
+
+                        var root = from item in serverXMLCache.get().Descendants("server")
+                            select new {
+                                fonts = item.Descendants("font")
+                            };
+
+                        List<FontPackage> packages = new List<FontPackage>();
+                        foreach (var data in root) {
+                            foreach (var f in data.fonts) {
+                                packages.Add(new FontPackage(f));
+                            }
+                        }
+                        
+                        List<String> installedFonts = new List<String>();
+
+                        String fontCachePath = client.getFontCacheDir();
+                        String tmpFontPath = Path.Combine(fontCachePath, "tmpfonts");
+                        if (!Directory.Exists(fontCachePath)) {
+                            Directory.CreateDirectory(fontCachePath);
+                            Directory.CreateDirectory(tmpFontPath);
+                        }
+                        else {
+                            if (!Directory.Exists(tmpFontPath)) {
+                                Directory.CreateDirectory(tmpFontPath);
+                            }
+                            // Preload already existing fonts
+                            installedFonts = installPrivateFonts(fontCachePath);
+                        }
+
+                        if (packages.Count > 0) {
+                            // Download font packages
+                            foreach (FontPackage package in packages) {
+                                if (!FontHandler.doesFontExist(package.getName(), true, true)) {
+                                    if (package.canDownload()) {
+                                        dlHandler.enqueueFile(new Uri(package.getPackage()), tmpFontPath,
+                                            package.getArchiveName(), (Boolean cancelled) => {
+                                            if (!cancelled) {
+                                                ArchiveHandler.extractZip(Path.Combine(tmpFontPath,
+                                                    package.getArchiveName()), tmpFontPath, false);
+                                            }
+                                        });
+                                    }
+                                }
+                                else {
+                                    package.setInstalled(true);
+                                }
+                            }
+
+                            dlHandler.setQueueFileCallback(new QueueCallback(() => {
+                                installedFonts.AddRange(installPrivateFonts(tmpFontPath));
+
+                                // Finished installing new fonts, now cache them
+                                cacheFonts(tmpFontPath);
+
+                                // Apply new fonts to the packages
+                                foreach (FontPackage package in packages) {
+                                    if (FontHandler.doesPrivateFontExist(package.getName(), true)) {
+                                        package.setInstalled(true); // Ensure package is now installed
+
+                                        foreach (KeyValuePair<String, FontApply> pair in package.getApplyMap()) {
+                                            FontApply fontApply = pair.Value;
+                                            fontApply.usePrivateFont(package.getName());
+                                        }
+                                    }
+                                }
+
+                                callback.onSuccess(packages);
+                            }));
+
+                            dlHandler.startFileQueue();
+                        }
+                        else {
+                            callback.onSuccess(packages);
+                        }
+                    }
+                    catch (Exception ex) {
+                        Logger.log(Logger.TYPE.ERROR, "Was unable to get font packages: "
+                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
+
+                        callback.onFailure();
+                    }
+                });
+        }
+
+        public List<String> installPrivateFonts(String fontsDir) {
+            // Install fonts from specified directory
+            List<String> fontNames = new List<String>();
+            if (Directory.Exists(fontsDir)) {
+                foreach (String fileName in Directory.GetFiles(fontsDir)) {
+                    if (fileName.ToLower().EndsWith(".ttf")) {
+                        String name = FontHandler.addPrivateFont(Path.Combine(fontsDir, fileName));
+                        fontNames.Add(name);
+                    }
+                }
+            }
+            return fontNames;
+        }
+
+        public void cacheFonts(String fontsDir) {
+            if (!Directory.Exists(fontsDir)) {
+                Logger.log(Logger.TYPE.WARN, "cacheFonts: Directory does not exist: " 
+                    + fontsDir);
+                return;
+            }
+
+            try {
+                String fontCachePath = client.getFontCacheDir();
+                if (!Directory.Exists(fontCachePath)) {
+                    Directory.CreateDirectory(fontCachePath);
+                }
+
+                foreach (String fileName in Directory.GetFiles(fontsDir)) {
+                    if (File.Exists(fileName)) {
+                        String newPath = Path.Combine(fontCachePath, Path.GetFileName(fileName));
+                        if(File.Exists(newPath)) {
+                            File.Delete(newPath);
+                        }
+                        File.Move(fileName, newPath);
+                    }
+                }
+            }
+            catch (Exception e) {
+                Logger.log(Logger.TYPE.ERROR, "Unable to cache fonts: " + e.Message);
+            }
         }
 
         /**

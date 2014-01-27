@@ -290,7 +290,7 @@ namespace Launcher.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 185);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 183);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -305,7 +305,7 @@ namespace Launcher.Interface {
             this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
-            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 183);
             this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
@@ -319,7 +319,7 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Name = "txtBoxUpdate";
             this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 183);
             this.txtBoxUpdate.TabIndex = 0;
             // 
             // lblName
@@ -329,11 +329,11 @@ namespace Launcher.Interface {
             this.lblName.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
             this.lblName.DisabledTextColor = System.Drawing.Color.SteelBlue;
             this.lblName.Enabled = false;
-            this.lblName.Font = new System.Drawing.Font("Moltors", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.ForeColor = System.Drawing.Color.SteelBlue;
             this.lblName.Location = new System.Drawing.Point(5, 7);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(182, 37);
+            this.lblName.Size = new System.Drawing.Size(150, 33);
             this.lblName.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.lblName.TabIndex = 11;
             this.lblName.Text = "Gamename";
