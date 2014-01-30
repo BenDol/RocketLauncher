@@ -45,6 +45,7 @@ namespace Launcher {
 
         private Boolean initialized = false;
         private String serverName;
+        private String targetPath;
 
         public static String UPDATE_XML_NAME = @"update.xml";
 
@@ -58,8 +59,9 @@ namespace Launcher {
         }
 
         public void initialize(Action callback) {
-            reciever.getServerName(new StringAsyncCallback((String name) => {
+            reciever.getInitialData(new InitAsyncCallback((String name, String path) => {
                 setServerName(name);
+                setTargetPath(path);
 
                 reciever.getFonts(new FontAsyncCallback((List<FontPackage> packages) => {
                     foreach (FontPackage package in packages) {
@@ -415,6 +417,14 @@ namespace Launcher {
             ui.getNameLabel().Visible = true;
         }
 
+        public String getTargetPath() {
+            return targetPath;
+        }
+
+        public void setTargetPath(String path) {
+            this.targetPath = path;
+        }
+
         private void enablePlay() {
             ui.getRefreshButton().Enabled = true;
             ui.getPlayButton().Enabled = true;
@@ -435,6 +445,27 @@ namespace Launcher {
 
         public bool isInitialized() {
             return initialized;
+        }
+
+        public void executeTarget() {
+            Process p = new Process();
+            p.StartInfo.FileName = getTargetPath();
+            p.StartInfo.Arguments = "";
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.Start();
+
+            exitApplication();
+        }
+
+        public void exitApplication() {
+            try {
+                Environment.Exit(0);
+            }
+            catch (Win32Exception ex) {
+                Logger.log(Logger.TYPE.WARN, "Exception caught during exit process: "
+                    + ex.Message + ex.StackTrace);
+            }
         }
     }
 }

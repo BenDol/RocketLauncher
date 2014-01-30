@@ -111,6 +111,7 @@
     <Compile Include="src\Archive.cs" />
     <Compile Include="src\ArchiveHandler.cs" />
     <Compile Include="src\Changelog.cs" />
+    <Compile Include="src\InitAsyncCallback.cs" />
     <Compile Include="src\EnumUtils.cs" />
     <Compile Include="src\FontAsyncCallback.cs" />
     <Compile Include="src\ExternalAsset.cs" />

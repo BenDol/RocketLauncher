@@ -290,7 +290,7 @@ namespace Launcher.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 180);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 185);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -305,7 +305,7 @@ namespace Launcher.Interface {
             this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
-            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 180);
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
             this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
@@ -319,7 +319,7 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Name = "txtBoxUpdate";
             this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 180);
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
             this.txtBoxUpdate.TabIndex = 0;
             // 
             // lblName
@@ -396,6 +396,7 @@ namespace Launcher.Interface {
             this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
             this.btnPlay.StandbyBorderColor = System.Drawing.Color.White;
             this.btnPlay.TabIndex = 6;
+            this.btnPlay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnPlay_MouseClick);
             // 
             // lblStatus
             // 

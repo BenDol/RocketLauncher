@@ -147,7 +147,7 @@ namespace Launcher {
             return request;
         }
 
-        public void getServerName(StringAsyncCallback callback) {
+        public void getInitialData(InitAsyncCallback callback) {
             Uri url = getUrl();
 
             dlHandler.downloadStringAsync(url, 
@@ -158,16 +158,19 @@ namespace Launcher {
 
                         var root = from item in serverXMLCache.get().Descendants("server")
                             select new {
-                                name = item.Attribute("name")
+                                name = item.Attribute("name"),
+                                target = item.Attribute("target")
                             };
 
                         String serverName = "";
+                        String targetPath = "";
                         foreach (var data in root) {
                             serverName = data.name.Value;
+                            targetPath = data.target.Value;
                             break;
                         }
 
-                        callback.onSuccess(serverName);
+                        callback.onSuccess(serverName, targetPath);
                     }
                     catch(Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "

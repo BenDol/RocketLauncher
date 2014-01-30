@@ -173,13 +173,7 @@ namespace Launcher.Interface {
         }
 
         private void btnClose_MouseClick(object sender, MouseEventArgs e) {
-            try {
-                Environment.Exit(0);
-            }
-            catch (Win32Exception ex) {
-                Logger.log(Logger.TYPE.WARN, "Exception caught during exit process: " 
-                    + ex.Message + ex.StackTrace);
-            }
+            client.exitApplication();
         }
 
         private void btnMinimize_MouseEnter(object sender, EventArgs e) {
@@ -228,6 +222,10 @@ namespace Launcher.Interface {
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e) {
             this.btnRepair.Image = global::Launcher.Properties.Resources.repair;
+        }
+
+        private void btnPlay_MouseClick(object sender, MouseEventArgs e) {
+            client.executeTarget();
         }
     }
 }
