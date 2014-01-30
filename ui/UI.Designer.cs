@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2010-2014 Launcher <https://github.com/BenDol/RocketLauncher>
+ * Copyright (c) 2014 RocketLauncher <https://github.com/BenDol/RocketLauncher>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -290,7 +290,7 @@ namespace Launcher.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 183);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 180);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -305,7 +305,7 @@ namespace Launcher.Interface {
             this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
-            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 183);
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 180);
             this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
@@ -319,7 +319,7 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Name = "txtBoxUpdate";
             this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 183);
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 180);
             this.txtBoxUpdate.TabIndex = 0;
             // 
             // lblName

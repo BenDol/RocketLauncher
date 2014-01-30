@@ -219,10 +219,11 @@
     <Content Include="assets\0.2-sample.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="icon.ico" />
     <None Include="assets\images\repair_new.png" />
     <EmbeddedResource Include="dlls\ListControls.dll" />
     <None Include="assets\images\sheep_launcher.png" />
-    <Content Include="icon.ico" />
+    <None Include="assets\images\icon-old.ico" />
     <EmbeddedResource Include="dlls\JacksonSoft.CustomTabControl.dll" />
     <None Include="assets\images\refresh.png" />
     <None Include="assets\images\refresh-hover.png" />
