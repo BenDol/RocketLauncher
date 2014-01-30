@@ -169,13 +169,14 @@ namespace Launcher.Interface {
             // 
             // imgLogo
             // 
-            this.imgLogo.Enabled = false;
             this.imgLogo.Image = global::Launcher.Properties.Resources.sheep_launcher;
-            this.imgLogo.Location = new System.Drawing.Point(388, 7);
+            this.imgLogo.Location = new System.Drawing.Point(382, 7);
             this.imgLogo.Name = "imgLogo";
-            this.imgLogo.Size = new System.Drawing.Size(64, 64);
+            this.imgLogo.Size = new System.Drawing.Size(70, 64);
             this.imgLogo.TabIndex = 15;
             this.imgLogo.TabStop = false;
+            this.imgLogo.MouseEnter += new System.EventHandler(this.imgLogo_MouseEnter);
+            this.imgLogo.MouseLeave += new System.EventHandler(this.imgLogo_MouseLeave);
             // 
             // customTabControl1
             // 

@@ -227,5 +227,13 @@ namespace Launcher.Interface {
         private void btnPlay_MouseClick(object sender, MouseEventArgs e) {
             client.executeTarget();
         }
+
+        private void imgLogo_MouseEnter(object sender, EventArgs e) {
+            this.imgLogo.Image = global::Launcher.Properties.Resources.sheep_launcher_hover;
+        }
+
+        private void imgLogo_MouseLeave(object sender, EventArgs e) {
+            this.imgLogo.Image = global::Launcher.Properties.Resources.sheep_launcher;
+        }
     }
 }

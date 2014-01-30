@@ -220,6 +220,7 @@
     <Content Include="assets\0.2-sample.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="assets\images\sheep_launcher_hover.png" />
     <Content Include="icon.ico" />
     <None Include="assets\images\repair_new.png" />
     <EmbeddedResource Include="dlls\ListControls.dll" />
