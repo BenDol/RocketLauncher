@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Url: Path to your server xml
+  Latest: Current version the client is up to date with
+  Logging:
+    DEBUG = 1 // Detailed log messages for debugging issues.
+    INFO = 2 // General information on update tasks.
+    WARN = 3 // Warn when something isn't correct but can still function.
+    ERROR = 4 // Something has not functioned the way it is mean't to.
+    FATAL = 5 // Something has gone horribly wrong.
+-->
+<updates url="https://dl.dropboxusercontent.com/u/49948294/updater/server/server.xml" latest="0" logging="1,2,3,4,5">
+    
+</updates>

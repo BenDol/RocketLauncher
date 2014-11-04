@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<update name="Cool Update" version="0.2">
+<update name="Update Data Files" version="0.2">
   <changelog>
     <log>Updated the item image to better fit</log>
     <log>Updated the banner image to look pretty</log>
     <log>Updated all the data files</log>
   </changelog>
-    
+
   <file name="banner.png" destination="" mime="images/png">
     https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/banner.png
   </file>
@@ -14,6 +14,6 @@
   </file>
 
   <archive name="data.zip" extractTo="data" cleanDirs="true" mime="application/zip">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/full.zip
+    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/data.zip
   </archive>
 </update>
