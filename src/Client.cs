@@ -56,6 +56,8 @@ namespace Launcher {
                 ui.getDownloadProgressBar());
 
             reciever = new Reciever(ref dlHandler, this);
+
+            Logger.log(Logger.TYPE.DEBUG, "Client successfully constructed.");
         }
 
         public void initialize(Action callback) {
@@ -90,6 +92,7 @@ namespace Launcher {
         }
 
         public void update() {
+            Logger.log(Logger.TYPE.DEBUG, "Initializing update sequence.");
             if (!isInitialized()) {
                 Logger.log(Logger.TYPE.WARN, "You are attempting to update" 
                     + " before initializing the client, update cancelled.");
@@ -140,12 +143,14 @@ namespace Launcher {
         }
 
         public void clearChangeLog(ImageListBox listBox, TextBox textBox) {
+            Logger.log(Logger.TYPE.DEBUG, "Clearing the changelog.");
             textBox.Clear();
             listBox.Items.Clear();
         }
 
         public void addChangeLog(ImageListBox listBox, Changelog changelog, 
                 String updateName, String baseType, int imageIndex) {
+            Logger.log(Logger.TYPE.DEBUG, "Add changelog.");
 
             String text = "[" + changelog.getVersion() + baseType + "] " + updateName;
             ImageListBoxItem item = new ImageListBoxItem(text, imageIndex);
@@ -154,6 +159,8 @@ namespace Launcher {
         }
 
         protected void processUpdates(List<Update> updates) {
+            Logger.log(Logger.TYPE.DEBUG, "Processing updates...");
+
             // Process changelog and temp directories
             clearChangeLog(ui.getChangelogListBox(), ui.getChangelogBox());
 
@@ -181,6 +188,7 @@ namespace Launcher {
 
         public static void addUpdateListChangeHandler(ImageListBox listBox, List<Update> updates,
                 TextBox textBox) {
+            Logger.log(Logger.TYPE.DEBUG, "Add update list change handler.");
             listBox.SelectedValueChanged += new EventHandler(
                     (object sender, EventArgs e) => {
                 ImageListBox lb = sender as ImageListBox;
@@ -210,9 +218,9 @@ namespace Launcher {
         }
 
         private void downloadUpdates(List<Update> updates) {
+            Logger.log(Logger.TYPE.DEBUG, "Downloading " + updates.Count + " updates...");
             // Enqueue each file to the download handler
             foreach (Update update in updates) {
-
                 foreach(GhostFile file in update.getFiles()) {
                     Boolean isArchive = file is Archive;
 
@@ -278,6 +286,7 @@ namespace Launcher {
         }
 
         private bool applyFileChange(GhostFile file, String tmpPath) {
+            Logger.log(Logger.TYPE.DEBUG, "Apply file change " + file.getName() + " path: " + tmpPath);
             bool success = true;
             String tmpFile = Path.Combine(tmpPath, file.getName());
             String newPath = Path.Combine(getRootDir(), ((file is Archive) ? 
@@ -322,6 +331,7 @@ namespace Launcher {
         }
 
         public bool verifyFile(String file) {
+            Logger.log(Logger.TYPE.DEBUG, "Verify file '" + file + "' exists.");
             bool exists = File.Exists(file);
             if(!exists) {
                 Logger.log(Logger.TYPE.ERROR, "Could not verify file: " + file);
@@ -330,6 +340,7 @@ namespace Launcher {
         }
 
         public bool ensureDirectory(String dir) {
+            Logger.log(Logger.TYPE.DEBUG, "Ensure directory '" + dir + "' exists.");
             bool exists = Directory.Exists(dir);
             if (!exists) {
                 try {
@@ -345,6 +356,8 @@ namespace Launcher {
         }
 
         protected void assignTempDirs(Update update) {
+            Logger.log(Logger.TYPE.DEBUG, "Assign temporary directories.");
+
             String path = Path.Combine(getTempPath(), Convert.ToString(update.getVersion()));
             if (Directory.Exists(path)) {
                 Directory.Delete(path, true);
@@ -373,6 +386,8 @@ namespace Launcher {
         }
 
         private void applyCustomFonts(Dictionary<String, FontApply> applyMap) {
+            Logger.log(Logger.TYPE.DEBUG, "Applying " + applyMap.Count + " custom fonts");
+
             foreach (KeyValuePair<String, FontApply> pair in applyMap) {
                 String to = pair.Key;
                 FontApply fontApply = pair.Value;
@@ -424,6 +439,7 @@ namespace Launcher {
         }
 
         private void enablePlay() {
+            Logger.log(Logger.TYPE.DEBUG, "Enable Play button");
             ui.getRefreshButton().Enabled = true;
             ui.getPlayButton().Enabled = true;
             ui.getPlayButton().BtnText = "Play";
@@ -446,6 +462,7 @@ namespace Launcher {
         }
 
         public void executeTarget() {
+            Logger.log(Logger.TYPE.DEBUG, "Executing target application (" + getTargetPath() + ").");
             Process p = new Process();
             p.StartInfo.FileName = getTargetPath();
             p.StartInfo.Arguments = "";

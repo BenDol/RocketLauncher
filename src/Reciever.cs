@@ -131,6 +131,7 @@ namespace Launcher {
         }
 
         public Request sendRequest(RequestAsyncCallback callback) {
+            Logger.log(Logger.TYPE.DEBUG, "Creating update request...");
             reloadIfModified(); //Ensure the update XML is up to date
 
             Request request = null;
@@ -148,10 +149,12 @@ namespace Launcher {
         }
 
         public void getInitialData(InitAsyncCallback callback) {
+            Logger.log(Logger.TYPE.DEBUG, "Getting initial data...");
             Uri url = getUrl();
 
             dlHandler.downloadStringAsync(url, 
                 (object s, DownloadStringCompletedEventArgs e) => {
+                    Logger.log(Logger.TYPE.DEBUG, "Successfully retreived initial data.");
                     try {
                         serverXMLCache = new ExternalAsset<XDocument>(
                             XDocument.Parse(e.Result), url.OriginalString);
@@ -182,10 +185,12 @@ namespace Launcher {
         }
 
         public void getFonts(FontAsyncCallback callback) {
+            Logger.log(Logger.TYPE.DEBUG, "Getting fonts...");
             Uri url = getUrl();
 
             dlHandler.downloadStringAsync(url,
                 (object s, DownloadStringCompletedEventArgs e) => {
+                    Logger.log(Logger.TYPE.DEBUG, "Successfully retreived fonts.");
                     try {
                         serverXMLCache = new ExternalAsset<XDocument>(
                             XDocument.Parse(e.Result), url.OriginalString);

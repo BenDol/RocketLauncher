@@ -62,6 +62,7 @@ namespace Launcher {
         }
 
         public void send(XDocument serverXMLCached) {
+            Logger.log(Logger.TYPE.DEBUG, "Sending request...");
             if (isDead()) {
                 return;
             }
@@ -71,12 +72,13 @@ namespace Launcher {
             if (serverXMLCached == null) {
                 dlHandler.downloadStringAsync(url, (object s1,
                         DownloadStringCompletedEventArgs e1) => {
+                    Logger.log(Logger.TYPE.DEBUG, "Successfully recieved the server XML.");
                     try {
                         serverXML = XDocument.Parse(e1.Result);
                         requestUpdates();
                     }
                     catch (Exception ex) {
-                        Logger.log(Logger.TYPE.ERROR, "Error while requesting server XML: "
+                        Logger.log(Logger.TYPE.ERROR, "Error while parsing server XML: "
                             + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
 
                         kill();

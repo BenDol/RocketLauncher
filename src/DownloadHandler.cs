@@ -115,6 +115,7 @@ namespace Launcher {
 
         public void downloadFileAsync(Uri url, String dest, EventHandler<AsyncCompletedEventArgs> completed,
                 QueueBlock<Boolean> block) {
+            Logger.log(Logger.TYPE.DEBUG, "Downloading file (async) from " + url);
             if (!isBusy()) {
                 prepare(url);
 
@@ -130,12 +131,14 @@ namespace Launcher {
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(
                     (object sender, AsyncCompletedEventArgs e) => {
+                        Logger.log(Logger.TYPE.DEBUG, "Finished downloading file.");
                         downloadCompleted(block);
                         completed(sender, e);
                 });
 
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
+                        Logger.log(Logger.TYPE.DEBUG, "Download progress (async) " + url + ": " + e.ProgressPercentage);
                         downloadProgressChanged(e, block);
                 });
 
@@ -150,7 +153,8 @@ namespace Launcher {
 
         public void downloadStringAsync(Uri url, EventHandler<DownloadStringCompletedEventArgs> completed,
                 QueueBlock<String> block) {
-            if(!isBusy()) {
+            Logger.log(Logger.TYPE.DEBUG, "Downloading string (async) from " + url);
+            if (!isBusy()) {
                 prepare(url);
 
                 if (block == null && progressBar != null) {
@@ -165,14 +169,16 @@ namespace Launcher {
                 WebClient webClient = new WebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
                     (object sender, DownloadStringCompletedEventArgs e) => {
+                        Logger.log(Logger.TYPE.DEBUG, "Finished downloading String.");
                         downloadCompleted(block);
                         completed(sender, e);
-                });
+                    });
 
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (object sender, DownloadProgressChangedEventArgs e) => {
+                        Logger.log(Logger.TYPE.DEBUG, "Download progress (async) "+ url +": " + e.ProgressPercentage);
                         downloadProgressChanged(e, block);
-                });
+                    });
 
                 webClient.DownloadStringAsync(currentUrl);
                 fileDownloadElapsed.Start();
@@ -243,6 +249,7 @@ namespace Launcher {
         }
 
         public void nextString() {
+            Logger.log(Logger.TYPE.DEBUG, "Try next string from download queue...");
             if (queueString.Any()) {
                 QueueBlock<String> block = queueString.Dequeue();
                 if (block != null) {
@@ -265,6 +272,7 @@ namespace Launcher {
 
         public void enqueueFile(Uri url, String destination, String fileName, 
                 Action<Boolean> callback) {
+            Logger.log(Logger.TYPE.DEBUG, "Queue file download (" + fileName + ")...");
             if (!isBusy()) {
                 queueFile.Enqueue(new QueueBlock<Boolean>(url, 
                     fileName, destination, callback));
@@ -272,6 +280,7 @@ namespace Launcher {
         }
 
         public void startFileQueue() {
+            Logger.log(Logger.TYPE.DEBUG, "Start the file download queue...");
             if (progressBar != null) {
                 progressBar.Value = 0;
             }
@@ -282,6 +291,7 @@ namespace Launcher {
         }
 
         public void nextFile() {
+            Logger.log(Logger.TYPE.DEBUG, "Try next file from download queue...");
             if (queueFile.Any()) {
                 QueueBlock<Boolean> block = queueFile.Dequeue();
                 if (block != null) {
@@ -355,6 +365,9 @@ namespace Launcher {
         }
 
         public bool isBusy() {
+            if (busy && Logger.canLog(Logger.TYPE.DEBUG)) {
+                Logger.log(Logger.TYPE.DEBUG, "Download handler is busy.");
+            }
             return busy;
         }
 
