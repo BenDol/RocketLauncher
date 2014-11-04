@@ -217,8 +217,7 @@ namespace Launcher {
                     Boolean isArchive = file is Archive;
 
                     String tmpPath = Path.Combine(update.getTempDir().FullName,
-                        isArchive ? ((Archive)file).getExtractTo() 
-                        : file.getDestination());
+                        isArchive ? ((Archive)file).getExtractTo() : file.getDestination());
 
                     dlHandler.enqueueFile(file.getUrl(), tmpPath, file.getName(),
                     (Boolean cancelled) => {
@@ -259,7 +258,7 @@ namespace Launcher {
                             + "cancelling update process.");
 
                         ui.getStatusLabel().Text = "Error while patching files, please check the "
-                            +"log for more details.";
+                            + "log for more details.";
 
                         ui.getPlayButton().BtnText = "Failed";
                         return;
@@ -325,7 +324,7 @@ namespace Launcher {
         public bool verifyFile(String file) {
             bool exists = File.Exists(file);
             if(!exists) {
-                Logger.log(Logger.TYPE.ERROR, "Could not verify temp file: " + file);
+                Logger.log(Logger.TYPE.ERROR, "Could not verify file: " + file);
             }
             return exists;
         }
@@ -335,12 +334,11 @@ namespace Launcher {
             if (!exists) {
                 try {
                     Directory.CreateDirectory(dir);
+                    exists = true;
                 }
                 catch (Exception ex) {
                     Logger.log(Logger.TYPE.ERROR, "Unable to create directory " 
                         + dir + ex.Message + ex.StackTrace);
-
-                    exists = false;
                 }
             }
             return exists;
