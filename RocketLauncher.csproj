@@ -218,12 +218,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\images\sheep_launcher_hover.png" />
-    <Content Include="assets\0.1-update.xml">
+    <Content Include="assets\config\client\update.xml" />
+    <Content Include="assets\config\server\0.1-update.xml" />
+    <Content Include="assets\config\server\0.2-update.xml" />
+    <Content Include="assets\config\server\server.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="assets\0.2-update.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="assets\images\failed.png" />
     <Content Include="icon.ico" />
     <None Include="assets\images\repair_new.png" />
     <EmbeddedResource Include="dlls\ListControls.dll" />
@@ -243,10 +244,6 @@
     <None Include="assets\images\icon.ico" />
     <None Include="assets\images\repair.png" />
     <None Include="assets\images\repair_hover.png" />
-    <Content Include="assets\server.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="assets\update.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="external\ImageListBox\ImageListBox.csproj">

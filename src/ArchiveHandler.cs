@@ -10,7 +10,7 @@ namespace Launcher {
 
         public static void extractZip(String file, String toDir, bool cleanDirs) {
             Logger.log(Logger.TYPE.DEBUG, "Extracting zip archive " + file + " to " 
-                + toDir + "cleanDirs: " + cleanDirs);
+                + toDir + " cleanDirs: " + cleanDirs);
 
             if (!File.Exists(file)) {
                 Logger.log(Logger.TYPE.ERROR, "Cannot extract " + file + " as is does not exist.");
