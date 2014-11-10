@@ -407,7 +407,7 @@ namespace Launcher {
             String logging = "";
             XDocument xml = Xml.load(file);
             if (xml != null) {
-                var root = from item in xml.Descendants("updates")
+                var root = from item in xml.Descendants("Updates")
                     select new {
                         logging = item.Attribute("logging")
                     };

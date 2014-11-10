@@ -1,12 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<server name="Rocket Launcher" target="Application.exe">
-  <font name="Moltor" archive="moltors.zip" package="https://dl.dropboxusercontent.com/u/49948294/updater/server/moltors.zip">
-    <apply to="lblName" size="20" unit="Point" bold="false" italic="false" strikeout="false" underline="false" gdicharset="0" gdiverticalfont="false"/>
-  </font>
-  <update version="0.1">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/0.1-update.xml
-  </update>
-  <update version="0.2">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/0.2-update.xml
-  </update>
-</server>
+<Server name="Rocket Launcher" target="Application.exe" launchText="Play">
+  <FontPackage name="Moltors" archive="moltors.zip" package="https://dl.dropboxusercontent.com/u/49948294/updater/server/moltors.zip"/>
+  
+  <Component name="lblName">
+    <Accessibility>
+      <AccessibleDescription></AccessibleDescription>
+      <AccessibleName></AccessibleName>
+      <AccessibleRole>Default</AccessibleRole>
+    </Accessibility>
+    <Appearance>
+      <Text>Rocket Launcher</Text>
+      <Font size="20" unit="Point" bold="false" italic="false" strikeout="false" underline="false" gdicharset="0" gdiverticalfont="false">Moltors</Font>
+      <BackColor>Control</BackColor>
+      <BorderStyle>None</BorderStyle>
+      <CompositeQuality>HighQuality</CompositeQuality>
+      <Cursor>Default</Cursor>
+      <DisabledTextColor>SteelBlue</DisabledTextColor>
+      <FlatStyle>Standard</FlatStyle>
+      <ForeColor>SteelBlue</ForeColor>
+      <Image></Image>
+      <ImageIndex></ImageIndex>
+      <ImageKey></ImageKey>
+      <ImageList></ImageList>
+      <ImageAlign>MiddleCenter</ImageAlign>
+      <RightToLeft>No</RightToLeft>
+      <SmoothingMode>HighQuality</SmoothingMode>
+      <TextAlign>TopLeft</TextAlign>
+      <TextRenderHint>AntiAliasGridFit</TextRenderHint>
+      <UseMnmonic>True</UseMnmonic>
+      <UseWaitCursor>False</UseWaitCursor>
+    </Appearance>
+    <Behavior>
+      <AllowDrop>False</AllowDrop>
+      <AutoEllipsis>True</AutoEllipsis>
+      <ContextMenuStrip></ContextMenuStrip>
+      <Enabled>False</Enabled>
+      <TabIndex>11</TabIndex>
+      <UseCompatibleTextRendering>False</UseCompatibleTextRendering>
+      <Visible>True</Visible>
+    </Behavior>
+    <Design>
+      <GenerateMember>True</GenerateMember>
+      <Locked>False</Locked>
+      <Modifiers>Private</Modifiers>
+    </Design>
+    <Focus>
+      <CausesValidation>True</CausesValidation>
+    </Focus>
+    <Layout>
+      <Anchor>Top, Left</Anchor>
+      <AutoSize>True</AutoSize>
+      <Dock>None</Dock>
+      <Location X="5" Y="7"/>
+      <Margin All="-1" Left="3" Top="0" Right="3" Bottom="0"/>
+      <Padding All="0" Left="0" Top="0" Right="0" Bottom="0"/>
+      <MaximumSize Width="0" Height="0"/>
+      <MinimumSize Width="0" Height="0"/>
+      <Size Width="150" Height="33"/>
+    </Layout>
+  </Component>
+
+  <Component name="btnPlay">
+    <Accessibility>
+      <AccessibleDescription></AccessibleDescription>
+      <AccessibleName></AccessibleName>
+      <AccessibleRole>Default</AccessibleRole>
+    </Accessibility>
+    <Appearance>
+      <Text>Rocket Launcher</Text>
+      <Font size="20" unit="Point" bold="false" italic="false" strikeout="false" underline="false" gdicharset="0" gdiverticalfont="false">Moltors</Font>
+      <ActiveBackColor>DarkSeaGreen</ActiveBackColor>
+      <ActiveBorderColor>White</ActiveBorderColor>
+      <BackColor>Control</BackColor>
+      <BackgroundImage></BackgroundImage>
+      <BackgroundImageLayout>Tile</BackgroundImageLayout>
+      <BorderColor>White</BorderColor>
+      <BorderStyle>None</BorderStyle>
+      <Cursor>Default</Cursor>
+      <DisabledTextColor>SteelBlue</DisabledTextColor>
+      <FlatStyle>Standard</FlatStyle>
+      <ForeColor>SteelBlue</ForeColor>
+      <HoverBackColor>MediumAquamarine</HoverBackColor>
+      <HoverBorderColor>White</HoverBorderColor>
+      <RightToLeft>No</RightToLeft>
+      <StandbyBackColor>DarkSeaGreen</StandbyBackColor>
+      <StandbyBorderColor>White</StandbyBorderColor>
+      <UseWaitCursor>False</UseWaitCursor>
+    </Appearance>
+    <Behavior>
+      <AllowDrop>False</AllowDrop>
+      <AutoValidate>True</AutoValidate>
+      <ContextMenuStrip></ContextMenuStrip>
+      <Enabled>False</Enabled>
+      <ImeMode>NoControl</ImeMode>
+      <TabIndex>6</TabIndex>
+      <TabStop>True</TabStop>
+      <Visible>True</Visible>
+    </Behavior>
+    <Design>
+      <GenerateMember>True</GenerateMember>
+      <Locked>False</Locked>
+      <Modifiers>Private</Modifiers>
+    </Design>
+    <Focus>
+      <CausesValidation>True</CausesValidation>
+    </Focus>
+    <Layout>
+      <Anchor>Top, Left</Anchor>
+      <AutoScroll>False</AutoScroll>
+      <AutoScrollMargin Width="0" Height="0"/>
+      <AutoScrollMinSize Width="0" Height="0"/>
+      <AutoSize>True</AutoSize>
+      <AutoSizeMode>GrowOnly</AutoSizeMode>
+      <Dock>None</Dock>
+      <Location X="427" Y="309"/>
+      <Margin All="3" Left="3" Top="3" Right="3" Bottom="3"/>
+      <Padding All="0" Left="0" Top="0" Right="0" Bottom="0"/>
+      <MaximumSize Width="0" Height="0"/>
+      <MinimumSize Width="0" Height="0"/>
+      <Size Width="150" Height="33"/>
+    </Layout>
+  </Component>
+
+  <Updates>
+    <Update version="0.1">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/0.1-update.xml
+    </Update>
+    <Update version="0.2">
+      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/0.2-update.xml
+    </Update>
+  </Updates>
+</Server>

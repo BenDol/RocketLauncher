@@ -146,9 +146,9 @@ namespace Launcher {
             }
 
             try {
-                var root = from item in serverXML.Descendants("server")
+                var root = from item in serverXML.Descendants("Server")
                     select new {
-                        updates = item.Descendants("update")
+                        updates = item.Descendants("Update")
                     };
 
                 foreach (var data in root) {
@@ -182,11 +182,11 @@ namespace Launcher {
             }
 
             try {
-                var root = from item in xml.Descendants("update")
+                var root = from item in xml.Descendants("Update")
                     select new {
-                        changelog = item.Descendants("changelog"),
-                        files = item.Descendants("file"),
-                        archives = item.Descendants("archive"),
+                        changelog = item.Descendants("Changelog"),
+                        files = item.Descendants("File"),
+                        archives = item.Descendants("Archive"),
                         name = item.Attribute("name"),
                         baseType = item.Attribute("base")
                     };
@@ -202,7 +202,7 @@ namespace Launcher {
                     // Add the changelog data
                     foreach (var clog in data.changelog) {
                         Changelog changelog = new Changelog(update.getVersion());
-                        foreach (var log in clog.Descendants("log")) {
+                        foreach (var log in clog.Descendants("Log")) {
                             changelog.addLog(new Changelog.Log(log.Value.Trim()));
                         }
                         update.setChangelog(changelog);
