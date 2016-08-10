@@ -246,6 +246,10 @@
     <None Include="assets\images\repair_hover.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="external\CustomTabControl\CustomTabControl.csproj">
+      <Project>{4dbfe2cf-45e4-4594-8e6a-5ebc2eef85ae}</Project>
+      <Name>CustomTabControl</Name>
+    </ProjectReference>
     <ProjectReference Include="external\ImageListBox\ImageListBox.csproj">
       <Project>{b9f6169c-c838-4621-8e3c-3af3d9a31453}</Project>
       <Name>ImageListBox</Name>
