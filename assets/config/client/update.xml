@@ -9,6 +9,6 @@
     ERROR = 4 // Something has not functioned the way it is mean't to.
     FATAL = 5 // Something has gone horribly wrong.
 -->
-<Updates url="https://dl.dropboxusercontent.com/u/49948294/updater/server/server.xml" latest="0" logging="1,2,3,4,5">
+<Updates url="https://dl.dropboxusercontent.com/u/49948294/updater/server" director="server.xml" latest="0" logging="1,2,3,4,5">
     
 </Updates>

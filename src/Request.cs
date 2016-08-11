@@ -37,6 +37,8 @@ namespace Launcher {
         private RequestAsyncCallback callback;
 
         private Uri url;
+        private Uri directorUrl;
+        private String director;
         private DateTime dateTime;
         private DownloadHandler dlHandler;
         private Double lastVersion;
@@ -49,10 +51,18 @@ namespace Launcher {
 
         private bool dead = false;
 
-        public Request(Uri url, ref DownloadHandler dlHandler, Double lastVersion) {
+        public Request(Uri url, String director, ref DownloadHandler dlHandler, Double lastVersion) {
             this.url = url;
+            this.director = director;
             this.dlHandler = dlHandler;
             this.lastVersion = lastVersion;
+        }
+
+        public Uri getDirectorPath() {
+            if(directorUrl == null) {
+                directorUrl = new Uri(url.AbsoluteUri + "/" + director);
+            }
+            return directorUrl;
         }
 
         public void send() {
@@ -68,7 +78,7 @@ namespace Launcher {
             dateTime = DateTime.Now;
 
             if (serverXMLCached == null) {
-                dlHandler.downloadStringAsync(url, (object s1,
+                dlHandler.downloadStringAsync(getDirectorPath(), (object s1,
                         DownloadStringCompletedEventArgs e1) => {
                     Logger.log(Logger.TYPE.DEBUG, "Successfully recieved the server XML.");
                     try {
@@ -77,7 +87,7 @@ namespace Launcher {
                     }
                     catch (Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Error while parsing server XML: "
-                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
+                            + ex.Message + ex.StackTrace + " URL: " + getDirectorPath().OriginalString);
 
                         kill();
 
@@ -86,8 +96,7 @@ namespace Launcher {
                         }
                     }
                 });
-            }
-            else {
+            } else {
                 serverXML = serverXMLCached;
                 requestUpdates();
             }
@@ -97,7 +106,8 @@ namespace Launcher {
             updateNodes = getUpdateNodes();
 
             foreach (UpdateNode node in updateNodes) {
-                dlHandler.enqueueString(new Uri(node.getUrl()), node.getFileName(),
+                Uri updateUrl = new Uri(url.AbsoluteUri + "/" + node.getFullPath());
+                dlHandler.enqueueString(updateUrl, node.getFileName(),
                     (String result) => {
                     try {
                         results.Add(node, result);
@@ -153,10 +163,12 @@ namespace Launcher {
                     foreach (var update in data.updates) {
                         String versionStr = update.Attribute("version").Value.Trim();
                         try {
+                            XAttribute dir = update.Attribute("dir");
                             double version = Convert.ToDouble(versionStr);
                             if (version > lastVersion) {
-                                updateNodes.Add(new UpdateNode(this, update.Value.Trim(), version));
-                                Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr);
+                                UpdateNode updateNode = new UpdateNode(this, update.Value.Trim(), version, dir != null ? dir.Value : "");
+                                updateNodes.Add(updateNode);
+                                Logger.log(Logger.TYPE.DEBUG, "Found a new update: " + versionStr + ", url: " + updateNode.getFullPath());
                             }
                         }
                         catch (FormatException e) {
@@ -214,7 +226,7 @@ namespace Launcher {
                         String mime = getAttributeValue(f.Attribute("mime"), "none");
 
                         update.addFile(new GhostFile(name, destination, mime,
-                            new Uri(f.Value.Trim())));
+                            new Uri(url + "/" + node.getDir() + "/" + name)));
                     }
 
                     // Add the archive data
@@ -229,7 +241,7 @@ namespace Launcher {
                         }
 
                         update.addFile(new Archive(name, extractTo, mime, 
-                            new Uri(f.Value.Trim()), cleanDirs));
+                            new Uri(url + "/" + node.getDir() + "/" + name), cleanDirs));
                     }
                 }
             }
@@ -282,6 +294,8 @@ namespace Launcher {
             serverXML = null;
             callback = null;
             url = null;
+            director = null;
+            directorUrl = null;
             dlHandler = null;
             lastVersion = 0;
         }

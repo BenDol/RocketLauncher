@@ -21,7 +21,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,7 +32,7 @@ using System.Xml.Linq;
 namespace Launcher {
 
     class Reciever {
-        private String file;
+        private String file, url, director;
         private DownloadHandler dlHandler;
         private Client client;
 
@@ -48,16 +47,30 @@ namespace Launcher {
             load();
         }
 
-        /**
+        /*
          * Loads the update XML document as an XAsset.
-         **/
+         */
         private void load() {
             try {
                 if (File.Exists(file)) {
                     updateXML = new Asset<XDocument>(XDocument.Load(file), file);
                     validateXML(updateXML.get());
-                }
-                else {
+
+                    var root = from item in updateXML.get().Descendants("Updates")
+                        select new {
+                            // Attributes
+                            url = item.Attribute("url"),
+                            director = item.Attribute("director")
+                        };
+
+                    // Ensure there is only one <Updates> tag set
+                    if (root.Count() < 2) {
+                        foreach (var data in root) {
+                            url = data.url.Value;
+                            director = data.director.Value;
+                        }
+                    }
+                }  else {
                     throw new FileNotFoundException("The file " + file + " does not exist.");
                 }
             }
@@ -79,6 +92,8 @@ namespace Launcher {
          **/
         protected void reset() {
             updateXML.clear();
+            url = null;
+            director = null;
         }
 
         /**
@@ -89,7 +104,7 @@ namespace Launcher {
                 select new {
                     // Attributes
                     url = item.Attribute("url"),
-                    latest = item.Attribute("latest")
+                    director = item.Attribute("director")
                 };
 
             // Ensure there is only one <updates> tag set
@@ -98,16 +113,18 @@ namespace Launcher {
                     Uri url = new Uri(data.url.Value.Trim());
 
                     if (url == null) {
-                        Logger.log(Logger.TYPE.FATAL, "No 'url' attribute found in the <updates> tag: "
+                        Logger.log(Logger.TYPE.FATAL, "No 'url' attribute found in the <Updates> tag: "
                             + data.ToString());
                         break;
-                    }
-                    else {
+                    } else if(data.director == null || data.director.Value == null) {
+                        Logger.log(Logger.TYPE.FATAL, "No 'director' attribute found in the <Updates> tag: "
+                            + data.ToString());
+                        break;
+                    } else {
                         return true;
                     }
                 }
-            }
-            else {
+            } else {
                 Logger.log(Logger.TYPE.FATAL, "No <updates> parent tag found in the xml file");
             }
 
@@ -136,7 +153,7 @@ namespace Launcher {
 
             Request request = null;
             try {
-                request = new Request(getUrl(), ref dlHandler, getLatestVersion());
+                request = new Request(getUrl(), getDirector(), ref dlHandler, getLatestVersion());
                 request.setCallback(callback);
                 request.send(getServerXMLCache());
             }
@@ -150,14 +167,14 @@ namespace Launcher {
 
         public void getInitialData(InitAsyncCallback callback) {
             Logger.log(Logger.TYPE.DEBUG, "Getting initial data...");
-            Uri url = getUrl();
+            Uri directorUrl = getDirectorUrl();
 
-            dlHandler.downloadStringAsync(url, 
+            dlHandler.downloadStringAsync(directorUrl, 
                 (object s, DownloadStringCompletedEventArgs e) => {
                     Logger.log(Logger.TYPE.DEBUG, "Successfully retreived initial data.");
                     try {
                         serverXMLCache = new ExternalAsset<XDocument>(
-                            XDocument.Parse(e.Result), url.OriginalString);
+                            XDocument.Parse(e.Result), directorUrl.OriginalString);
 
                         var root = from item in serverXMLCache.get().Descendants("Server")
                             select new {
@@ -177,7 +194,7 @@ namespace Launcher {
                     }
                     catch(Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "
-                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
+                            + ex.Message + ex.StackTrace + " URL: " + directorUrl.OriginalString);
 
                         callback.onFailure();
                     }
@@ -186,14 +203,14 @@ namespace Launcher {
 
         public void getFonts(FontAsyncCallback callback) {
             Logger.log(Logger.TYPE.DEBUG, "Getting fonts...");
-            Uri url = getUrl();
+            Uri directorUrl = getDirectorUrl();
 
-            dlHandler.downloadStringAsync(url,
+            dlHandler.downloadStringAsync(directorUrl,
                 (object s, DownloadStringCompletedEventArgs e) => {
                     Logger.log(Logger.TYPE.DEBUG, "Successfully retreived fonts.");
                     try {
                         serverXMLCache = new ExternalAsset<XDocument>(
-                            XDocument.Parse(e.Result), url.OriginalString);
+                            XDocument.Parse(e.Result), directorUrl.OriginalString);
 
                         var root = from item in serverXMLCache.get().Descendants("Server")
                             select new {
@@ -271,7 +288,7 @@ namespace Launcher {
                     }
                     catch (Exception ex) {
                         Logger.log(Logger.TYPE.ERROR, "Was unable to get font packages: "
-                            + ex.Message + ex.StackTrace + " URL: " + url.OriginalString);
+                            + ex.Message + ex.StackTrace + " URL: " + directorUrl.OriginalString);
 
                         callback.onFailure();
                     }
@@ -347,8 +364,7 @@ namespace Launcher {
                 select new {
                     url = item.Attribute("url")
                 };
-
-            String url = null;
+            
             foreach (var data in root) {
                 url = data.url.Value;
             }
@@ -497,8 +513,7 @@ namespace Launcher {
             using (XmlWriter xw = XmlWriter.Create(sb, xws)) {
                 try {
                     doc.Element("Updates").AddFirst(update.getXML());
-                    doc.Element("Updates").SetAttributeValue("latest", 
-                        update.getVersion());
+                    doc.Element("Updates").SetAttributeValue("latest", update.getVersion());
 
                     doc.WriteTo(xw);
                     doc.Save(file);
@@ -508,6 +523,16 @@ namespace Launcher {
                         + e.Message + e.StackTrace);
                 }
             }
+        }
+
+        public String getDirector() {
+            reloadIfModified();
+            return director;
+        }
+
+        public Uri getDirectorUrl() {
+            reloadIfModified();
+            return new Uri((url + "/" + director).Trim()); ;
         }
     }
 }

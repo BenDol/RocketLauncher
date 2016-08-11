@@ -4,7 +4,5 @@
     <Log>Add initial application binaries</Log>
   </Changelog>
 
-  <File name="application.exe" destination="" mime="application/exe">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/application.exe
-  </File>
+  <File name="application.exe" destination="" mime="application/exe"/>
 </Update>

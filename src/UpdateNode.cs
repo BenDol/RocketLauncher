@@ -20,20 +20,18 @@
  * THE SOFTWARE.
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Launcher {
     class UpdateNode {
         protected Request request;
         protected String url;
         protected Double version;
+        protected String dir;
 
         public UpdateNode() {
         }
 
-        public UpdateNode(Request request, String url, Double version) {
+        public UpdateNode(Request request, String url, Double version, String dir) {
             if (request == null) {
                 Logger.log(Logger.TYPE.ERROR, "Provided a null request to UpdateNode");
             }
@@ -48,6 +46,8 @@ namespace Launcher {
                 Logger.log(Logger.TYPE.ERROR, "Provided an invalid version to UpdateNode");
             }
             this.version = version;
+            
+            this.dir = dir != null ? dir : "";
         }
 
         public Request getRequest() {
@@ -76,6 +76,18 @@ namespace Launcher {
 
         public void setVersion(Double version) {
             this.version = version;
+        }
+
+        public String getDir() {
+            return dir;
+        }
+
+        public void setDir(String dir) {
+            this.dir = dir;
+        }
+
+        public String getFullPath() {
+            return dir + "/" + url;
         }
     }
 }

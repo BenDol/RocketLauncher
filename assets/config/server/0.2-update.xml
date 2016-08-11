@@ -6,14 +6,7 @@
     <Log>Updated all the data files</Log>
   </Changelog>
 
-  <File name="banner.png" destination="" mime="images/png">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/banner.png
-  </File>
-  <File name="item.png" destination="items" mime="images/png">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/item.png
-  </File>
-
-  <Archive name="data.zip" extractTo="data" cleanDirs="true" mime="application/zip">
-    https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/data.zip
-  </Archive>
+  <File name="banner.png" destination="" mime="images/png"/>
+  <File name="item.png" destination="items" mime="images/png"/>
+  <Archive name="data.zip" extractTo="data" cleanDirs="true" mime="application/zip"/>
 </Update>

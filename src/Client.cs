@@ -22,16 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Net.NetworkInformation;
-using System.Net;
 using System.IO;
-using System.IO.Compression;
-using System.Threading;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Launcher.Interface;
@@ -52,9 +45,7 @@ namespace Launcher {
         public Client(Ui ui) {
             this.ui = ui;
 
-            dlHandler = new DownloadHandler(ui.getStatusLabel(), 
-                ui.getDownloadProgressBar());
-
+            dlHandler = new DownloadHandler(ui.getStatusLabel(), ui.getDownloadProgressBar());
             reciever = new Reciever(ref dlHandler, this);
 
             Logger.log(Logger.TYPE.DEBUG, "Client successfully constructed.");
@@ -360,7 +351,11 @@ namespace Launcher {
 
             String path = Path.Combine(getTempPath(), Convert.ToString(update.getVersion()));
             if (Directory.Exists(path)) {
-                Directory.Delete(path, true);
+                try {
+                    Directory.Delete(path, true);
+                } catch(IOException ex) {
+                    Logger.log(Logger.TYPE.FATAL, "Unable to delete temp dir: " + ex.Message + ex.StackTrace);
+                }
             }
             update.setTempDir(Directory.CreateDirectory(path));
 

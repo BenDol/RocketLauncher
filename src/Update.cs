@@ -41,6 +41,7 @@ namespace Launcher {
             this.request = node.getRequest();
             this.url = node.getUrl();
             this.version = node.getVersion();
+            this.dir = node.getDir();
             this.success = false;
 
             this.changelog = new Changelog(version);
@@ -117,8 +118,7 @@ namespace Launcher {
             xml.SetAttributeValue("name", getName());
             xml.SetAttributeValue("version", getVersion());
             xml.SetAttributeValue("base", getBaseType());
-            xml.SetAttributeValue("url", getUrl());
-
+            xml.SetAttributeValue("url", getFullPath());
             return xml;
         }
 

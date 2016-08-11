@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Server name="Rocket Launcher" target="Application.exe" launchText="Play">
-  <FontPackage name="Moltors" archive="moltors.zip" package="https://dl.dropboxusercontent.com/u/49948294/updater/server/moltors.zip"/>
+  <FontPackage name="Moltors" archive="moltors.zip" package="moltors.zip"/>
   
   <Component name="lblName">
     <Accessibility>
@@ -123,11 +123,7 @@
   </Component>
 
   <Updates>
-    <Update version="0.1">
-      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/0.1-update.xml
-    </Update>
-    <Update version="0.2">
-      https://dl.dropboxusercontent.com/u/49948294/updater/server/0.2/0.2-update.xml
-    </Update>
+    <Update version="0.1" dir="0.1">0.1-update.xml</Update>
+    <Update version="0.2" dir="0.2">0.2-update.xml</Update>
   </Updates>
 </Server>
