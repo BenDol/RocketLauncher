@@ -99,15 +99,15 @@ namespace Launcher {
         }
 
         public XElement getXML() {
-            XElement xml = new XElement("update");
+            XElement xml = new XElement("Update");
 
             Changelog changeLog = getChangelog();
             XElement changeLogXML = null;
 
             if(changeLog != null && !changeLog.isEmpty()) {
-                changeLogXML = new XElement("changelog");
+                changeLogXML = new XElement("Changelog");
                 foreach(Changelog.Log log in changeLog.getLogs()) {
-                    XElement logXML = new XElement("log");
+                    XElement logXML = new XElement("Log");
                     logXML.SetValue(log.getText());
                     changeLogXML.Add(logXML);
                 }

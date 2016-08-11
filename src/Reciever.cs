@@ -85,7 +85,7 @@ namespace Launcher {
          * Ensure the update XML is valid.
          **/
         protected static bool validateXML(XDocument updateXML) {
-            var root = from item in updateXML.Descendants("updates")
+            var root = from item in updateXML.Descendants("Updates")
                 select new {
                     // Attributes
                     url = item.Attribute("url"),
@@ -159,7 +159,7 @@ namespace Launcher {
                         serverXMLCache = new ExternalAsset<XDocument>(
                             XDocument.Parse(e.Result), url.OriginalString);
 
-                        var root = from item in serverXMLCache.get().Descendants("server")
+                        var root = from item in serverXMLCache.get().Descendants("Server")
                             select new {
                                 name = item.Attribute("name"),
                                 target = item.Attribute("target")
@@ -195,9 +195,9 @@ namespace Launcher {
                         serverXMLCache = new ExternalAsset<XDocument>(
                             XDocument.Parse(e.Result), url.OriginalString);
 
-                        var root = from item in serverXMLCache.get().Descendants("server")
+                        var root = from item in serverXMLCache.get().Descendants("Server")
                             select new {
-                                fonts = item.Descendants("font")
+                                fonts = item.Descendants("Font")
                             };
 
                         List<FontPackage> packages = new List<FontPackage>();
@@ -343,7 +343,7 @@ namespace Launcher {
         public Uri getUrl() {
             reloadIfModified();
 
-            var root = from item in updateXML.get().Descendants("updates")
+            var root = from item in updateXML.get().Descendants("Updates")
                 select new {
                     url = item.Attribute("url")
                 };
@@ -363,7 +363,7 @@ namespace Launcher {
         public double getLatestVersion() {
             reloadIfModified();
 
-            var root = from item in updateXML.get().Descendants("updates")
+            var root = from item in updateXML.get().Descendants("Updates")
                 select new {
                     latest = item.Attribute("latest")
                 };
@@ -391,9 +391,9 @@ namespace Launcher {
             XDocument xml = getUpdateXML();
 
             List<Update> updates = new List<Update>();
-            var root = from item in updateXML.get().Descendants("updates")
+            var root = from item in updateXML.get().Descendants("Updates")
                 select new {
-                    updates = item.Descendants("update")
+                    updates = item.Descendants("Update")
                 };
 
             try {
@@ -404,7 +404,7 @@ namespace Launcher {
                             version = item.Attribute("version"),
                             url = item.Attribute("url"),
                             baseType = item.Attribute("base"),
-                            changelogs = item.Descendants("changelog")
+                            changelogs = item.Descendants("Changelog")
                         };
 
                     foreach (var u in udates) {
@@ -420,7 +420,7 @@ namespace Launcher {
 
                         Changelog changelog = new Changelog(update.getVersion());
                         foreach (var clog in u.changelogs) {
-                            foreach(var log in clog.Descendants("log")) {
+                            foreach(var log in clog.Descendants("Log")) {
                                 changelog.addLog(new Changelog.Log(log.Value));
                             }
                             update.setChangelog(changelog);
@@ -442,7 +442,7 @@ namespace Launcher {
         public String getLogging() {
             reloadIfModified();
 
-            var root = from item in updateXML.get().Descendants("updates")
+            var root = from item in updateXML.get().Descendants("Updates")
                 select new {
                     logging = item.Attribute("logging")
                 };
@@ -455,9 +455,9 @@ namespace Launcher {
         }
 
         public XElement getUpdateElement(Update update, XDocument doc) {
-            var root = from item in doc.Descendants("updates")
+            var root = from item in doc.Descendants("Updates")
                 select new {
-                    updates = item.Descendants("update")
+                    updates = item.Descendants("Update")
                 };
 
             XElement element = null;

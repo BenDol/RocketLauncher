@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<update name="Initial Install" version="0.1">
-  <changelog>
-    <log>Add initial application binaries</log>
-  </changelog>
+<Update name="Initial Install" version="0.1">
+  <Changelog>
+    <Log>Add initial application binaries</Log>
+  </Changelog>
 
-  <file name="application.exe" destination="" mime="application/exe">
+  <File name="application.exe" destination="" mime="application/exe">
     https://dl.dropboxusercontent.com/u/49948294/updater/server/0.1/application.exe
-  </file>
-</update>
+  </File>
+</Update>
