@@ -21,11 +21,9 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -211,9 +209,9 @@ namespace Launcher {
 
                     // Add the file data
                     foreach (var f in data.files) {
-                        String name = f.Attribute("name").Value.Trim();
-                        String destination = f.Attribute("destination").Value.Trim();
-                        String mime = f.Attribute("mime").Value.Trim();
+                        String name = getAttributeValue(f.Attribute("name"));
+                        String destination = getAttributeValue(f.Attribute("destination"));
+                        String mime = getAttributeValue(f.Attribute("mime"), "none");
 
                         update.addFile(new GhostFile(name, destination, mime,
                             new Uri(f.Value.Trim())));
@@ -221,9 +219,9 @@ namespace Launcher {
 
                     // Add the archive data
                     foreach (var f in data.archives) {
-                        String name = f.Attribute("name").Value.Trim();
-                        String extractTo = f.Attribute("extractTo").Value.Trim();
-                        String mime = f.Attribute("mime").Value.Trim();
+                        String name = getAttributeValue(f.Attribute("name"));
+                        String extractTo = getAttributeValue(f.Attribute("extractTo"));
+                        String mime = getAttributeValue(f.Attribute("mime"), "none");
 
                         Boolean cleanDirs = false;
                         if (f.Attribute("cleanDirs") != null) {
@@ -241,6 +239,19 @@ namespace Launcher {
             }
 
             return update;
+        }
+
+        public static String getAttributeValue(XAttribute attr, String optional = null) {
+            if (optional == null) {
+                try {
+                    return attr.Value.Trim();
+                } catch(NullReferenceException) {
+                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
+                }
+            } else {
+                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
+            }
+            
         }
 
         public static List<Update> orderUpdates(List<Update> updates) {

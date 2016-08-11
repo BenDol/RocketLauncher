@@ -22,7 +22,7 @@ namespace Launcher {
 
         protected void setTo(XElement elem) {
             try {
-                this.to = elem.Attribute("to").Value;
+                to = elem.Attribute("to").Value;
             }
             catch (Exception e) {
                 Logger.log(Logger.TYPE.ERROR, "FontApply: Unable to parse 'to'. " + e.Message);

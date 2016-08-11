@@ -118,6 +118,7 @@
     <Compile Include="src\FontApply.cs" />
     <Compile Include="src\FontHandler.cs" />
     <Compile Include="src\FontPackage.cs" />
+    <Compile Include="src\MissingAttributeException.cs" />
     <Compile Include="src\StringAsyncCallback.cs" />
     <Compile Include="src\GhostFile.cs" />
     <Compile Include="src\WindowsMessages.cs" />
