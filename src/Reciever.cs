@@ -426,6 +426,7 @@ namespace Launcher {
                             update.setChangelog(changelog);
                             break;
                         }
+                        update.setChangelog(changelog);
 
                         updates.Add(update);
                     }
@@ -495,8 +496,8 @@ namespace Launcher {
 
             using (XmlWriter xw = XmlWriter.Create(sb, xws)) {
                 try {
-                    doc.Element("updates").AddFirst(update.getXML());
-                    doc.Element("updates").SetAttributeValue("latest", 
+                    doc.Element("Updates").AddFirst(update.getXML());
+                    doc.Element("Updates").SetAttributeValue("latest", 
                         update.getVersion());
 
                     doc.WriteTo(xw);

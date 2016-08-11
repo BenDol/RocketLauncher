@@ -42,7 +42,7 @@ namespace Launcher {
             setPackage(elem);
 
             try {
-                foreach (var apply in elem.Descendants("apply")) {
+                foreach (var apply in elem.Descendants("Apply")) {
                     addApply(new FontApply(apply, getName()));
                 }
             }
