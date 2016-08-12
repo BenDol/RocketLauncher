@@ -171,128 +171,148 @@ namespace Launcher {
 
             dlHandler.downloadStringAsync(directorUrl, 
                 (object s, DownloadStringCompletedEventArgs e) => {
-                    Logger.log(Logger.TYPE.DEBUG, "Successfully retreived initial data.");
-                    try {
-                        serverXMLCache = new ExternalAsset<XDocument>(
-                            XDocument.Parse(e.Result), directorUrl.OriginalString);
+                Logger.log(Logger.TYPE.DEBUG, "Successfully retreived initial data.");
+                try {
+                    serverXMLCache = new ExternalAsset<XDocument>(
+                        XDocument.Parse(e.Result), directorUrl.OriginalString);
 
-                        var root = from item in serverXMLCache.get().Descendants("Server")
+                    var root = from item in serverXMLCache.get().Descendants("Server")
+                        select new {
+                            name = item.Attribute("name"),
+                            target = item.Attribute("target")
+                        };
+
+                    String serverName = "";
+                    String targetPath = "";
+                    foreach (var data in root) {
+                        serverName = data.name.Value;
+                        targetPath = data.target.Value;
+                        break;
+                    }
+
+                    callback.onSuccess(serverName, targetPath);
+                }
+                catch(Exception ex) {
+                    Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "
+                        + ex.Message + ex.StackTrace + " URL: " + directorUrl.OriginalString);
+
+                    callback.onFailure();
+                }
+            });
+        }
+
+        public void getLayout(LayoutAsyncCallback callback) {
+            Logger.log(Logger.TYPE.DEBUG, "Getting layout...");
+            String layout = null;
+
+            List<Component> components = new List<Component>();
+
+            XAttribute layoutAttr = serverXMLCache.get().Element("Server").Attribute("layout");
+            if(layoutAttr != null) {
+                layout = layoutAttr.Value;
+            }
+
+            if (layout != null) {
+                // Download layout xml
+                dlHandler.downloadStringAsync(new Uri(getUrl() + "/" + layout), 
+                    (object s, DownloadStringCompletedEventArgs e) => {
+                        XDocument doc = XDocument.Parse(e.Result);
+                        var root = from item in doc.Elements("Layout")
                             select new {
-                                name = item.Attribute("name"),
-                                target = item.Attribute("target")
+                                components = item.Elements()
                             };
-
-                        String serverName = "";
-                        String targetPath = "";
+                        
                         foreach (var data in root) {
-                            serverName = data.name.Value;
-                            targetPath = data.target.Value;
-                            break;
+                            foreach (var f in data.components) {
+                                String name = Xml.getAttributeValue(f.Attribute("name"));
+                                components.Add(new Component(name, f.Name.LocalName, f));
+                            }
                         }
 
-                        callback.onSuccess(serverName, targetPath);
-                    }
-                    catch(Exception ex) {
-                        Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "
-                            + ex.Message + ex.StackTrace + " URL: " + directorUrl.OriginalString);
-
-                        callback.onFailure();
-                    }
-            });
+                        callback.onSuccess(components);
+                    });
+            } else {
+                callback.onSuccess(components);
+            }
         }
 
         public void getFonts(FontAsyncCallback callback) {
             Logger.log(Logger.TYPE.DEBUG, "Getting fonts...");
-            Uri directorUrl = getDirectorUrl();
+            
+            var root = from item in serverXMLCache.get().Descendants("Server")
+                select new {
+                    fonts = item.Descendants("Font")
+                };
 
-            dlHandler.downloadStringAsync(directorUrl,
-                (object s, DownloadStringCompletedEventArgs e) => {
-                    Logger.log(Logger.TYPE.DEBUG, "Successfully retreived fonts.");
-                    try {
-                        serverXMLCache = new ExternalAsset<XDocument>(
-                            XDocument.Parse(e.Result), directorUrl.OriginalString);
-
-                        var root = from item in serverXMLCache.get().Descendants("Server")
-                            select new {
-                                fonts = item.Descendants("Font")
-                            };
-
-                        List<FontPackage> packages = new List<FontPackage>();
-                        foreach (var data in root) {
-                            foreach (var f in data.fonts) {
-                                packages.Add(new FontPackage(f));
-                            }
-                        }
+            List<FontPackage> packages = new List<FontPackage>();
+            foreach (var data in root) {
+                foreach (var f in data.fonts) {
+                    packages.Add(new FontPackage(f));
+                }
+            }
                         
-                        List<String> installedFonts = new List<String>();
+            List<String> installedFonts = new List<String>();
 
-                        String fontCachePath = client.getFontCacheDir();
-                        String tmpFontPath = Path.Combine(fontCachePath, "tmpfonts");
-                        if (!Directory.Exists(fontCachePath)) {
-                            Directory.CreateDirectory(fontCachePath);
-                            Directory.CreateDirectory(tmpFontPath);
-                        }
-                        else {
-                            if (!Directory.Exists(tmpFontPath)) {
-                                Directory.CreateDirectory(tmpFontPath);
-                            }
-                            // Preload already existing fonts
-                            installedFonts = installPrivateFonts(fontCachePath);
-                        }
+            String fontCachePath = client.getFontCacheDir();
+            String tmpFontPath = Path.Combine(fontCachePath, "tmpfonts");
+            if (!Directory.Exists(fontCachePath)) {
+                Directory.CreateDirectory(fontCachePath);
+                Directory.CreateDirectory(tmpFontPath);
+            }
+            else {
+                if (!Directory.Exists(tmpFontPath)) {
+                    Directory.CreateDirectory(tmpFontPath);
+                }
+                // Preload already existing fonts
+                installedFonts = installPrivateFonts(fontCachePath);
+            }
 
-                        if (packages.Count > 0) {
-                            // Download font packages
-                            foreach (FontPackage package in packages) {
-                                if (!FontHandler.doesFontExist(package.getName(), true, true)) {
-                                    if (package.canDownload()) {
-                                        dlHandler.enqueueFile(new Uri(package.getPackage()), tmpFontPath,
-                                            package.getArchiveName(), (Boolean cancelled) => {
-                                            if (!cancelled) {
-                                                ArchiveHandler.extractZip(Path.Combine(tmpFontPath,
-                                                    package.getArchiveName()), tmpFontPath, false);
-                                            }
-                                        });
-                                    }
+            if (packages.Count > 0) {
+                // Download font packages
+                foreach (FontPackage package in packages) {
+                    if (!FontHandler.doesFontExist(package.getName(), true, true)) {
+                        if (package.canDownload()) {
+                            Uri packageUrl = new Uri(getUrl() + "/" + package.getPackage());
+                            dlHandler.enqueueFile(packageUrl, tmpFontPath,
+                                package.getArchiveName(), (Boolean cancelled) => {
+                                if (!cancelled) {
+                                    ArchiveHandler.extractZip(Path.Combine(tmpFontPath,
+                                        package.getArchiveName()), tmpFontPath, false);
                                 }
-                                else {
-                                    package.setInstalled(true);
-                                }
-                            }
-
-                            dlHandler.setQueueFileCallback(new QueueCallback(() => {
-                                installedFonts.AddRange(installPrivateFonts(tmpFontPath));
-
-                                // Finished installing new fonts, now cache them
-                                cacheFonts(tmpFontPath);
-
-                                // Apply new fonts to the packages
-                                foreach (FontPackage package in packages) {
-                                    if (FontHandler.doesPrivateFontExist(package.getName(), true)) {
-                                        package.setInstalled(true); // Ensure package is now installed
-
-                                        foreach (KeyValuePair<String, FontApply> pair in package.getApplyMap()) {
-                                            FontApply fontApply = pair.Value;
-                                            fontApply.usePrivateFont(package.getName());
-                                        }
-                                    }
-                                }
-
-                                callback.onSuccess(packages);
-                            }));
-
-                            dlHandler.startFileQueue();
-                        }
-                        else {
-                            callback.onSuccess(packages);
+                            });
                         }
                     }
-                    catch (Exception ex) {
-                        Logger.log(Logger.TYPE.ERROR, "Was unable to get font packages: "
-                            + ex.Message + ex.StackTrace + " URL: " + directorUrl.OriginalString);
-
-                        callback.onFailure();
+                    else {
+                        package.setInstalled(true);
                     }
-                });
+                }
+
+                dlHandler.setQueueFileCallback(new QueueCallback(() => {
+                    installedFonts.AddRange(installPrivateFonts(tmpFontPath));
+
+                    // Finished installing new fonts, now cache them
+                    cacheFonts(tmpFontPath);
+
+                    // Apply new fonts to the packages
+                    foreach (FontPackage package in packages) {
+                        if (FontHandler.doesPrivateFontExist(package.getName(), true)) {
+                            package.setInstalled(true); // Ensure package is now installed
+
+                            foreach (KeyValuePair<String, FontApply> pair in package.getApplyMap()) {
+                                FontApply fontApply = pair.Value;
+                                fontApply.usePrivateFont(package.getName());
+                            }
+                        }
+                    }
+
+                    callback.onSuccess(packages);
+                }));
+
+                dlHandler.startFileQueue();
+            }
+            else {
+                callback.onSuccess(packages);
+            }
         }
 
         public List<String> installPrivateFonts(String fontsDir) {

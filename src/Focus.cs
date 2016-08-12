@@ -20,44 +20,34 @@
  * THE SOFTWARE.
  */
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Launcher {
-    class Xml {
-        /**
-         * Static load specific xml document
-         **/
-        public static XDocument load(String file) {
-            XDocument xml = null;
-            try {
-                if (File.Exists(file)) {
-                    xml = XDocument.Load(file);
-                }
-                else {
-                    throw new FileNotFoundException("The file " + file + " does not exist.");
-                }
-            }
-            catch (IOException e) {
-                Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
-            }
 
-            return xml;
+    class Focus {
+        private Boolean causesValidation;
+
+        public Focus(XElement element) {
+            parse(element);
         }
 
-        public static String getAttributeValue(XAttribute attr, String optional = null) {
-            if (optional == null) {
-                try {
-                    return attr.Value.Trim();
-                } catch (NullReferenceException) {
-                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
-                }
-            } else {
-                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
-            }
+        public Focus(Boolean causesValidation) {
+            this.causesValidation = causesValidation;
+        }
+
+        public Boolean getCausesValidation() {
+            return causesValidation;
+        }
+
+        public void setCausesValidation(Boolean causesValidation) {
+            this.causesValidation = causesValidation;
+        }
+
+        private void parse(XElement element) {
+            XElement root = element.Element("Focus");
+            try {
+                setCausesValidation(Convert.ToBoolean(root.Element("CausesValidation").Value));
+            } catch (NullReferenceException) { }
         }
     }
 }

@@ -79,10 +79,10 @@ namespace Launcher {
 
             if (serverXMLCached == null) {
                 dlHandler.downloadStringAsync(getDirectorPath(), (object s1,
-                        DownloadStringCompletedEventArgs e1) => {
+                        DownloadStringCompletedEventArgs e) => {
                     Logger.log(Logger.TYPE.DEBUG, "Successfully recieved the server XML.");
                     try {
-                        serverXML = XDocument.Parse(e1.Result);
+                        serverXML = XDocument.Parse(e.Result);
                         requestUpdates();
                     }
                     catch (Exception ex) {
@@ -221,9 +221,9 @@ namespace Launcher {
 
                     // Add the file data
                     foreach (var f in data.files) {
-                        String name = getAttributeValue(f.Attribute("name"));
-                        String destination = getAttributeValue(f.Attribute("destination"));
-                        String mime = getAttributeValue(f.Attribute("mime"), "none");
+                        String name = Xml.getAttributeValue(f.Attribute("name"));
+                        String destination = Xml.getAttributeValue(f.Attribute("destination"));
+                        String mime = Xml.getAttributeValue(f.Attribute("mime"), "none");
 
                         update.addFile(new GhostFile(name, destination, mime,
                             new Uri(url + "/" + node.getDir() + "/" + name)));
@@ -231,9 +231,9 @@ namespace Launcher {
 
                     // Add the archive data
                     foreach (var f in data.archives) {
-                        String name = getAttributeValue(f.Attribute("name"));
-                        String extractTo = getAttributeValue(f.Attribute("extractTo"));
-                        String mime = getAttributeValue(f.Attribute("mime"), "none");
+                        String name = Xml.getAttributeValue(f.Attribute("name"));
+                        String extractTo = Xml.getAttributeValue(f.Attribute("extractTo"));
+                        String mime = Xml.getAttributeValue(f.Attribute("mime"), "none");
 
                         Boolean cleanDirs = false;
                         if (f.Attribute("cleanDirs") != null) {
@@ -251,19 +251,6 @@ namespace Launcher {
             }
 
             return update;
-        }
-
-        public static String getAttributeValue(XAttribute attr, String optional = null) {
-            if (optional == null) {
-                try {
-                    return attr.Value.Trim();
-                } catch(NullReferenceException) {
-                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
-                }
-            } else {
-                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
-            }
-            
         }
 
         public static List<Update> orderUpdates(List<Update> updates) {

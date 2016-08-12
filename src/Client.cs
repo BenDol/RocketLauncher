@@ -62,14 +62,24 @@ namespace Launcher {
                             applyCustomFonts(package.getApplyMap());
                         }
                     }
+                },
+                () => {
+                    Logger.log(Logger.TYPE.FATAL, "Failed to get font packages");
+                    MessageBox.Show("Failed to get font packages, check the log file for more details.");
+                }));
+
+                reciever.getLayout(new LayoutAsyncCallback((List<Component> components) => {
+                    foreach (Component component in components) {
+                        ui.addOrModifyComponent(component);
+                    }
 
                     initialized = true;
                     populateUpdateLogs();
                     callback();
                 },
                 () => {
-                    Logger.log(Logger.TYPE.FATAL, "Failed to get font packages");
-                    MessageBox.Show("Failed to get font packages, check the log file for more details.");
+                    Logger.log(Logger.TYPE.FATAL, "Failed to get layout data");
+                    MessageBox.Show("Failed to get layout data, check the log file for more details.");
 
                     initialized = true;
                     populateUpdateLogs();
@@ -97,8 +107,8 @@ namespace Launcher {
             ui.getTickImage().Visible = false;
             ui.getUpToDateLabel().Visible = false;
 
-            ui.getPlayButton().Enabled = false;
-            ui.getPlayButton().BtnText = "Updating";
+            ui.getLaunchButton().Enabled = false;
+            ui.getLaunchButton().BtnText = "Updating";
 
             reciever.sendRequest(new RequestAsyncCallback((List<Update> updates, TimeSpan response) => {
                 Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in "
@@ -259,7 +269,7 @@ namespace Launcher {
                         ui.getStatusLabel().Text = "Error while patching files, please check the "
                             + "log for more details.";
 
-                        ui.getPlayButton().BtnText = "Failed";
+                        ui.getLaunchButton().BtnText = "Failed";
                         return;
                     }
                 }
@@ -436,8 +446,8 @@ namespace Launcher {
         private void enablePlay() {
             Logger.log(Logger.TYPE.DEBUG, "Enable Play button");
             ui.getRefreshButton().Enabled = true;
-            ui.getPlayButton().Enabled = true;
-            ui.getPlayButton().BtnText = "Play";
+            ui.getLaunchButton().Enabled = true;
+            ui.getLaunchButton().BtnText = "Play";
         }
 
         public Reciever getReciever() {

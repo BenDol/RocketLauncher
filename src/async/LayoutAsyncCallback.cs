@@ -21,43 +21,23 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 
 namespace Launcher {
-    class Xml {
-        /**
-         * Static load specific xml document
-         **/
-        public static XDocument load(String file) {
-            XDocument xml = null;
-            try {
-                if (File.Exists(file)) {
-                    xml = XDocument.Load(file);
-                }
-                else {
-                    throw new FileNotFoundException("The file " + file + " does not exist.");
-                }
-            }
-            catch (IOException e) {
-                Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
-            }
+    class LayoutAsyncCallback {
+        private Action<List<Component>> success;
+        private Action failure;
 
-            return xml;
+        public LayoutAsyncCallback(Action<List<Component>> onSuccess, Action onFailure) {
+            this.success = onSuccess;
+            this.failure = onFailure;
         }
 
-        public static String getAttributeValue(XAttribute attr, String optional = null) {
-            if (optional == null) {
-                try {
-                    return attr.Value.Trim();
-                } catch (NullReferenceException) {
-                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
-                }
-            } else {
-                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
-            }
+        public void onSuccess(List<Component> value) {
+            success(value);
+        }
+
+        public void onFailure() {
+            failure();
         }
     }
 }

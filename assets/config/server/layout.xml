@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Layout>
+  <Launcher.Interface.ControlLabel name="lblName">
+    <Accessibility>
+      <AccessibleName></AccessibleName>
+      <AccessibleDescription></AccessibleDescription>
+      <AccessibleRole>Default</AccessibleRole>
+    </Accessibility>
+    <Appearance>
+      <Text>Rocket Launcher</Text>
+      <BackColor>Control</BackColor>
+      <CompositeQuality>HighQuality</CompositeQuality>
+      <Cursor>Default</Cursor>
+      <DisabledTextColor>SteelBlue</DisabledTextColor>
+      <FlatStyle>Standard</FlatStyle>
+      <ForeColor>SteelBlue</ForeColor>
+      <Image></Image>
+      <ImageIndex></ImageIndex>
+      <ImageKey></ImageKey>
+      <ImageList></ImageList>
+      <ImageAlign>MiddleCenter</ImageAlign>
+      <RightToLeft>No</RightToLeft>
+      <SmoothingMode>HighQuality</SmoothingMode>
+      <TextAlign>TopLeft</TextAlign>
+      <TextRenderHint>AntiAliasGridFit</TextRenderHint>
+      <UseMnmonic>True</UseMnmonic>
+      <UseWaitCursor>False</UseWaitCursor>
+    </Appearance>
+    <Behavior>
+      <AllowDrop>False</AllowDrop>
+      <AutoEllipsis>True</AutoEllipsis>
+      <Enabled>False</Enabled>
+      <TabIndex>11</TabIndex>
+      <UseCompatibleTextRendering>False</UseCompatibleTextRendering>
+      <Visible>True</Visible>
+    </Behavior>
+    <Design>
+      <GenerateMember>True</GenerateMember>
+      <Locked>False</Locked>
+      <Modifiers>Private</Modifiers>
+    </Design>
+    <Focus>
+      <CausesValidation>True</CausesValidation>
+    </Focus>
+    <Layout>
+      <Anchor>Top, Left</Anchor>
+      <AutoSize>True</AutoSize>
+      <Dock>None</Dock>
+      <Location X="5" Y="7"/>
+      <Margin All="-1" Left="3" Top="0" Right="3" Bottom="0"/>
+      <Padding All="0" Left="0" Top="0" Right="0" Bottom="0"/>
+      <MaximumSize Width="0" Height="0"/>
+      <MinimumSize Width="0" Height="0"/>
+      <Size Width="150" Height="33"/>
+    </Layout>
+  </Launcher.Interface.ControlLabel>
+
+  <Launcher.Interface.GlossyButton name="btnLaunch">
+    <Accessibility>
+      <AccessibleName></AccessibleName>
+      <AccessibleDescription></AccessibleDescription>
+      <AccessibleRole>Default</AccessibleRole>
+    </Accessibility>
+    <Appearance>
+      <Text>Start</Text>
+      <Font size="8.25" unit="Point" bold="false" italic="false" strikeout="false" underline="false" gdicharset="0" gdiverticalfont="false">Tahoma</Font>
+      <ActiveBackColor>DarkSeaGreen</ActiveBackColor>
+      <ActiveBorderColor>White</ActiveBorderColor>
+      <BackColor>Control</BackColor>
+      <BackgroundImage></BackgroundImage>
+      <BackgroundImageLayout>Tile</BackgroundImageLayout>
+      <BorderColor>White</BorderColor>
+      <Cursor>Default</Cursor>
+      <DisabledTextColor>SteelBlue</DisabledTextColor>
+      <FlatStyle>Standard</FlatStyle>
+      <ForeColor>SteelBlue</ForeColor>
+      <HoverBackColor>MediumAquamarine</HoverBackColor>
+      <HoverBorderColor>White</HoverBorderColor>
+      <RightToLeft>No</RightToLeft>
+      <StandbyBackColor>DarkSeaGreen</StandbyBackColor>
+      <StandbyBorderColor>White</StandbyBorderColor>
+      <UseWaitCursor>False</UseWaitCursor>
+    </Appearance>
+    <Behavior>
+      <AllowDrop>False</AllowDrop>
+      <AutoValidate>True</AutoValidate>
+      <Enabled>False</Enabled>
+      <ImeMode>NoControl</ImeMode>
+      <TabIndex>6</TabIndex>
+      <TabStop>True</TabStop>
+      <Visible>True</Visible>
+    </Behavior>
+    <Design>
+      <GenerateMember>True</GenerateMember>
+      <Locked>False</Locked>
+      <Modifiers>Private</Modifiers>
+    </Design>
+    <Focus>
+      <CausesValidation>True</CausesValidation>
+    </Focus>
+    <Layout>
+      <Anchor>Top, Left</Anchor>
+      <AutoScroll>False</AutoScroll>
+      <AutoScrollMargin Width="0" Height="0"/>
+      <AutoScrollMinSize Width="0" Height="0"/>
+      <AutoSize>True</AutoSize>
+      <AutoSizeMode>GrowOnly</AutoSizeMode>
+      <Dock>None</Dock>
+      <Location X="427" Y="309"/>
+      <Margin All="3" Left="3" Top="3" Right="3" Bottom="3"/>
+      <Padding All="0" Left="0" Top="0" Right="0" Bottom="0"/>
+      <MaximumSize Width="0" Height="0"/>
+      <MinimumSize Width="0" Height="0"/>
+      <Size Width="76" Height="39"/>
+    </Layout>
+  </Launcher.Interface.GlossyButton>
+</Layout>

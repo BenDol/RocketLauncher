@@ -108,18 +108,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="src\ReflectUtils.cs" />
     <Compile Include="src\Archive.cs" />
     <Compile Include="src\ArchiveHandler.cs" />
+    <Compile Include="src\async\AsyncCallback.cs" />
+    <Compile Include="src\async\FontAsyncCallback.cs" />
+    <Compile Include="src\async\InitAsyncCallback.cs" />
+    <Compile Include="src\async\LayoutAsyncCallback.cs" />
+    <Compile Include="src\async\QueueCallback.cs" />
+    <Compile Include="src\async\RequestAsyncCallback.cs" />
+    <Compile Include="src\async\StringAsyncCallback.cs" />
     <Compile Include="src\Changelog.cs" />
-    <Compile Include="src\InitAsyncCallback.cs" />
     <Compile Include="src\EnumUtils.cs" />
-    <Compile Include="src\FontAsyncCallback.cs" />
     <Compile Include="src\ExternalAsset.cs" />
     <Compile Include="src\FontApply.cs" />
     <Compile Include="src\FontHandler.cs" />
     <Compile Include="src\FontPackage.cs" />
+    <Compile Include="src\layout\Accessibility.cs" />
+    <Compile Include="src\layout\Appearance.cs" />
+    <Compile Include="src\layout\Behavior.cs" />
+    <Compile Include="src\layout\Component.cs" />
+    <Compile Include="src\layout\Focus.cs" />
+    <Compile Include="src\layout\Layout.cs" />
     <Compile Include="src\MissingAttributeException.cs" />
-    <Compile Include="src\StringAsyncCallback.cs" />
     <Compile Include="src\GhostFile.cs" />
     <Compile Include="src\WindowsMessages.cs" />
     <Compile Include="src\WinAPI.cs" />
@@ -141,8 +152,6 @@
       <Generator>GlossyButton</Generator>
       <CustomToolNamespace>GlossyButton</CustomToolNamespace>
     </Compile>
-    <Compile Include="src\QueueCallback.cs" />
-    <Compile Include="src\RequestAsyncCallback.cs" />
     <Compile Include="src\Logger.cs" />
     <Compile Include="src\DownloadHandler.cs" />
     <Compile Include="src\Reciever.cs" />
@@ -222,6 +231,7 @@
     <Content Include="assets\config\client\update.xml" />
     <Content Include="assets\config\server\0.1-update.xml" />
     <Content Include="assets\config\server\0.2-update.xml" />
+    <Content Include="assets\config\server\layout.xml" />
     <Content Include="assets\config\server\server.xml">
       <SubType>Designer</SubType>
     </Content>

@@ -68,7 +68,7 @@ namespace Launcher.Interface {
             this.lblName = new Launcher.Interface.ControlLabel();
             this.btnClose = new Launcher.Interface.GlossyButton();
             this.pBarMain = new Launcher.Interface.PrettyProgressBar();
-            this.btnPlay = new Launcher.Interface.GlossyButton();
+            this.btnLaunch = new Launcher.Interface.GlossyButton();
             this.lblStatus = new Launcher.Interface.ControlLabel();
             this.lblUptodate = new Launcher.Interface.ControlLabel();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
@@ -334,11 +334,12 @@ namespace Launcher.Interface {
             this.lblName.ForeColor = System.Drawing.Color.SteelBlue;
             this.lblName.Location = new System.Drawing.Point(5, 7);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(150, 33);
+            this.lblName.Size = new System.Drawing.Size(149, 39);
             this.lblName.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.lblName.TabIndex = 11;
             this.lblName.Text = "Gamename";
             this.lblName.TextRenderHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            this.lblName.UseCompatibleTextRendering = true;
             this.lblName.Visible = false;
             // 
             // btnClose
@@ -378,26 +379,26 @@ namespace Launcher.Interface {
             this.pBarMain.TabStop = false;
             this.pBarMain.Value = 0F;
             // 
-            // btnPlay
+            // btnLaunch
             // 
-            this.btnPlay.ActiveBackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnPlay.ActiveBorderColor = System.Drawing.Color.White;
-            this.btnPlay.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnPlay.BorderColor = System.Drawing.Color.White;
-            this.btnPlay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnPlay.BtnText = "Updating";
-            this.btnPlay.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPlay.Enabled = false;
-            this.btnPlay.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnPlay.HoverBackColor = System.Drawing.Color.MediumAquamarine;
-            this.btnPlay.HoverBorderColor = System.Drawing.Color.White;
-            this.btnPlay.Location = new System.Drawing.Point(427, 309);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(76, 39);
-            this.btnPlay.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnPlay.StandbyBorderColor = System.Drawing.Color.White;
-            this.btnPlay.TabIndex = 6;
-            this.btnPlay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnPlay_MouseClick);
+            this.btnLaunch.ActiveBackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.ActiveBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.BorderColor = System.Drawing.Color.White;
+            this.btnLaunch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btnLaunch.BtnText = "Updating";
+            this.btnLaunch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLaunch.Enabled = false;
+            this.btnLaunch.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnLaunch.HoverBackColor = System.Drawing.Color.MediumAquamarine;
+            this.btnLaunch.HoverBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.Location = new System.Drawing.Point(427, 309);
+            this.btnLaunch.Name = "btnLaunch";
+            this.btnLaunch.Size = new System.Drawing.Size(76, 39);
+            this.btnLaunch.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.StandbyBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.TabIndex = 6;
+            this.btnLaunch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnPlay_MouseClick);
             // 
             // lblStatus
             // 
@@ -446,7 +447,7 @@ namespace Launcher.Interface {
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.pBarMain);
-            this.Controls.Add(this.btnPlay);
+            this.Controls.Add(this.btnLaunch);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblUptodate);
@@ -492,11 +493,10 @@ namespace Launcher.Interface {
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.PictureBox imgTick;
         private ControlLabel lblUptodate;
-        private GlossyButton btnPlay;
+        private GlossyButton btnLaunch;
         private PrettyProgressBar pBarMain;
         private GlossyButton btnClose;
         private System.Windows.Forms.Button btnMinimize;
-        private ControlLabel lblName;
         private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.CustomTabControl customTabControl1;
         private System.Windows.Forms.TabPage tabChangelog;
@@ -511,6 +511,7 @@ namespace Launcher.Interface {
         private System.Windows.Forms.ImageList imgListDLIcon;
         private System.Windows.Forms.ImageList imgListArrow;
         private System.Windows.Forms.PictureBox imgLogo;
+        private ControlLabel lblName;
     }
 }
 

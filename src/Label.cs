@@ -19,45 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+using Launcher.Interface;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace Launcher {
-    class Xml {
-        /**
-         * Static load specific xml document
-         **/
-        public static XDocument load(String file) {
-            XDocument xml = null;
-            try {
-                if (File.Exists(file)) {
-                    xml = XDocument.Load(file);
-                }
-                else {
-                    throw new FileNotFoundException("The file " + file + " does not exist.");
-                }
-            }
-            catch (IOException e) {
-                Logger.log(Logger.TYPE.WARN, e.Message + e.StackTrace);
-            }
 
-            return xml;
-        }
+    class Label : Component {
 
-        public static String getAttributeValue(XAttribute attr, String optional = null) {
-            if (optional == null) {
-                try {
-                    return attr.Value.Trim();
-                } catch (NullReferenceException) {
-                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
-                }
-            } else {
-                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
-            }
-        }
+        public Label(String name) : base(name) { }
+
+
     }
 }
