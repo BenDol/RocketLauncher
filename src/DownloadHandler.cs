@@ -28,6 +28,7 @@ using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using Launcher.Interface;
+using System.Reflection;
 
 namespace Launcher {
 
@@ -129,9 +130,14 @@ namespace Launcher {
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(
                     (object sender, AsyncCompletedEventArgs e) => {
-                        Logger.log(Logger.TYPE.DEBUG, "Finished downloading file.");
-                        downloadCompleted(block);
-                        completed(sender, e);
+                        try {
+                            Logger.log(Logger.TYPE.DEBUG, "Finished downloading file.");
+                            downloadCompleted(block);
+                            completed(sender, e);
+                        } catch (TargetInvocationException) {
+                            Logger.log(Logger.TYPE.ERROR, "There was a problem downloading from " + url + ", error: " + e.Error);
+                            statusLabel.Text = "File download failed: " + url + "\n" + e.Error.Message;
+                        }
                 });
 
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
@@ -167,9 +173,14 @@ namespace Launcher {
                 WebClient webClient = new WebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(
                     (object sender, DownloadStringCompletedEventArgs e) => {
-                        Logger.log(Logger.TYPE.DEBUG, "Finished downloading String.");
-                        downloadCompleted(block);
-                        completed(sender, e);
+                        try {
+                            Logger.log(Logger.TYPE.DEBUG, "Finished downloading String.");
+                            downloadCompleted(block);
+                            completed(sender, e);
+                        } catch (TargetInvocationException) {
+                            Logger.log(Logger.TYPE.ERROR, "There was a problem downloading from " + url + ", error: " + e.Error);
+                            statusLabel.Text = "String download failed: "+ url + "\n" + e.Error.Message;
+                        }
                     });
 
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(

@@ -39,6 +39,7 @@ namespace Launcher {
         private Boolean initialized = false;
         private String serverName;
         private String targetPath;
+        private String launchText;
 
         public static String UPDATE_XML_NAME = @"update.xml";
 
@@ -52,9 +53,10 @@ namespace Launcher {
         }
 
         public void initialize(Action callback) {
-            reciever.getInitialData(new InitAsyncCallback((String name, String path) => {
+            reciever.getInitialData(new InitAsyncCallback((String name, String path, String launchText) => {
                 setServerName(name);
                 setTargetPath(path);
+                setLaunchText(launchText);
 
                 reciever.getFonts(new FontAsyncCallback((List<FontPackage> packages) => {
                     foreach (FontPackage package in packages) {
@@ -108,7 +110,7 @@ namespace Launcher {
             ui.getUpToDateLabel().Visible = false;
 
             ui.getLaunchButton().Enabled = false;
-            ui.getLaunchButton().BtnText = "Updating";
+            ui.getLaunchButton().BtnText = launchText;
 
             reciever.sendRequest(new RequestAsyncCallback((List<Update> updates, TimeSpan response) => {
                 Logger.log(Logger.TYPE.INFO, "Found " + updates.Count + " new updates in "
@@ -443,11 +445,15 @@ namespace Launcher {
             this.targetPath = path;
         }
 
+        public void setLaunchText(String launchText) {
+            this.launchText = launchText;
+        }
+
         private void enablePlay() {
             Logger.log(Logger.TYPE.DEBUG, "Enable Play button");
             ui.getRefreshButton().Enabled = true;
             ui.getLaunchButton().Enabled = true;
-            ui.getLaunchButton().BtnText = "Play";
+            ui.getLaunchButton().BtnText = launchText;
         }
 
         public Reciever getReciever() {

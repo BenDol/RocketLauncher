@@ -179,18 +179,19 @@ namespace Launcher {
                     var root = from item in serverXMLCache.get().Descendants("Server")
                         select new {
                             name = item.Attribute("name"),
-                            target = item.Attribute("target")
+                            target = item.Attribute("target"),
+                            launchText = item.Attribute("launchText")
                         };
 
-                    String serverName = "";
-                    String targetPath = "";
+                    String serverName = "", targetPath = "", launchText = "";
                     foreach (var data in root) {
                         serverName = data.name.Value;
                         targetPath = data.target.Value;
+                        launchText = data.launchText.Value;
                         break;
                     }
 
-                    callback.onSuccess(serverName, targetPath);
+                    callback.onSuccess(serverName, targetPath, launchText);
                 }
                 catch(Exception ex) {
                     Logger.log(Logger.TYPE.ERROR, "Was unable to parse server XML: "

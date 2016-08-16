@@ -55,6 +55,11 @@ namespace Launcher.Interface {
                 message.Result = (IntPtr)HTCAPTION;
         }
 
+        public new void Show() {
+            connecting.Hide();
+            base.Show();
+        }
+
         public Control.ControlCollection getControls() {
             return Controls;
         }

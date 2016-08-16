@@ -53,7 +53,6 @@ namespace Launcher {
                 client.update();
 
                 // Display main window
-                con.Hide();
                 ui.Show();
             });
 

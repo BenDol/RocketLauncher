@@ -26,16 +26,16 @@ using System.Text;
 
 namespace Launcher {
     class InitAsyncCallback {
-        private Action<String, String> success;
+        private Action<String, String, String> success;
         private Action failure;
 
-        public InitAsyncCallback(Action<String, String> onSuccess, Action onFailure) {
+        public InitAsyncCallback(Action<String, String, String> onSuccess, Action onFailure) {
             this.success = onSuccess;
             this.failure = onFailure;
         }
 
-        public void onSuccess(String serverName, String targetPath) {
-            success(serverName, targetPath);
+        public void onSuccess(String serverName, String targetPath, String launchText) {
+            success(serverName, targetPath, launchText);
         }
 
         public void onFailure() {

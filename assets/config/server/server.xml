@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Server name="Rocket Launcher" target="Application.exe" layout="layout.xml">
+<Server name="Rocket Launcher" launchText="Play!" target="Application.exe" layout="layout.xml">
   <FontPackage name="Moltors" archive="moltors.zip" package="moltors.zip"/>
   
   <Updates>
