@@ -19,9 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using Launcher.Interface;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 

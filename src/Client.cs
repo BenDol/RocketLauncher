@@ -486,7 +486,11 @@ namespace Launcher {
 
         public void exitApplication() {
             try {
-                Environment.Exit(0);
+                if (Application.MessageLoop) {
+                    Application.Exit();
+                } else {
+                    Environment.Exit(1);
+                }
             }
             catch (Win32Exception ex) {
                 Logger.log(Logger.TYPE.WARN, "Exception caught during exit process: "

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Update name="Update Data Files" version="0.2">
+<Update name="Update Data Files">
   <Changelog>
     <Log>Updated the item image to better fit</Log>
     <Log>Updated the banner image to look pretty</Log>

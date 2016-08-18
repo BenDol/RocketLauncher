@@ -24,6 +24,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -220,6 +221,10 @@ namespace Launcher {
 
         private void parse(XElement element) {
             XElement root = element.Element("Appearance");
+            if (root == null) {
+                Logger.log(Logger.TYPE.DEBUG, "No Appearance element found.");
+                return;
+            }
             try {
                 setText(root.Element("Text").Value);
             } catch (NullReferenceException) {}
@@ -402,7 +407,14 @@ namespace Launcher {
          * Load the Control object.
          **/
         internal void merge<T>(ref T control) where T : Control {
-            if (text != null) control.Text = text;
+            load(ref control);
+        }
+
+        /**
+         * Load the Control object.
+         **/
+        internal void load<T>(ref T control) where T : Control {
+            if (text != null && text != "") control.Text = text;
             if (font != null) control.Font = font;
             if (backColor != null) control.BackColor = (Color)backColor;
             if (cursor != null) control.Cursor = cursor;
@@ -429,38 +441,18 @@ namespace Launcher {
             if (control is ButtonBase) {
                 if (flatStyle != null) (control as ButtonBase).FlatStyle = (FlatStyle)flatStyle;
             }
-        }
 
-        /**
-         * Load the Control object.
-         **/
-        internal void load<T>(ref T control) where T : Control {
-            control.Text = getText();
-            control.Font = getFont();
-            control.BackColor = (Color)getBackColor();
-            control.Cursor = getCursor();
-            control.ForeColor = (Color)getForeColor();
-            control.RightToLeft = (RightToLeft)getRightToLeft();
-            control.UseWaitCursor = (Boolean)getUseWaitCursor();
+            if (image != null && image != "") {
+                if (control is PictureBox) {
+                    (control as PictureBox).Load(image);
+                } else {
+                    var request = WebRequest.Create(image);
 
-            if(control is ListBox) {
-                (control as ListBox).BorderStyle = (BorderStyle)getBorderStyle();
-            }
-
-            if(control is Label) {
-                (control as Label).TextAlign = (ContentAlignment)getTextAlign();
-                (control as Label).UseMnemonic = (Boolean)getUseMnmonic();
-            }
-
-            if(control is ControlLabel) {
-                (control as ControlLabel).CompositeQuality = (CompositingQuality)getCompositeQuality();
-                (control as ControlLabel).DisabledTextColor = (Color)getDisabledTextColor();
-                (control as ControlLabel).SmoothingMode = (SmoothingMode)getSmoothingMode();
-                (control as ControlLabel).TextRenderHint = (TextRenderingHint)getTextRenderHint();
-            }
-
-            if(control is ButtonBase) {
-                (control as ButtonBase).FlatStyle = (FlatStyle)getFlatStyle();
+                    using (var response = request.GetResponse())
+                    using (var stream = response.GetResponseStream()) {
+                        control.BackgroundImage = Bitmap.FromStream(stream);
+                    }
+                }
             }
         }
     }

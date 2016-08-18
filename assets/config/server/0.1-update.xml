@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Update name="Initial Install" version="0.1">
+<Update name="Initial Install">
   <Changelog>
     <Log>Add initial application binaries</Log>
   </Changelog>

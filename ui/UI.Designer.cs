@@ -89,6 +89,7 @@ namespace Launcher.Interface {
             // 
             // btnMinimize
             // 
+            this.btnMinimize.BackColor = System.Drawing.Color.Transparent;
             this.btnMinimize.BackgroundImage = global::Launcher.Properties.Resources.minimize_icon;
             this.btnMinimize.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -99,7 +100,7 @@ namespace Launcher.Interface {
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(16, 16);
             this.btnMinimize.TabIndex = 1;
-            this.btnMinimize.UseVisualStyleBackColor = true;
+            this.btnMinimize.UseVisualStyleBackColor = false;
             this.btnMinimize.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnMinimize_MouseClick);
             this.btnMinimize.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMinimize_MouseDown);
             this.btnMinimize.MouseEnter += new System.EventHandler(this.btnMinimize_MouseEnter);
@@ -107,6 +108,7 @@ namespace Launcher.Interface {
             // 
             // imgTick
             // 
+            this.imgTick.BackColor = System.Drawing.Color.Transparent;
             this.imgTick.Enabled = false;
             this.imgTick.Image = global::Launcher.Properties.Resources.tick_blue;
             this.imgTick.Location = new System.Drawing.Point(475, 277);
@@ -122,9 +124,11 @@ namespace Launcher.Interface {
             this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnRefresh.ForeColor = System.Drawing.Color.Transparent;
             this.btnRefresh.Image = global::Launcher.Properties.Resources.refresh_normal;
             this.btnRefresh.Location = new System.Drawing.Point(5, 304);
             this.btnRefresh.Name = "btnRefresh";
@@ -137,6 +141,7 @@ namespace Launcher.Interface {
             // 
             // btnRepair
             // 
+            this.btnRepair.BackColor = System.Drawing.Color.Transparent;
             this.btnRepair.Image = global::Launcher.Properties.Resources.repair;
             this.btnRepair.Location = new System.Drawing.Point(479, 37);
             this.btnRepair.Name = "btnRepair";
@@ -169,6 +174,7 @@ namespace Launcher.Interface {
             // 
             // imgLogo
             // 
+            this.imgLogo.BackColor = System.Drawing.Color.Transparent;
             this.imgLogo.Image = global::Launcher.Properties.Resources.sheep_launcher;
             this.imgLogo.Location = new System.Drawing.Point(382, 7);
             this.imgLogo.Name = "imgLogo";
@@ -291,7 +297,7 @@ namespace Launcher.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 185);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 183);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -306,7 +312,7 @@ namespace Launcher.Interface {
             this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
-            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 183);
             this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
@@ -320,13 +326,14 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Name = "txtBoxUpdate";
             this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 183);
             this.txtBoxUpdate.TabIndex = 0;
             // 
             // lblName
             // 
             this.lblName.AutoEllipsis = true;
             this.lblName.AutoSize = true;
+            this.lblName.BackColor = System.Drawing.Color.Transparent;
             this.lblName.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
             this.lblName.DisabledTextColor = System.Drawing.Color.SteelBlue;
             this.lblName.Enabled = false;
@@ -404,11 +411,12 @@ namespace Launcher.Interface {
             // 
             this.lblStatus.AutoEllipsis = true;
             this.lblStatus.AutoSize = true;
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
             this.lblStatus.DisabledTextColor = System.Drawing.Color.Black;
             this.lblStatus.Enabled = false;
             this.lblStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblStatus.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblStatus.Location = new System.Drawing.Point(7, 274);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(93, 13);
@@ -420,6 +428,7 @@ namespace Launcher.Interface {
             // lblUptodate
             // 
             this.lblUptodate.AutoSize = true;
+            this.lblUptodate.BackColor = System.Drawing.Color.Transparent;
             this.lblUptodate.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
             this.lblUptodate.DisabledTextColor = System.Drawing.Color.Black;
             this.lblUptodate.Enabled = false;

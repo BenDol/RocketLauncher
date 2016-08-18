@@ -89,6 +89,10 @@ namespace Launcher {
 
         private void parse(XElement element) {
             XElement root = element.Element("Behavior");
+            if (root == null) {
+                Logger.log(Logger.TYPE.DEBUG, "No Behavior element found.");
+                return;
+            }
             try {
                 setAllowDrop(Convert.ToBoolean(root.Element("AllowDrop").Value));
             } catch (NullReferenceException) { }
@@ -118,7 +122,14 @@ namespace Launcher {
          * Merge the Control object.
          **/
         internal void merge<T>(ref T control) where T : Control {
-            if(allowDrop != null) control.AllowDrop = (Boolean)allowDrop;
+            load(ref control);
+        }
+
+        /**
+         * Load the Control object.
+         **/
+        internal void load<T>(ref T control) where T : Control {
+            if (allowDrop != null) control.AllowDrop = (Boolean)allowDrop;
             if (enabled != null) control.Enabled = (Boolean)enabled;
             if (tabIndex != null) control.TabIndex = (int)tabIndex;
             if (visible != null) control.Visible = (Boolean)visible;
@@ -126,21 +137,6 @@ namespace Launcher {
             if (control is Label) {
                 if (autoEllipsis != null) (control as Label).AutoEllipsis = (Boolean)autoEllipsis;
                 if (useCompatTextRendering != null) (control as Label).UseCompatibleTextRendering = (Boolean)useCompatTextRendering;
-            }
-        }
-
-        /**
-         * Load the Control object.
-         **/
-        internal void load<T>(ref T control) where T : Control {
-            control.AllowDrop = (Boolean)getAllowDrop();
-            control.Enabled = (Boolean)getEnabled();
-            control.TabIndex = (int)getTabIndex();
-            control.Visible = (Boolean)getVisible();
-
-            if (control is Label) {
-                (control as Label).AutoEllipsis = (Boolean)getAutoEllipsis();
-                (control as Label).UseCompatibleTextRendering = (Boolean)getUseCompatTextRendering();
             }
         }
     }

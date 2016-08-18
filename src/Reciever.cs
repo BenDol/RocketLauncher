@@ -107,7 +107,7 @@ namespace Launcher {
                     director = item.Attribute("director")
                 };
 
-            // Ensure there is only one <updates> tag set
+            // Ensure there is only one <Updates> tag set
             if (root.Count() < 2) {
                 foreach (var data in root) {
                     Uri url = new Uri(data.url.Value.Trim());

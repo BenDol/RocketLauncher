@@ -23,7 +23,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Controls.Development;
-using System.Reflection;
 using System.IO;
 
 namespace Launcher.Interface {
@@ -72,11 +71,12 @@ namespace Launcher.Interface {
             if (assemblyIndex < assemblies.Length) {
                 String name = component.getName();
                 if (name != null) {
-                    Control[] exists = Controls.Find(name, true);
+                    Control[] exists = find(name);
                     if (exists.Length < 1) {
                         // Add component
                         try {
                             Control control = (Control)Activator.CreateInstance(assemblies[assemblyIndex], component.getType()).Unwrap();
+                            component.load(ref control);
                             Controls.Add(control);
                         } catch (Exception ex) when (ex is TypeLoadException || ex is ArgumentNullException || ex is FileNotFoundException) {
                             addOrModifyComponent(component, ++assemblyIndex);
@@ -86,6 +86,14 @@ namespace Launcher.Interface {
                         component.merge(ref exists[0]);
                     }
                 }
+            }
+        }
+
+        public Control[] find(String name) {
+            if(name == "Ui") {
+                return new Control[] { this };
+            } else {
+                return Controls.Find(name, true);
             }
         }
 

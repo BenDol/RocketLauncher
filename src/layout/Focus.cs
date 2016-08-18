@@ -46,6 +46,10 @@ namespace Launcher {
 
         private void parse(XElement element) {
             XElement root = element.Element("Focus");
+            if (root == null) {
+                Logger.log(Logger.TYPE.DEBUG, "No Focus element found.");
+                return;
+            }
             try {
                 setCausesValidation(Convert.ToBoolean(root.Element("CausesValidation").Value));
             } catch (NullReferenceException) { }
@@ -55,14 +59,14 @@ namespace Launcher {
          * Merge the Control object.
          **/
         internal void merge<T>(ref T control) where T : Control {
-            if(causesValidation != null) control.CausesValidation = (Boolean)causesValidation;
+            load(ref control);
         }
 
         /**
          * Load the Control object.
          **/
         internal void load<T>(ref T control) where T : Control {
-            control.CausesValidation = (Boolean)getCausesValidation();
+            if (causesValidation != null) control.CausesValidation = (Boolean)causesValidation;
         }
     }
 }

@@ -21,7 +21,6 @@
  */
 using System;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -31,12 +30,12 @@ namespace Launcher {
         private AnchorStyles? anchor;
         private Boolean? autoSize;
         private DockStyle? dock;
-        private Point location;
-        private Padding margin;
-        private Padding padding;
-        private Size maxSize;
-        private Size minSize;
-        private Size size;
+        private Point? location;
+        private Padding? margin;
+        private Padding? padding;
+        private Size? maxSize;
+        private Size? minSize;
+        private Size? size;
 
         public Layout(XElement element) {
             parse(element);
@@ -66,7 +65,7 @@ namespace Launcher {
             this.dock = dock;
         }
 
-        public Point getLocation() {
+        public Point? getLocation() {
             return location;
         }
 
@@ -74,7 +73,7 @@ namespace Launcher {
             this.location = location;
         }
 
-        public Padding getMargin() {
+        public Padding? getMargin() {
             return margin;
         }
 
@@ -82,7 +81,7 @@ namespace Launcher {
             this.margin = margin;
         }
 
-        public Padding getPadding() {
+        public Padding? getPadding() {
             return padding;
         }
 
@@ -90,7 +89,7 @@ namespace Launcher {
             this.padding = padding;
         }
 
-        public Size getMaxSize() {
+        public Size? getMaxSize() {
             return maxSize;
         }
 
@@ -98,7 +97,7 @@ namespace Launcher {
             this.maxSize = maxSize;
         }
 
-        public Size getMinSize() {
+        public Size? getMinSize() {
             return minSize;
         }
 
@@ -106,7 +105,7 @@ namespace Launcher {
             this.minSize = minSize;
         }
 
-        public Size getSize() {
+        public Size? getSize() {
             return size;
         }
 
@@ -116,6 +115,10 @@ namespace Launcher {
 
         private void parse(XElement element) {
             XElement root = element.Element("Layout");
+            if (root == null) {
+                Logger.log(Logger.TYPE.DEBUG, "No Layout element found.");
+                return;
+            }
             try {
                 setAnchor(EnumUtils.parseEnum<AnchorStyles>(root.Element("Anchor").Value));
             } catch (NullReferenceException) { }
@@ -179,13 +182,20 @@ namespace Launcher {
          * Merge the Control object.
          **/
         internal void merge<T>(ref T control) where T : Control {
+            load(ref control);
+        }
+
+        /**
+         * Load the Control object.
+         **/
+        internal void load<T>(ref T control) where T : Control {
             if (anchor != null) control.Anchor = (AnchorStyles)anchor;
-            if (location != null) control.Location = location;
-            if (margin != null) control.Margin = margin;
-            if (padding != null) control.Padding = padding;
-            if (maxSize != null) control.MaximumSize = maxSize;
-            if (minSize != null) control.MinimumSize = minSize;
-            if (size != null) control.Size = size;
+            if (location != null) control.Location = (Point)location;
+            if (margin != null) control.Margin = (Padding)margin;
+            if (padding != null) control.Padding = (Padding)padding;
+            if (maxSize != null) control.MaximumSize = (Size)maxSize;
+            if (minSize != null) control.MinimumSize = (Size)minSize;
+            if (size != null) control.Size = (Size)size;
 
             if (control is Label) {
                 if (autoSize != null) (control as Label).AutoSize = (Boolean)autoSize;
@@ -193,27 +203,6 @@ namespace Launcher {
 
             if (control is SplitContainer) {
                 if (dock != null) (control as SplitContainer).Dock = (DockStyle)dock;
-            }
-        }
-
-        /**
-         * Load the Control object.
-         **/
-        internal void load<T>(ref T control) where T : Control {
-            control.Anchor = (AnchorStyles)getAnchor();
-            control.Location = getLocation();
-            control.Margin = getMargin();
-            control.Padding = getPadding();
-            control.MaximumSize = getMaxSize();
-            control.MinimumSize = getMinSize();
-            control.Size = getSize();
-
-            if (control is Label) {
-                (control as Label).AutoSize = (Boolean)getAutoSize();
-            }
-
-            if(control is SplitContainer) {
-                (control as SplitContainer).Dock = (DockStyle)getDock();
             }
         }
     }

@@ -86,18 +86,16 @@ namespace Launcher {
          * Merge the Control object. 
          **/
         internal void merge<T>(ref T control) where T : Control {
-            if(name != null) control.AccessibleName = name;
-            if (description != null) control.AccessibleDescription = description;
-            if (role != null) control.AccessibleRole = (AccessibleRole)role;
+            load(ref control);
         }
 
         /**
          * Load the Control object. 
          **/
         internal void load<T>(ref T control) where T: Control {
-            control.AccessibleName = getName();
-            control.AccessibleDescription = getDescription();
-            control.AccessibleRole = (AccessibleRole)getRole();
+            if (name != null && name != "") control.AccessibleName = name;
+            if (description != null && description != "") control.AccessibleDescription = description;
+            if (role != null) control.AccessibleRole = (AccessibleRole)role;
         }
     }
 }
