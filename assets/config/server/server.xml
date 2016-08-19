@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Server name="Rocket Launcher" launchText="Play!" target="Application.exe" layout="layout.xml">
-  <FontPackage name="Moltors" archive="moltors.zip" package="moltors.zip"/>
+  <Font name="Moltors" archive="moltors.zip" package="moltors.zip">
+    <Apply to="lblName" size="20" unit="Point" bold="false" italic="false" strikeout="false" underline="false" gdicharset="0" gdiverticalfont="false"/>
+  </Font>
   
   <Updates>
     <Update version="0.1" dir="">0.1-update.xml</Update>
