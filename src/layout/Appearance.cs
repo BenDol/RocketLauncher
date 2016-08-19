@@ -53,6 +53,15 @@ namespace Launcher {
         private Boolean? useMnmonic;
         private Boolean? useWaitCursor;
 
+        // GlossyButton
+        private Color? activeBackColor;
+        private Color? activeBorderColor;
+        private Color? borderColor;
+        private Color? standbyBackColor;
+        private Color? hoverBackColor;
+        private Color? standbyBorderColor;
+        private Color? hoverBorderColor;
+
         public Appearance() { }
 
         public Appearance(XElement element) {
@@ -81,6 +90,62 @@ namespace Launcher {
 
         public void setBackColor(Color backColor) {
             this.backColor = backColor;
+        }
+
+        public Color? getActiveBackColor() {
+            return activeBackColor;
+        }
+
+        public void setActiveBackColor(Color activeBackColor) {
+            this.activeBackColor = activeBackColor;
+        }
+
+        public Color? getActiveBorderColor() {
+            return activeBorderColor;
+        }
+
+        public void setActiveBorderColor(Color activeBorderColor) {
+            this.activeBorderColor = activeBorderColor;
+        }
+
+        public Color? getBorderColor() {
+            return activeBorderColor;
+        }
+
+        public void setBorderColor(Color borderColor) {
+            this.borderColor = borderColor;
+        }
+
+        public Color? getStandbyBackColor() {
+            return standbyBackColor;
+        }
+
+        public void setStandbyBackColor(Color standbyBackColor) {
+            this.standbyBackColor = standbyBackColor;
+        }
+
+        public Color? getHoverBackColor() {
+            return hoverBackColor;
+        }
+
+        public void setHoverBackColor(Color hoverBackColor) {
+            this.hoverBackColor = hoverBackColor;
+        }
+
+        public Color? getStandbyBorderColor() {
+            return standbyBorderColor;
+        }
+
+        public void setStandbyBorderColor(Color standbyBorderColor) {
+            this.standbyBorderColor = standbyBorderColor;
+        }
+
+        public Color? getHoverBorderColor() {
+            return hoverBorderColor;
+        }
+
+        public void setHoverBorderColor(Color hoverBorderColor) {
+            this.hoverBorderColor = hoverBorderColor;
         }
 
         public BorderStyle? getBorderStyle() {
@@ -250,6 +315,34 @@ namespace Launcher {
             } catch (NullReferenceException) {}
 
             try {
+                setActiveBackColor(Color.FromName(root.Element("ActiveBackColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setActiveBorderColor(Color.FromName(root.Element("ActiveBorderColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setBorderColor(Color.FromName(root.Element("BorderColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setStandbyBackColor(Color.FromName(root.Element("StandbyBackColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setHoverBackColor(Color.FromName(root.Element("HoverBackColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setStandbyBorderColor(Color.FromName(root.Element("StandbyBorderColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
+                setHoverBorderColor(Color.FromName(root.Element("HoverBorderColor").Value));
+            } catch (NullReferenceException) { }
+
+            try {
                 setBorderStyle(EnumUtils.parseEnum<BorderStyle>(root.Element("BorderStyle").Value));
             } catch (NullReferenceException) { }
 
@@ -414,13 +507,25 @@ namespace Launcher {
          * Load the Control object.
          **/
         internal void load<T>(ref T control) where T : Control {
-            if (text != null && text != "") control.Text = text;
             if (font != null) control.Font = font;
             if (backColor != null) control.BackColor = (Color)backColor;
             if (cursor != null) control.Cursor = cursor;
             if (foreColor != null) control.ForeColor = (Color)foreColor;
             if (rightToLeft != null) control.RightToLeft = (RightToLeft)rightToLeft;
             if (useWaitCursor != null) control.UseWaitCursor = (Boolean)useWaitCursor;
+
+            if(control is GlossyButton) {
+                if(activeBackColor != null) (control as GlossyButton).ActiveBackColor = (Color)activeBackColor;
+                if(activeBorderColor != null) (control as GlossyButton).ActiveBorderColor = (Color)activeBorderColor;
+                if(borderColor != null) (control as GlossyButton).BorderColor = (Color)borderColor;
+                if (standbyBackColor != null) (control as GlossyButton).StandbyBackColor = (Color)standbyBackColor;
+                if (hoverBackColor != null) (control as GlossyButton).HoverBackColor = (Color)hoverBackColor;
+                if (standbyBorderColor != null) (control as GlossyButton).StandbyBorderColor = (Color)standbyBorderColor;
+                if (hoverBorderColor != null) (control as GlossyButton).HoverBorderColor = (Color)hoverBorderColor;
+                if (text != null && text != "") (control as GlossyButton).BtnText = text;
+            } else {
+                if (text != null && text != "") control.Text = text;
+            }
 
             if (control is ListBox) {
                 if (borderStyle != null) (control as ListBox).BorderStyle = (BorderStyle)borderStyle;

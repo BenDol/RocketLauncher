@@ -153,6 +153,15 @@ namespace Launcher.Interface {
             }
         }
 
+        public override Color ForeColor {
+            get {
+                return label1.ForeColor;
+            }
+            set {
+                label1.ForeColor = value;
+            }
+        }
+
         public GlossyButton() {
             InitializeComponent();
         }
