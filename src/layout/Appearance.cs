@@ -298,14 +298,14 @@ namespace Launcher {
             XElement font = root.Element("Font");
             if(font != null) {
                 FontFamily family = new FontFamily(font.Value);
-                float size = (float)Convert.ToDouble(Xml.getAttributeValue(font.Attribute("size"), "12"));
-                GraphicsUnit unit = EnumUtils.parseEnum<GraphicsUnit>(Xml.getAttributeValue(font.Attribute("unit"), "Point"));
-                FontStyle bold = Convert.ToBoolean(Xml.getAttributeValue(font.Attribute("bold"), "false")) ? FontStyle.Bold : 0;
-                FontStyle italic = Convert.ToBoolean(Xml.getAttributeValue(font.Attribute("italic"), "false")) ? FontStyle.Italic : 0;
-                FontStyle strikeout = Convert.ToBoolean(Xml.getAttributeValue(font.Attribute("strikeout"), "false")) ? FontStyle.Strikeout : 0;
-                FontStyle underline = Convert.ToBoolean(Xml.getAttributeValue(font.Attribute("underline"), "false")) ? FontStyle.Underline : 0;
-                byte gdicharset = Convert.ToByte(Xml.getAttributeValue(font.Attribute("gdicharset"), "0"));
-                Boolean gdiverticalfont = Convert.ToBoolean(Xml.getAttributeValue(font.Attribute("gdiverticalfont"), "false"));
+                float size = (float)Convert.ToDouble(Xml.getAttributeValue(font, "size", "12"));
+                GraphicsUnit unit = EnumUtils.parseEnum<GraphicsUnit>(Xml.getAttributeValue(font, "unit", "Point"));
+                FontStyle bold = Convert.ToBoolean(Xml.getAttributeValue(font, "bold", "false")) ? FontStyle.Bold : 0;
+                FontStyle italic = Convert.ToBoolean(Xml.getAttributeValue(font, "italic", "false")) ? FontStyle.Italic : 0;
+                FontStyle strikeout = Convert.ToBoolean(Xml.getAttributeValue(font, "strikeout", "false")) ? FontStyle.Strikeout : 0;
+                FontStyle underline = Convert.ToBoolean(Xml.getAttributeValue(font, "underline", "false")) ? FontStyle.Underline : 0;
+                byte gdicharset = Convert.ToByte(Xml.getAttributeValue(font, "gdicharset", "0"));
+                Boolean gdiverticalfont = Convert.ToBoolean(Xml.getAttributeValue(font, "gdiverticalfont", "false"));
 
                 setFont(new Font(family, size, (bold | italic | strikeout | underline), unit, gdicharset, gdiverticalfont));
             }

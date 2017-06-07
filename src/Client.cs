@@ -314,8 +314,7 @@ namespace Launcher {
 
                             success = false;
                         }
-                    }
-                    else {
+                    } else {
                         try {
                             File.Copy(tmpFile, Path.Combine(newPath, file.getName()), true);
 

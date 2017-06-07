@@ -225,7 +225,7 @@ namespace Launcher {
                         
                         foreach (var data in root) {
                             foreach (var f in data.components) {
-                                String name = Xml.getAttributeValue(f.Attribute("name"));
+                                String name = Xml.getAttributeValue(f, "name");
                                 components.Add(new Component(name, f.Name.LocalName, f));
                             }
                         }
@@ -277,8 +277,7 @@ namespace Launcher {
                             dlHandler.enqueueFile(packageUrl, tmpFontPath,
                                 package.getArchiveName(), (Boolean cancelled) => {
                                 if (!cancelled) {
-                                    ArchiveHandler.extractZip(Path.Combine(tmpFontPath,
-                                        package.getArchiveName()), tmpFontPath, false);
+                                    ArchiveHandler.extractZip(Path.Combine(tmpFontPath, package.getArchiveName()), tmpFontPath, false);
                                 }
                             });
                         }

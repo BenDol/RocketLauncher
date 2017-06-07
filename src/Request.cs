@@ -221,9 +221,9 @@ namespace Launcher {
 
                     // Add the file data
                     foreach (var f in data.files) {
-                        String name = Xml.getAttributeValue(f.Attribute("name"));
-                        String destination = Xml.getAttributeValue(f.Attribute("destination"));
-                        String mime = Xml.getAttributeValue(f.Attribute("mime"), "none");
+                        String name = Xml.getAttributeValue(f, "name");
+                        String destination = Xml.getAttributeValue(f, "destination");
+                        String mime = Xml.getAttributeValue(f, "mime", "none");
 
                         update.addFile(new GhostFile(name, destination, mime,
                             new Uri(url + "/" + node.getDir() + "/" + name)));
@@ -231,9 +231,9 @@ namespace Launcher {
 
                     // Add the archive data
                     foreach (var f in data.archives) {
-                        String name = Xml.getAttributeValue(f.Attribute("name"));
-                        String extractTo = Xml.getAttributeValue(f.Attribute("extractTo"));
-                        String mime = Xml.getAttributeValue(f.Attribute("mime"), "none");
+                        String name = Xml.getAttributeValue(f, "name");
+                        String extractTo = Xml.getAttributeValue(f, "extractTo");
+                        String mime = Xml.getAttributeValue(f, "mime", "none");
 
                         Boolean cleanDirs = false;
                         if (f.Attribute("cleanDirs") != null) {

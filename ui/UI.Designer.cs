@@ -57,34 +57,34 @@ namespace Launcher.Interface {
             this.imgListArrow = new System.Windows.Forms.ImageList(this.components);
             this.imgLogo = new System.Windows.Forms.PictureBox();
             this.panelInfo = new System.Windows.Forms.Panel();
-            this.panelControls = new System.Windows.Forms.Panel();
-            this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
-            this.tabChangelog = new System.Windows.Forms.TabPage();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lboxChangelog = new Controls.Development.ImageListBox();
-            this.txtboxChangelog = new System.Windows.Forms.TextBox();
-            this.tabUpdatelogs = new System.Windows.Forms.TabPage();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lboxUpdatelogs = new Controls.Development.ImageListBox();
-            this.txtBoxUpdate = new System.Windows.Forms.TextBox();
-            this.lblName = new Launcher.Interface.ControlLabel();
             this.lblStatus = new Launcher.Interface.ControlLabel();
             this.lblUptodate = new Launcher.Interface.ControlLabel();
             this.btnLaunch = new Launcher.Interface.GlossyButton();
             this.pBarMain = new Launcher.Interface.PrettyProgressBar();
+            this.panelControls = new System.Windows.Forms.Panel();
             this.btnClose = new Launcher.Interface.GlossyButton();
+            this.customTabControl1 = new System.Windows.Forms.CustomTabControl();
+            this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lboxChangelog = new Controls.Development.ImageListBox();
+            this.txtboxChangelog = new System.Windows.Forms.TextBox();
+            this.tabChangelog = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lboxUpdatelogs = new Controls.Development.ImageListBox();
+            this.txtBoxUpdate = new System.Windows.Forms.TextBox();
+            this.lblName = new Launcher.Interface.ControlLabel();
             ((System.ComponentModel.ISupportInitialize)(this.imgTick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRepair)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.panelInfo.SuspendLayout();
             this.panelControls.SuspendLayout();
             this.customTabControl1.SuspendLayout();
-            this.tabChangelog.SuspendLayout();
+            this.tabUpdates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tabUpdatelogs.SuspendLayout();
+            this.tabChangelog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -134,7 +134,7 @@ namespace Launcher.Interface {
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.Color.Transparent;
             this.btnRefresh.Image = global::Launcher.Properties.Resources.refresh_normal;
-            this.btnRefresh.Location = new System.Drawing.Point(1, 29);
+            this.btnRefresh.Location = new System.Drawing.Point(0, 29);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(45, 47);
             this.btnRefresh.TabIndex = 5;
@@ -202,6 +202,75 @@ namespace Launcher.Interface {
             this.panelInfo.Size = new System.Drawing.Size(495, 76);
             this.panelInfo.TabIndex = 16;
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoEllipsis = true;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+            this.lblStatus.DisabledTextColor = System.Drawing.Color.Black;
+            this.lblStatus.Enabled = false;
+            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblStatus.Location = new System.Drawing.Point(1, 0);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(93, 13);
+            this.lblStatus.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            this.lblStatus.TabIndex = 3;
+            this.lblStatus.Text = "Status: Waiting...";
+            this.lblStatus.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            // 
+            // lblUptodate
+            // 
+            this.lblUptodate.AutoSize = true;
+            this.lblUptodate.BackColor = System.Drawing.Color.Transparent;
+            this.lblUptodate.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+            this.lblUptodate.DisabledTextColor = System.Drawing.Color.Black;
+            this.lblUptodate.Enabled = false;
+            this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUptodate.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblUptodate.Location = new System.Drawing.Point(400, 9);
+            this.lblUptodate.Name = "lblUptodate";
+            this.lblUptodate.Size = new System.Drawing.Size(62, 13);
+            this.lblUptodate.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+            this.lblUptodate.TabIndex = 7;
+            this.lblUptodate.Text = "Up to date!";
+            this.lblUptodate.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.lblUptodate.Visible = false;
+            // 
+            // btnLaunch
+            // 
+            this.btnLaunch.ActiveBackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.ActiveBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.BorderColor = System.Drawing.Color.White;
+            this.btnLaunch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btnLaunch.BtnText = "Updating";
+            this.btnLaunch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLaunch.Enabled = false;
+            this.btnLaunch.HoverBackColor = System.Drawing.Color.MediumAquamarine;
+            this.btnLaunch.HoverBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.Location = new System.Drawing.Point(417, 34);
+            this.btnLaunch.Name = "btnLaunch";
+            this.btnLaunch.Size = new System.Drawing.Size(76, 39);
+            this.btnLaunch.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnLaunch.StandbyBorderColor = System.Drawing.Color.White;
+            this.btnLaunch.TabIndex = 6;
+            this.btnLaunch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnPlay_MouseClick);
+            // 
+            // pBarMain
+            // 
+            this.pBarMain.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pBarMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pBarMain.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.pBarMain.Location = new System.Drawing.Point(47, 35);
+            this.pBarMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.pBarMain.Name = "pBarMain";
+            this.pBarMain.Size = new System.Drawing.Size(368, 37);
+            this.pBarMain.TabIndex = 9;
+            this.pBarMain.TabStop = false;
+            this.pBarMain.Value = 0F;
+            // 
             // panelControls
             // 
             this.panelControls.BackColor = System.Drawing.Color.Transparent;
@@ -212,10 +281,33 @@ namespace Launcher.Interface {
             this.panelControls.Size = new System.Drawing.Size(38, 17);
             this.panelControls.TabIndex = 10;
             // 
+            // btnClose
+            // 
+            this.btnClose.ActiveBackColor = System.Drawing.Color.Transparent;
+            this.btnClose.ActiveBorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_icon;
+            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.BtnText = "";
+            this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClose.HoverBackColor = System.Drawing.Color.Transparent;
+            this.btnClose.HoverBorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.Location = new System.Drawing.Point(21, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(16, 16);
+            this.btnClose.StandbyBackColor = System.Drawing.Color.Transparent;
+            this.btnClose.StandbyBorderColor = System.Drawing.Color.Transparent;
+            this.btnClose.TabIndex = 10;
+            this.btnClose.TabStop = false;
+            this.btnClose.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseClick);
+            this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
+            this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
+            this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
+            // 
             // customTabControl1
             // 
+            this.customTabControl1.Controls.Add(this.tabUpdates);
             this.customTabControl1.Controls.Add(this.tabChangelog);
-            this.customTabControl1.Controls.Add(this.tabUpdatelogs);
             this.customTabControl1.DisplayStyle = System.Windows.Forms.TabStyle.Chrome;
             // 
             // 
@@ -244,17 +336,17 @@ namespace Launcher.Interface {
             this.customTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.customTabControl1.TabIndex = 2;
             // 
-            // tabChangelog
+            // tabUpdates
             // 
-            this.tabChangelog.Controls.Add(this.splitContainer2);
-            this.tabChangelog.Location = new System.Drawing.Point(4, 25);
-            this.tabChangelog.Name = "tabChangelog";
-            this.tabChangelog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChangelog.Size = new System.Drawing.Size(494, 191);
-            this.tabChangelog.TabIndex = 0;
-            this.tabChangelog.Text = "Changelog";
-            this.tabChangelog.ToolTipText = "New updates changelog";
-            this.tabChangelog.UseVisualStyleBackColor = true;
+            this.tabUpdates.Controls.Add(this.splitContainer2);
+            this.tabUpdates.Location = new System.Drawing.Point(4, 25);
+            this.tabUpdates.Name = "tabUpdates";
+            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdates.Size = new System.Drawing.Size(494, 191);
+            this.tabUpdates.TabIndex = 0;
+            this.tabUpdates.Text = "Updates";
+            this.tabUpdates.ToolTipText = "New updates changelog";
+            this.tabUpdates.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -301,17 +393,17 @@ namespace Launcher.Interface {
             this.txtboxChangelog.TabIndex = 4;
             this.txtboxChangelog.TabStop = false;
             // 
-            // tabUpdatelogs
+            // tabChangelog
             // 
-            this.tabUpdatelogs.Controls.Add(this.splitContainer1);
-            this.tabUpdatelogs.Location = new System.Drawing.Point(4, 25);
-            this.tabUpdatelogs.Name = "tabUpdatelogs";
-            this.tabUpdatelogs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUpdatelogs.Size = new System.Drawing.Size(494, 191);
-            this.tabUpdatelogs.TabIndex = 1;
-            this.tabUpdatelogs.Text = "Update Logs";
-            this.tabUpdatelogs.ToolTipText = "Previous update information";
-            this.tabUpdatelogs.UseVisualStyleBackColor = true;
+            this.tabChangelog.Controls.Add(this.splitContainer1);
+            this.tabChangelog.Location = new System.Drawing.Point(4, 25);
+            this.tabChangelog.Name = "tabChangelog";
+            this.tabChangelog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChangelog.Size = new System.Drawing.Size(494, 191);
+            this.tabChangelog.TabIndex = 1;
+            this.tabChangelog.Text = "Changelog";
+            this.tabChangelog.ToolTipText = "Previous update information";
+            this.tabChangelog.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -326,7 +418,7 @@ namespace Launcher.Interface {
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtBoxUpdate);
-            this.splitContainer1.Size = new System.Drawing.Size(488, 180);
+            this.splitContainer1.Size = new System.Drawing.Size(488, 185);
             this.splitContainer1.SplitterDistance = 162;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
@@ -341,7 +433,7 @@ namespace Launcher.Interface {
             this.lboxUpdatelogs.ImageList = this.imageList1;
             this.lboxUpdatelogs.Location = new System.Drawing.Point(0, 0);
             this.lboxUpdatelogs.Name = "lboxUpdatelogs";
-            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 180);
+            this.lboxUpdatelogs.Size = new System.Drawing.Size(162, 185);
             this.lboxUpdatelogs.TabIndex = 15;
             // 
             // txtBoxUpdate
@@ -355,7 +447,7 @@ namespace Launcher.Interface {
             this.txtBoxUpdate.Name = "txtBoxUpdate";
             this.txtBoxUpdate.ReadOnly = true;
             this.txtBoxUpdate.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 180);
+            this.txtBoxUpdate.Size = new System.Drawing.Size(325, 185);
             this.txtBoxUpdate.TabIndex = 0;
             // 
             // lblName
@@ -377,100 +469,6 @@ namespace Launcher.Interface {
             this.lblName.TextRenderHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             this.lblName.UseCompatibleTextRendering = true;
             this.lblName.Visible = false;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoEllipsis = true;
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lblStatus.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
-            this.lblStatus.DisabledTextColor = System.Drawing.Color.Black;
-            this.lblStatus.Enabled = false;
-            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblStatus.Location = new System.Drawing.Point(1, 0);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(93, 13);
-            this.lblStatus.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-            this.lblStatus.TabIndex = 3;
-            this.lblStatus.Text = "Status: Waiting...";
-            this.lblStatus.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            // 
-            // lblUptodate
-            // 
-            this.lblUptodate.AutoSize = true;
-            this.lblUptodate.BackColor = System.Drawing.Color.Transparent;
-            this.lblUptodate.CompositeQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
-            this.lblUptodate.DisabledTextColor = System.Drawing.Color.Black;
-            this.lblUptodate.Enabled = false;
-            this.lblUptodate.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUptodate.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblUptodate.Location = new System.Drawing.Point(405, 9);
-            this.lblUptodate.Name = "lblUptodate";
-            this.lblUptodate.Size = new System.Drawing.Size(62, 13);
-            this.lblUptodate.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
-            this.lblUptodate.TabIndex = 7;
-            this.lblUptodate.Text = "Up to date!";
-            this.lblUptodate.TextRenderHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.lblUptodate.Visible = false;
-            // 
-            // btnLaunch
-            // 
-            this.btnLaunch.ActiveBackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnLaunch.ActiveBorderColor = System.Drawing.Color.White;
-            this.btnLaunch.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnLaunch.BorderColor = System.Drawing.Color.White;
-            this.btnLaunch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btnLaunch.BtnText = "Updating";
-            this.btnLaunch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLaunch.Enabled = false;
-            this.btnLaunch.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLaunch.HoverBackColor = System.Drawing.Color.MediumAquamarine;
-            this.btnLaunch.HoverBorderColor = System.Drawing.Color.White;
-            this.btnLaunch.Location = new System.Drawing.Point(417, 34);
-            this.btnLaunch.Name = "btnLaunch";
-            this.btnLaunch.Size = new System.Drawing.Size(76, 39);
-            this.btnLaunch.StandbyBackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnLaunch.StandbyBorderColor = System.Drawing.Color.White;
-            this.btnLaunch.TabIndex = 6;
-            this.btnLaunch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnPlay_MouseClick);
-            // 
-            // pBarMain
-            // 
-            this.pBarMain.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pBarMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pBarMain.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.pBarMain.Location = new System.Drawing.Point(47, 35);
-            this.pBarMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.pBarMain.Name = "pBarMain";
-            this.pBarMain.Size = new System.Drawing.Size(368, 37);
-            this.pBarMain.TabIndex = 9;
-            this.pBarMain.TabStop = false;
-            this.pBarMain.Value = 0F;
-            // 
-            // btnClose
-            // 
-            this.btnClose.ActiveBackColor = System.Drawing.Color.Transparent;
-            this.btnClose.ActiveBorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.BackgroundImage = global::Launcher.Properties.Resources.close_icon;
-            this.btnClose.BorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.BtnText = "";
-            this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClose.ForeColor = System.Drawing.Color.Transparent;
-            this.btnClose.HoverBackColor = System.Drawing.Color.Transparent;
-            this.btnClose.HoverBorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.Location = new System.Drawing.Point(21, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(16, 16);
-            this.btnClose.StandbyBackColor = System.Drawing.Color.Transparent;
-            this.btnClose.StandbyBorderColor = System.Drawing.Color.Transparent;
-            this.btnClose.TabIndex = 10;
-            this.btnClose.TabStop = false;
-            this.btnClose.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseClick);
-            this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
-            this.btnClose.MouseEnter += new System.EventHandler(this.btnClose_MouseEnter);
-            this.btnClose.MouseLeave += new System.EventHandler(this.btnClose_MouseLeave);
             // 
             // Ui
             // 
@@ -505,13 +503,13 @@ namespace Launcher.Interface {
             this.panelInfo.PerformLayout();
             this.panelControls.ResumeLayout(false);
             this.customTabControl1.ResumeLayout(false);
-            this.tabChangelog.ResumeLayout(false);
+            this.tabUpdates.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tabUpdatelogs.ResumeLayout(false);
+            this.tabChangelog.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -534,8 +532,8 @@ namespace Launcher.Interface {
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.TextBox txtboxChangelog;
         private System.Windows.Forms.CustomTabControl customTabControl1;
+        private System.Windows.Forms.TabPage tabUpdates;
         private System.Windows.Forms.TabPage tabChangelog;
-        private System.Windows.Forms.TabPage tabUpdatelogs;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox txtBoxUpdate;
         private System.Windows.Forms.PictureBox btnRepair;

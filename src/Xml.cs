@@ -48,15 +48,21 @@ namespace Launcher {
             return xml;
         }
 
-        public static String getAttributeValue(XAttribute attr, String optional = null) {
+        public static String getAttributeValue(XElement element, String attr, String optional = null) {
             if (optional == null) {
                 try {
-                    return attr.Value.Trim();
+                    return element.Attribute(attr).Value.Trim();
                 } catch (NullReferenceException) {
-                    throw new MissingAttributeException(attr.BaseUri, attr.Name.LocalName);
+                    throw new MissingAttributeException(element.BaseUri, attr);
                 }
             } else {
-                return (attr != null && attr.Value != null) ? attr.Value.Trim() : optional;
+                if(element != null) {
+                    XAttribute attribute = element.Attribute(attr);
+                    if (attribute != null) {
+                        return (attribute.Value != null ? attribute.Value.Trim() : optional);
+                    }
+                }
+                return optional;
             }
         }
     }
