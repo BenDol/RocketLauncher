@@ -192,8 +192,7 @@ namespace Launcher {
         public static void addUpdateListChangeHandler(ImageListBox listBox, List<Update> updates,
                 TextBox textBox) {
             Logger.log(Logger.TYPE.DEBUG, "Add update list change handler.");
-            listBox.SelectedValueChanged += new EventHandler(
-                    (object sender, EventArgs e) => {
+            listBox.SelectedValueChanged += new EventHandler((object sender, EventArgs e) => {
                 ImageListBox lb = sender as ImageListBox;
                 if (lb != null) {
                     foreach (Update update in updates) {
@@ -230,8 +229,7 @@ namespace Launcher {
                     String tmpPath = Path.Combine(update.getTempDir().FullName,
                         isArchive ? ((Archive)file).getExtractTo() : file.getDestination());
 
-                    dlHandler.enqueueFile(file.getUrl(), tmpPath, file.getName(),
-                    (Boolean cancelled) => {
+                    dlHandler.enqueueFile(file.getUrl(), tmpPath, file.getName(), (Boolean cancelled) => {
                         if (!cancelled) {
                             Logger.log(Logger.TYPE.DEBUG, "Completed downloading " 
                                 + (isArchive ? "archive " : "file ") + file.getName());
