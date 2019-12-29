@@ -50,7 +50,7 @@ namespace Launcher {
                     dlHandler.setProgressBar(ui.getDownloadProgressBar());
                 }
 
-                client.update();
+                client.update(true);
 
                 // Display main window
                 ui.Show();

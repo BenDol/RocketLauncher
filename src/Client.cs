@@ -94,7 +94,7 @@ namespace Launcher {
             }));
         }
 
-        public void update() {
+        public void update(Boolean useCached) {
             Logger.log(Logger.TYPE.DEBUG, "Initializing update sequence.");
             if (!isInitialized()) {
                 Logger.log(Logger.TYPE.WARN, "You are attempting to update" 
@@ -121,14 +121,14 @@ namespace Launcher {
             () => {
                 Logger.log(Logger.TYPE.WARN, "Failed to make update request, "
                     + "ensure your XML files have not been corrupted.");
-            }));
+            }), useCached);
         }
 
         public void refresh() {
             clearChangeLog(ui.getChangelogListBox(), ui.getChangelogBox());
             populateUpdateLogs();
 
-            update();
+            update(false);
         }
 
         private void populateUpdateLogs() {

@@ -147,7 +147,7 @@ namespace Launcher {
             return false;
         }
 
-        public Request sendRequest(RequestAsyncCallback callback) {
+        public Request sendRequest(RequestAsyncCallback callback, Boolean useCached) {
             Logger.log(Logger.TYPE.DEBUG, "Creating update request...");
             reloadIfModified(); //Ensure the update XML is up to date
 
@@ -155,7 +155,10 @@ namespace Launcher {
             try {
                 request = new Request(getUrl(), getDirector(), ref dlHandler, getLatestVersion());
                 request.setCallback(callback);
-                request.send(getServerXMLCache());
+                if (useCached)
+                    request.send(getServerXMLCache());
+                else
+                    request.send();
             }
             catch (Exception e) {
                 Logger.log(Logger.TYPE.FATAL, "Error creating request: " 

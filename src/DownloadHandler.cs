@@ -132,9 +132,13 @@ namespace Launcher {
                     (object sender, AsyncCompletedEventArgs e) => {
                         try {
                             Logger.log(Logger.TYPE.DEBUG, "Finished downloading file.");
+                            if (e.Error != null && e.Error.InnerException != null) {
+                                throw e.Error.InnerException;
+                            }
+
                             downloadCompleted(block);
                             completed(sender, e);
-                        } catch (TargetInvocationException) {
+                        } catch (Exception ex) {
                             Logger.log(Logger.TYPE.ERROR, "There was a problem downloading from " + url + ", error: " + e.Error);
                             statusLabel.Text = "File download failed: " + url + "\n" + e.Error.Message;
                         }
@@ -175,9 +179,12 @@ namespace Launcher {
                     (object sender, DownloadStringCompletedEventArgs e) => {
                         try {
                             Logger.log(Logger.TYPE.DEBUG, "Finished downloading String.");
+                            if (e.Error != null && e.Error.InnerException != null) {
+                                throw e.Error.InnerException;
+                            }
                             downloadCompleted(block);
                             completed(sender, e);
-                        } catch (TargetInvocationException) {
+                        } catch (Exception) {
                             Logger.log(Logger.TYPE.ERROR, "There was a problem downloading from " + url + ", error: " + e.Error);
                             statusLabel.Text = "String download failed: "+ url + "\n" + e.Error.Message;
                         }
