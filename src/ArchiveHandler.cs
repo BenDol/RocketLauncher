@@ -35,6 +35,9 @@ namespace Launcher {
             }
             if (!Directory.Exists(toDir)) {
                 Directory.CreateDirectory(toDir);
+            } else if (cleanDirs) {
+                Directory.Delete(toDir, true);
+                Directory.CreateDirectory(toDir);
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
@@ -42,13 +45,8 @@ namespace Launcher {
                 foreach (ZipArchiveEntry file in archive.Entries) {
                     string completeFileName = Path.Combine(toDir, file.FullName);
                     string directory = Path.GetDirectoryName(completeFileName);
-
-                    if (Directory.Exists(directory)) {
-                        if (cleanDirs) {
-                            Directory.Delete(directory, true);
-                            Directory.CreateDirectory(directory);
-                        }
-                    } else {
+                    
+                    if (!Directory.Exists(directory)) {
                         Directory.CreateDirectory(directory);
                     }
 
